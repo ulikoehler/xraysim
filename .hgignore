@@ -1,0 +1,8 @@
+syntax: glob
+
+*.o
+*.a
+
+sytax: regex
+.*/build/.*
+.*/dist/.*
