@@ -10,6 +10,7 @@
 
 #include "../3dio.hpp"
 
+
 #define TEST_NUMBERS 100 //How many numbers to test one time
 
 using namespace std;
@@ -17,6 +18,7 @@ using namespace boost;
 using namespace boost::unit_test;
 
 BOOST_AUTO_TEST_SUITE(IOTestSuite)
+
 
 BOOST_AUTO_TEST_CASE(init)
 {
@@ -27,10 +29,10 @@ BOOST_AUTO_TEST_CASE(init)
  * Tests readNextVal()
  * Test parsing of streams into numbers
  */
-BOOST_AUTO_TEST_CASE(TestInternalFieldParsing)
+BOOST_AUTO_TEST_CASE(TestReadNextVal)
 {
-    BOOST_TEST_MESSAGE("Testing readNextVal():");
-    stringstream ss(stringstream::in | stringstream::out); //Buffers the comma-separated integers
+    BOOST_TEST_MESSAGE("Testing readNextVal()");
+    stringstream ss(stringstream::in | stringstream::out); //Buffers the comma-separated data
 
     /**
      * Generate TEST_NUMBERS integers and save them in an array and the stringstream
@@ -73,10 +75,44 @@ BOOST_AUTO_TEST_CASE(TestInternalFieldParsing)
             //readNextVal parses the next number each iteration
             //Remark: The numbers are printed out with reduced precision on generation
             // so we have to use BOSOT_CHECK_CLOSE instead of BOOST_CHECK_EQUAL here
-            // (default: 3 digit precision = 0.001% 
+            // (default: 3 digit precision = 0.001%)
             BOOST_CHECK_CLOSE(readNextVal<double>(ss), doubleNumbers[i], 0.001);
         }
 
+}
+
+/**
+ * Tests readNextVal()
+ * Test reading of 3d matrices
+ */
+BOOST_AUTO_TEST_CASE(TestReadMatrix3d)
+{
+    stringstream ss(stringstream::in | stringstream::out); //Buffers the comma-separated integers
+    mt19937 intRng(time(0)); //Init a MT19937 PRNG (warning: low entropy seed)
+
+    BOOST_TEST_MESSAGE("Testing readMatrix3d()");
+
+    //Generate a random 10,9,8 matrix
+    matrix3d randMatrix(boost::extents[10][9][8]);
+
+    for(int ix = 0; ix < 10; ix++)
+        {
+            for(int iy = 0; iy < 9; iy++)
+                {
+                    for(int iz = 0; iz < 8; iz++)
+                        {
+                            uint32_t rand = intRng();
+                            randMatrix[ix][iy][iz] = rand;
+                            ss << rand << ',';
+                        }
+                }
+        }
+
+    //Re-read the matrix from the stringstream
+    matrix3d rereadMatrix = readMatrix3d(10, 9, 8, ss);
+
+    //Check the equality of the two matrices
+    BOOST_CHECK(randMatrix == rereadMatrix);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
