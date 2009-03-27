@@ -25,7 +25,7 @@ using namespace boost;
  */
 template<class T>
 inline T
-readVal (std::istream& in)
+readNextVal (std::istream& in)
 {
     static string buffer; //Buffers the digits read from in
     static char c;
