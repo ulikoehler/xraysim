@@ -41,6 +41,10 @@ readNextVal (std::istream& in)
                 {
                     buffer += c;
                 }
+            if(c == '.') //Append the decimal separator
+                {
+                    buffer += c;
+                }
             else if (c == FIELD_DELIM) //Last character of the field
                 {
                     return boost::lexical_cast<T>(buffer);

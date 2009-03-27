@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE(TestInternalFieldParsing)
     /**
      * Generate TEST_NUMBERS integers and save them in an array and the stringstream
      */
-    BOOST_TEST_MESSAGE("    Testing integer parsing:");
+    BOOST_TEST_MESSAGE("    Testing integer parsing");
     mt19937 intRng(time(0)); //Init a MT19937 PRNG (warning: low entropy seed)
     uint32_t intNumbers[TEST_NUMBERS];
     for(int i = 0; i < TEST_NUMBERS; i++)
@@ -54,7 +54,7 @@ BOOST_AUTO_TEST_CASE(TestInternalFieldParsing)
     /**
      * Do the same with doubles
      */
-    BOOST_TEST_MESSAGE("    Testing double parsing:");
+    BOOST_TEST_MESSAGE("    Testing double parsing");
     //Generate a special-distributed PRNG
     boost::uniform_real<> uniReal(0.0,1000.0);
     boost::variate_generator<mt19937&, uniform_real<> > doubleRng(intRng, uniReal);
@@ -71,7 +71,10 @@ BOOST_AUTO_TEST_CASE(TestInternalFieldParsing)
     for(int i = 0; i < TEST_NUMBERS; i++)
         {
             //readNextVal parses the next number each iteration
-            BOOST_CHECK_EQUAL(readNextVal<double>(ss), doubleNumbers[i]);
+            //Remark: The numbers are printed out with reduced precision on generation
+            // so we have to use BOSOT_CHECK_CLOSE instead of BOOST_CHECK_EQUAL here
+            // (default: 3 digit precision = 0.001% 
+            BOOST_CHECK_CLOSE(readNextVal<double>(ss), doubleNumbers[i], 0.001);
         }
 
 }
