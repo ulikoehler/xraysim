@@ -1,2 +1,2 @@
 all:
-	g++ testmain.cpp
+	g++ testmain.cpp -o xraysim-test
