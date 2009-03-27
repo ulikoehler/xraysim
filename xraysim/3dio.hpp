@@ -13,14 +13,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/multi_array.hpp>
 
-//Typedefs
-typedef boost::multi_array<uint32_t, 3> matrix3d;
-
-//Constant decs
-#define FIELD_DELIM ',' //Character that separates 2 values
-
-using namespace std;
-using namespace boost;
+#include "include.hpp"
 
 /**
  * Reads digits from the supplied input stream until FIELD_DELIM (constant)

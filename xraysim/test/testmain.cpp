@@ -5,9 +5,6 @@
 #include <boost/test/detail/unit_test_parameters.hpp>
 #include <boost/random.hpp>
 
-#include <iostream>
-#include <sstream>
-
 #include "../3dio.hpp"
 
 
