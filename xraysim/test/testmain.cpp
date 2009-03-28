@@ -49,33 +49,6 @@ BOOST_AUTO_TEST_CASE(TestReadNextVal)
             //readNextVal parses the next number each iteration
             BOOST_CHECK_EQUAL(readNextVal<uint32_t>(ss), intNumbers[i]);
         }
-
-    /**
-     * Do the same with doubles
-     */
-    BOOST_TEST_MESSAGE("    Testing double parsing");
-    //Generate a special-distributed PRNG
-    boost::uniform_real<> uniReal(0.0,1000.0);
-    boost::variate_generator<mt19937&, uniform_real<> > doubleRng(intRng, uniReal);
-
-    //Generate the numbers
-    double doubleNumbers[TEST_NUMBERS];
-    for(int i = 0; i < TEST_NUMBERS; i++)
-        {
-            double rand = doubleRng(); //Generate a random number
-            doubleNumbers[i] = rand;
-            ss << rand << ',';
-        }
-    //Check if the parsing leads to the same results
-    for(int i = 0; i < TEST_NUMBERS; i++)
-        {
-            //readNextVal parses the next number each iteration
-            //Remark: The numbers are printed out with reduced precision on generation
-            // so we have to use BOSOT_CHECK_CLOSE instead of BOOST_CHECK_EQUAL here
-            // (default: 3 digit precision = 0.001%)
-            BOOST_CHECK_CLOSE(readNextVal<double>(ss), doubleNumbers[i], 0.001);
-        }
-
 }
 
 /**

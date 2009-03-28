@@ -21,8 +21,7 @@
  * \param in The input stream to read from
  * \return The converted number
  */
-template<class T>
-inline T
+inline uint
 readNextVal (std::istream& in)
 {
     static string buffer; //Buffers the digits read from in
@@ -39,13 +38,9 @@ readNextVal (std::istream& in)
                 {
                     buffer += c;
                 }
-            if(c == '.') //Append the decimal separator
-                {
-                    buffer += c;
-                }
             else if (c == FIELD_DELIM) //Last character of the field
                 {
-                    return boost::lexical_cast<T>(buffer);
+                    return boost::lexical_cast<uint>(buffer);
                 }
             }
 }

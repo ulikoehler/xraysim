@@ -13,7 +13,7 @@
 /**
  * Sums up the z dimensions of a given matrix
  */
-inline void sumUpMatrix(matrix3d matrix)
+inline matrix2d sumUpMatrix(matrix3d matrix)
 {
     
 }
