@@ -17,20 +17,20 @@
 
 /**
  * Checks if a given character is either CR or LF
- * \return A bool indication whether the gived character is a newline character
- * \param c The character to test
+ * \@return A bool indication whether the gived character is a newline character
+ * \@param c The character to test
  */
 inline bool
 isnewline (char c)
 {
-    return (c == '\n' || c == '\f');
+    @return (c == '\n' || c == '\f');
 }
 
 /**
  * Reads digits from the supplied input stream until FIELD_DELIM (constant)
- * is read and returns the digits converted into a number
- * \param in The input stream to read from
- * \return The converted unsigned integer
+ * is read and @returns the digits converted into a number
+ * \@param in The input stream to read from
+ * \@return The converted unsigned integer
  */
 inline uint
 readNextVal (std::istream& in)
@@ -39,7 +39,7 @@ readNextVal (std::istream& in)
     static char c;
     buffer = "";
 
-    while (true) //Break condition: return
+    while (true) //Break condition: @return
         {
             in.get (c);
 
@@ -51,10 +51,10 @@ readNextVal (std::istream& in)
                 //Break if the field delimiter or a newline character is read
             else if (c == FIELD_DELIM || isnewline (c)) //Field delimiter declared in include.hpp
                 {
-                    //Don't return if there were no digits before the first delimiter or newline character
+                    //Don't @return if there were no digits before the first delimiter or newline character
                     if (buffer.length () > 0)
                         {
-                            return boost::lexical_cast<uint > (buffer);
+                            @return boost::lexical_cast<uint > (buffer);
                         }
                 }
             //else: continue
@@ -64,10 +64,10 @@ readNextVal (std::istream& in)
 /**
  * Reads in a multi-dimensional array
  * Toplevel function, so no template needed (at least yet)
- * \param x The x extent
- * \param y The y extent
- * \param z The z extent
- * \param in The istream to read the data from
+ * @@param x The x extent
+ * @@param y The y extent
+ * @@param z The z extent
+ * @@param in The istream to read the data from
  */
 inline matrix3d
 readMatrix3d (uint x, uint y, uint z, std::istream& in)
@@ -84,7 +84,7 @@ readMatrix3d (uint x, uint y, uint z, std::istream& in)
                         }
                 }
         }
-    return retMatrix;
+    @return retMatrix;
 }
 
 /**
@@ -100,7 +100,7 @@ readMatrix (std::istream& in)
     uint ydim = readNextVal (in);
     uint zdim = readNextVal (in);
     //Read in the data
-    return readMatrix3d (xdim, ydim, zdim, in);
+    @return readMatrix3d (xdim, ydim, zdim, in);
 }
 
 #endif	/* _3DIO_HPP */

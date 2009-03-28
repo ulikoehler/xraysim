@@ -29,7 +29,7 @@ BOOST_AUTO_TEST_CASE (init)
 BOOST_AUTO_TEST_CASE (TestReadNextVal)
 {
     BOOST_TEST_MESSAGE ("Testing readNextVal()");
-    stringstream ss (stringstream::in | stringstream::out); //Buffers the comma-separated data
+    stringstream ss (stringstream::in | stringstream::out); //Bduffers the comma-separated data
 
     /**
      * Generate TEST_NUMBERS integers and save them in an array and the stringstream

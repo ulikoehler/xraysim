@@ -8,3 +8,4 @@ xraysim-test
 sytax: regex
 .*/build/.*
 .*/dist/.*
+.*/doc/.*
