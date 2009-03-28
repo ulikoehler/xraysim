@@ -4,8 +4,8 @@ syntax: glob
 *.a
 a.out
 xraysim-test
-
-sytax: regex
-.*/build/.*
-.*/dist/.*
-.*/doc/.*
+doc
+build
+dist
+.dep.inc
+nbproject/private/private.xml
