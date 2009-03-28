@@ -5,7 +5,7 @@
 #include <boost/test/detail/unit_test_parameters.hpp>
 #include <boost/random.hpp>
 
-#include "../3dio.hpp"
+#include "3dio.hpp"
 
 
 #define TEST_NUMBERS 100 //How many numbers to test one time

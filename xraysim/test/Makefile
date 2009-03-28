@@ -1,7 +1,8 @@
 CXXDEBUGFLAGS=-g -DDEBUG
+CXXFLAGS=-I../include
 
 all:
-	g++ testmain.cpp -o xraysim-test
+	g++ $(CXXFLAGS) testmain.cpp -o xraysim-test
 
 debug:
 		g++ $(CXXDEBUGFLAGS) testmain.cpp -o xraysim-test

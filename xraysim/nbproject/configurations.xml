@@ -4,13 +4,13 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header-Dateien"
                    projectFiles="true">
-      <itemPath>3dio.hpp</itemPath>
-      <itemPath>3dops.hpp</itemPath>
+      <itemPath>include/3dio.hpp</itemPath>
+      <itemPath>include/3dops.hpp</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Quelldateien"
                    projectFiles="true">
-      <itemPath>main.cpp</itemPath>
+      <itemPath>src/main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Ressourcendateien"
@@ -36,13 +36,13 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
-      <item path="3dio.hpp">
+      <item path="include/3dio.hpp">
         <itemTool>3</itemTool>
       </item>
-      <item path="3dops.hpp">
+      <item path="include/3dops.hpp">
         <itemTool>3</itemTool>
       </item>
-      <item path="main.cpp">
+      <item path="src/main.cpp">
         <itemTool>1</itemTool>
       </item>
     </conf>
@@ -67,13 +67,13 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
-      <item path="3dio.hpp">
+      <item path="include/3dio.hpp">
         <itemTool>3</itemTool>
       </item>
-      <item path="3dops.hpp">
+      <item path="include/3dops.hpp">
         <itemTool>3</itemTool>
       </item>
-      <item path="main.cpp">
+      <item path="src/main.cpp">
         <itemTool>1</itemTool>
       </item>
     </conf>
