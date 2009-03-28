@@ -1,4 +1,4 @@
-CXXDEBUGFLAGS=-g
+CXXDEBUGFLAGS=-g -DDEBUG
 
 all:
 	g++ testmain.cpp -o xraysim-test
