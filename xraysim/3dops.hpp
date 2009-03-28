@@ -13,7 +13,10 @@
 /**
  * Sums up the z dimensions of a given matrix
  */
-//inline void sumUpMatrix //TODO
+inline void sumUpMatrix(matrix3d matrix)
+{
+    
+}
 
 #endif	/* _3DOPS_HPP */
 

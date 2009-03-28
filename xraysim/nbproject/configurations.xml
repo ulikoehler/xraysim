@@ -5,11 +5,11 @@
                    displayName="Header-Dateien"
                    projectFiles="true">
       <itemPath>3dio.hpp</itemPath>
+      <itemPath>3dops.hpp</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Quelldateien"
                    projectFiles="true">
-      <itemPath>3diotest.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -39,8 +39,8 @@
       <item path="3dio.hpp">
         <itemTool>3</itemTool>
       </item>
-      <item path="3diotest.cpp">
-        <itemTool>1</itemTool>
+      <item path="3dops.hpp">
+        <itemTool>3</itemTool>
       </item>
       <item path="main.cpp">
         <itemTool>1</itemTool>
@@ -70,8 +70,8 @@
       <item path="3dio.hpp">
         <itemTool>3</itemTool>
       </item>
-      <item path="3diotest.cpp">
-        <itemTool>1</itemTool>
+      <item path="3dops.hpp">
+        <itemTool>3</itemTool>
       </item>
       <item path="main.cpp">
         <itemTool>1</itemTool>

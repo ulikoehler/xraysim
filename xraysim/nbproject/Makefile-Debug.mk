@@ -28,7 +28,6 @@ OBJECTDIR=build/Debug/${PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/3diotest.o \
 	${OBJECTDIR}/main.o
 
 # C Compiler Flags
@@ -51,10 +50,6 @@ LDLIBSOPTIONS=
 dist/Debug/${PLATFORM}/xraysim: ${OBJECTFILES}
 	${MKDIR} -p dist/Debug/${PLATFORM}
 	${LINK.cc} -o dist/Debug/${PLATFORM}/xraysim ${OBJECTFILES} ${LDLIBSOPTIONS} 
-
-${OBJECTDIR}/3diotest.o: 3diotest.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	$(COMPILE.cc) -g -o ${OBJECTDIR}/3diotest.o 3diotest.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}

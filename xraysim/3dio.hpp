@@ -75,5 +75,20 @@ inline matrix3d readMatrix3d(uint x, uint y, uint z, std::istream& in)
     return retMatrix;
 }
 
+/**
+ * Reads in a 3d matrix data file
+ * See data-spec.txt for format specification
+ * (Reads in the dimensions and the uses readMatrix3d() to read in the data)d
+ */
+inline matrix3d readMatrix(std::istream& in)
+{
+    //Read in the dimensions
+    uint xdim = readNextVal<uint>(in);
+    uint ydim = readNextVal<uint>(in);
+    uint zdim = readNextVal<uint>(in);
+    //Read in the data
+    return readMatrix3d (xdim, ydim, zdim, in);
+}
+
 #endif	/* _3DIO_HPP */
 
