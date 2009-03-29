@@ -10,6 +10,8 @@
 
 #include <iostream>
 #include <sstream>
+#include <boost/lexical_cast.hpp>
+#include <boost/multi_array.hpp>
 
 //Local includes
 #include "matrixtask.hpp"
@@ -20,20 +22,6 @@ using namespace boost;
 //Typedefs
 typedef boost::multi_array<uint32_t, 3> Matrix3d;
 typedef boost::multi_array<uint32_t, 2> Matrix2d;
-
-class Vector3d
-{
-    public:
-        uint x;
-        uint y;
-        uint z;
-        Vector3d(const uint& x,const uint& y,const uint& z)
-        {
-            this->x = x;
-            this->y = y;
-            this->z = z;
-        }
-};
 
 //Constant decs
 #define FIELD_DELIM ',' //Character that separates 2 values in the data file
