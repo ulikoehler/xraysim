@@ -171,7 +171,7 @@ BOOST_AUTO_TEST_CASE(TestGetMatrixExtents)
     const int iz = 5; //Z Extent
 
     Matrix3d randMatrix (boost::extents[ix][iy][iz]);
-
+    
     for (int ix = 0; ix < 10; ix++)
         {
             for (int iy = 0; iy < 9; iy++)

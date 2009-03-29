@@ -11,6 +11,9 @@
 #include <iostream>
 #include <sstream>
 
+//Local includes
+#include "matrixtask.hpp"
+
 using namespace std;
 using namespace boost;
 
