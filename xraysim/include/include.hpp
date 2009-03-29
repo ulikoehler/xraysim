@@ -18,12 +18,19 @@ using namespace boost;
 typedef boost::multi_array<uint32_t, 3> Matrix3d;
 typedef boost::multi_array<uint32_t, 2> Matrix2d;
 
-struct
+class Vector3d
 {
-    uint x;
-    uint y;
-    uint z;
-} Vector3d;
+    public:
+        uint x;
+        uint y;
+        uint z;
+        Vector3d(const uint& x,const uint& y,const uint& z)
+        {
+            this->x = x;
+            this->y = y;
+            this->z = z;
+        }
+};
 
 //Constant decs
 #define FIELD_DELIM ',' //Character that separates 2 values in the data file

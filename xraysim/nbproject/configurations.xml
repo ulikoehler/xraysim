@@ -6,6 +6,7 @@
                    projectFiles="true">
       <itemPath>include/3dio.hpp</itemPath>
       <itemPath>include/3dops.hpp</itemPath>
+      <itemPath>include/include.hpp</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Quelldateien"
@@ -42,6 +43,9 @@
       <item path="include/3dops.hpp">
         <itemTool>3</itemTool>
       </item>
+      <item path="include/include.hpp">
+        <itemTool>3</itemTool>
+      </item>
       <item path="src/main.cpp">
         <itemTool>1</itemTool>
       </item>
@@ -71,6 +75,9 @@
         <itemTool>3</itemTool>
       </item>
       <item path="include/3dops.hpp">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="include/include.hpp">
         <itemTool>3</itemTool>
       </item>
       <item path="src/main.cpp">

@@ -5,7 +5,10 @@
 #include <boost/test/detail/unit_test_parameters.hpp>
 #include <boost/random.hpp>
 
-#include "../include/include.hpp"
+/**
+ * Includes
+ * include.hpp is already included by the other headers
+ */
 #include "../include/3dio.hpp"
 #include "../include/3dops.hpp"
 
@@ -182,7 +185,7 @@ BOOST_AUTO_TEST_CASE(TestGetMatrixExtents)
         }
 
     //Get the extents and test their correctness
-    Vector3d dimVector = matrixExtents(randMatrix);
+    struct Vector3d dimVector = matrixExtents(randMatrix);
     BOOST_CHECK_EQUAL(dimVector.x, ix);
     BOOST_CHECK_EQUAL(dimVector.y, iy);
     BOOST_CHECK_EQUAL(dimVector.z, iz);

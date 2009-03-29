@@ -27,8 +27,9 @@ inline Matrix2d sumUpMatrix(Matrix3d matrix)
  */
 inline Vector3d matrixExtents(Matrix3d matrix)
 {
-    Matrix3d::size_type* shape = matrix.shape();
-    return Vector3d(shape[0], shape[1], shape[2]);
+    const Matrix3d::size_type* shape = matrix.shape();
+    Vector3d ret(shape[0], shape[1], shape[2]);
+    return ret;
 }
 
 #endif	/* _3DOPS_HPP */
