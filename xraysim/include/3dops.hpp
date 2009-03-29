@@ -11,11 +11,24 @@
 #include "include.hpp"
 
 /**
- * Sums up the z dimensions of a given matrix
+ * Sums up the z vectors of a given matrix
+ * \param matrix The matrix to sum up from
+ * \return A 2d matrix containing the summed data
  */
-inline matrix2d sumUpMatrix(matrix3d matrix)
+inline Matrix2d sumUpMatrix(Matrix3d matrix)
 {
-    
+    //For each vector in the map //TODO
+}
+
+/**
+ * Helper to get the dimensions of a three-dimensional matrix
+ * \param matrix The matrix to get the dimensions from
+ * \return A 3d vector of the dimensions
+ */
+inline Vector3d matrixExtents(Matrix3d matrix)
+{
+    Matrix3d::size_type* shape = matrix.shape();
+    return Vector3d(shape[0], shape[1], shape[2]);
 }
 
 #endif	/* _3DOPS_HPP */
