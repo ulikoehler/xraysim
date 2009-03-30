@@ -23,7 +23,7 @@ public:
      * \param y The y extent
      * \param z The z extent
      */
-    MatrixTask(const uint& x, const uint& y, const uint& z)
+    MatrixTask(uint& x, uint& y, uint& z);
     /**
      * Constructs a new MatrixTask from an input stream
      * See data-spec.txt for a specification of the data format

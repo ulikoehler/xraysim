@@ -14,13 +14,13 @@ MatrixTask::MatrixTask (std::istream& in)
     this->matrix = new Matrix3d(readMatrix(in));
 }
 
-MatrixTask::MatrixTask (string filename)
+MatrixTask::MatrixTask (std::string& filename)
 {
     ifstream in (filename.c_str ());
     this->matrix = new Matrix3d(readMatrix (in));
 }
 
-MatrixTask::MatrixTask(const uint& x, const uint& y, const uint& z)
+MatrixTask::MatrixTask(uint& x, uint& y, uint& z)
 {
     this->matrix = new Matrix3d(boost::extents[x][y][z]);
 }
@@ -28,8 +28,8 @@ MatrixTask::MatrixTask(const uint& x, const uint& y, const uint& z)
 Matrix2d
 MatrixTask::sumUpMatrix ()
 {
-    Matrix2d ret(xExt, yExt);
-    for (int x = 0; x < xExt; x++)
+    Matrix2d ret(this->xExt, this->yExt);
+    for (int x = 0; x < this->xExt; x++)
         {
             for (int y = 0; y < yExt; y++)
                 {
