@@ -8,7 +8,7 @@
 #ifndef _MATRIXTASK_HPP
 #define	_MATRIXTASK_HPP
 
-#include "../include/3dio.hpp"
+#include "include.hpp"
 
 /**
  * A manager class to manage the matrix importing,
@@ -16,6 +16,13 @@
 class MatrixTask
 {
 public:
+    /**
+     * Construct a new matrix task with an empty matrix with extents x, y and z.
+     * \param x The x extent
+     * \param y The y extent
+     * \param z The z extent
+     */
+    MatrixTask(uint x, uint y, uint z);
     /**
      * Constructs a new MatrixTask from an input stream
      * See data-spec.txt for a specification of the data format

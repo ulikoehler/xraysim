@@ -109,6 +109,11 @@ MatrixTask::MatrixTask (string filename)
     this->matrix = readMatrix (in);
 }
 
+MatrixTask::MatrixTask(uint x, uint y, uint z)
+{
+    matrix(boost::extent[x][y][z]);
+}
+
 Matrix2d
 MatrixTask::sumUpMatrix ()
 {

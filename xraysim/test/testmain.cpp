@@ -5,7 +5,7 @@
 #include <boost/test/detail/unit_test_parameters.hpp>
 #include <boost/random.hpp>
 
-#include "../include/3dops.hpp"
+#include "../include/matrixtask.hpp"
 
 
 #define TEST_NUMBERS 100 //How many numbers to test one time
@@ -120,36 +120,5 @@ BOOST_AUTO_TEST_CASE (TestReadDataFile)
 BOOST_AUTO_TEST_SUITE_END ()
 
 BOOST_AUTO_TEST_SUITE (OperationsTestSuite)
-/**
- * Tests if matrixExtents() leads to the correct results
- */
-BOOST_AUTO_TEST_CASE(TestGetMatrixExtents)
-{
-    mt19937 intRng(time (0)); //Init a MT19937 PRNG (warning: low entropy seed)
-    //Generate a random 12,21,5 matrix (randomly choosen extents)
-    const int ix = 12; //X Extent
-    const int iy = 21; //Y Extent
-    const int iz = 5; //Z Extent
 
-    Matrix3d randMatrix (boost::extents[ix][iy][iz]);
-    
-    for (int ix = 0; ix < 10; ix++)
-        {
-            for (int iy = 0; iy < 9; iy++)
-                {
-                    for (int iz = 0; iz < 8; iz++)
-                        {
-                            uint32_t rand = intRng ();
-                            randMatrix[ix][iy][iz] = rand;
-                        }
-                }
-        }
-
-    //Get the extents and test their correctness
-    struct Vector3d dimVector = matrixExtents(randMatrix);
-    BOOST_CHECK_EQUAL(dimVector.x, ix);
-    BOOST_CHECK_EQUAL(dimVector.y, iy);
-    BOOST_CHECK_EQUAL(dimVector.z, iz);
-}
-        
 BOOST_AUTO_TEST_SUITE_END ()
