@@ -5,9 +5,9 @@
  * Created on 29. März 2009, 19:38
  */
 
+#include "../include/matrixtask.hpp"
 #include "../include/include.hpp"
 #include "../include/io_utils.hpp"
-
 
 MatrixTask::MatrixTask (std::istream& in)
 {
@@ -25,10 +25,10 @@ MatrixTask::MatrixTask(uint x, uint y, uint z)
     this->matrix = new Matrix3d(boost::extents[x][y][z]);
 }
 
-Matrix2d<uint>
+Matrix2d
 MatrixTask::sumUpMatrix ()
 {
-    Matrix2d<uint> ret(xExt, yExt);
+    Matrix2d ret(xExt, yExt);
     for (int x = 0; x < xExt; x++)
         {
             for (int y = 0; y < yExt; y++)
