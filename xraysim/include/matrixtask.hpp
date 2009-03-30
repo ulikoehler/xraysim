@@ -44,7 +44,7 @@ public:
      * Getter for the 3d matrix member variable
      * \return The matrix member
      */
-    Matrix3d&
+    Matrix3d
     getMatrix ()
     {
         return this->matrix;

@@ -5,6 +5,7 @@
                    displayName="Header-Dateien"
                    projectFiles="true">
       <itemPath>include/include.hpp</itemPath>
+      <itemPath>include/io_utils.hpp</itemPath>
       <itemPath>include/matrixtask.hpp</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
@@ -40,6 +41,9 @@
       <item path="include/include.hpp">
         <itemTool>3</itemTool>
       </item>
+      <item path="include/io_utils.hpp">
+        <itemTool>3</itemTool>
+      </item>
       <item path="include/matrixtask.hpp">
         <itemTool>3</itemTool>
       </item>
@@ -72,6 +76,9 @@
         </linkerTool>
       </compileType>
       <item path="include/include.hpp">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="include/io_utils.hpp">
         <itemTool>3</itemTool>
       </item>
       <item path="include/matrixtask.hpp">

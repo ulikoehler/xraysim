@@ -9,22 +9,24 @@
 #define	_INCLUDE_HPP
 
 #include <iostream>
+#include <fstream>
 #include <sstream>
+#include <string>
 #include <boost/lexical_cast.hpp>
 #include <boost/multi_array.hpp>
 
-//Local includes
-#include "matrixtask.hpp"
-
 using namespace std;
 using namespace boost;
+
+//Constant decs
+#define FIELD_DELIM ',' //Character that separates 2 values in the data file
 
 //Typedefs
 typedef boost::multi_array<uint32_t, 3> Matrix3d;
 typedef boost::multi_array<uint32_t, 2> Matrix2d;
 
-//Constant decs
-#define FIELD_DELIM ',' //Character that separates 2 values in the data file
+//Local includes
+#include "matrixtask.hpp"
 
 #endif	/* _INCLUDE_HPP */
 
