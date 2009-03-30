@@ -5,11 +5,6 @@
 #include <boost/test/detail/unit_test_parameters.hpp>
 #include <boost/random.hpp>
 
-/**
- * Includes
- * include.hpp is already included by the other headers
- */
-#include "../include/3dio.hpp"
 #include "../include/3dops.hpp"
 
 
@@ -87,40 +82,6 @@ BOOST_AUTO_TEST_CASE (TestReadNextVal)
 }
 
 /**
- * Tests readMatrix3d()
- * Test reading of 3d matrices
- */
-BOOST_AUTO_TEST_CASE (TestReadMatrix3d)
-{
-    stringstream ss (stringstream::in | stringstream::out); //Buffers the comma-separated integers
-    mt19937 intRng (time (0)); //Init a MT19937 PRNG (warning: low entropy seed)
-
-    BOOST_TEST_MESSAGE ("Testing readMatrix3d()");
-
-    //Generate a random 10,9,8 matrix
-    Matrix3d randMatrix (boost::extents[10][9][8]);
-
-    for (int ix = 0; ix < 10; ix++)
-        {
-            for (int iy = 0; iy < 9; iy++)
-                {
-                    for (int iz = 0; iz < 8; iz++)
-                        {
-                            uint32_t rand = intRng ();
-                            randMatrix[ix][iy][iz] = rand;
-                            ss << rand << ',';
-                        }
-                }
-        }
-
-    //Re-read the matrix from the stringstream
-    Matrix3d rereadMatrix = readMatrix3d (10, 9, 8, ss);
-
-    //Check the equality of the two matrices
-    BOOST_CHECK (randMatrix == rereadMatrix);
-}
-
-/**
  * Tests readMatrix
  * Test reading of data files
  */
@@ -150,10 +111,10 @@ BOOST_AUTO_TEST_CASE (TestReadDataFile)
         }
 
     //Re-read the matrix from the stringstream
-    Matrix3d rereadMatrix = readMatrix (ss);
+    MatrixTask task(ss);
 
     //Check the equality of the two matrices
-    BOOST_CHECK (randMatrix == rereadMatrix);
+    BOOST_CHECK (randMatrix == task.getMatrix());
 }
 
 BOOST_AUTO_TEST_SUITE_END ()
