@@ -54,7 +54,7 @@ public:
      * \param matrix The matrix to sum up from
      * \return A 2d matrix containing the summed data with max indices [xExt][yExt]
      */
-    Matrix2d sumUpMatrix ();
+    Matrix2d<uint> sumUpMatrix ();
 private:
     uint xExt, yExt, zExt; //Extents //TODO Implement getters
     Matrix3d *matrix; //The matrix

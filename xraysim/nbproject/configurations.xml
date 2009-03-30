@@ -6,12 +6,14 @@
                    projectFiles="true">
       <itemPath>include/include.hpp</itemPath>
       <itemPath>include/io_utils.hpp</itemPath>
+      <itemPath>include/matrix.hpp</itemPath>
       <itemPath>include/matrixtask.hpp</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Quelldateien"
                    projectFiles="true">
       <itemPath>src/main.cpp</itemPath>
+      <itemPath>src/matrix.cpp</itemPath>
       <itemPath>src/matrixtask.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -44,10 +46,16 @@
       <item path="include/io_utils.hpp">
         <itemTool>3</itemTool>
       </item>
+      <item path="include/matrix.hpp">
+        <itemTool>3</itemTool>
+      </item>
       <item path="include/matrixtask.hpp">
         <itemTool>3</itemTool>
       </item>
       <item path="src/main.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/matrix.cpp">
         <itemTool>1</itemTool>
       </item>
       <item path="src/matrixtask.cpp">
@@ -81,10 +89,16 @@
       <item path="include/io_utils.hpp">
         <itemTool>3</itemTool>
       </item>
+      <item path="include/matrix.hpp">
+        <itemTool>3</itemTool>
+      </item>
       <item path="include/matrixtask.hpp">
         <itemTool>3</itemTool>
       </item>
       <item path="src/main.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/matrix.cpp">
         <itemTool>1</itemTool>
       </item>
       <item path="src/matrixtask.cpp">

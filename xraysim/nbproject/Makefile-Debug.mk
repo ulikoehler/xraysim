@@ -28,6 +28,7 @@ OBJECTDIR=build/Debug/${PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/src/matrix.o \
 	${OBJECTDIR}/src/main.o \
 	${OBJECTDIR}/src/matrixtask.o
 
@@ -51,6 +52,10 @@ LDLIBSOPTIONS=
 dist/Debug/${PLATFORM}/xraysim: ${OBJECTFILES}
 	${MKDIR} -p dist/Debug/${PLATFORM}
 	${LINK.cc} -o dist/Debug/${PLATFORM}/xraysim ${OBJECTFILES} ${LDLIBSOPTIONS} 
+
+${OBJECTDIR}/src/matrix.o: src/matrix.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	$(COMPILE.cc) -g -o ${OBJECTDIR}/src/matrix.o src/matrix.cpp
 
 ${OBJECTDIR}/src/main.o: src/main.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
