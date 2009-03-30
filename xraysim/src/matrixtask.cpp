@@ -5,8 +5,6 @@
  * Created on 29. März 2009, 19:38
  */
 
-#include <boost/type_traits/extent.hpp>
-
 #include "../include/include.hpp"
 #include "../include/io_utils.hpp"
 
@@ -24,13 +22,13 @@ MatrixTask::MatrixTask (string filename)
 
 MatrixTask::MatrixTask(uint x, uint y, uint z)
 {
-    this->matrix(boost::extents[x][y][z]);
+    this->matrix = Matrix3d(boost::extents[x][y][z]);
 }
 
 Matrix2d
 MatrixTask::sumUpMatrix ()
 {
-    Matrix2d ret(boost::extents[xExt][yExt]);
+    Matrix2d ret(boost::extents[2][3]);
     for (int x = 0; x < this->xExt; x++)
         {
             for (int y = 0; y < this->yExt; y++)

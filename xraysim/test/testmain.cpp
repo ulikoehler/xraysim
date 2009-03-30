@@ -6,7 +6,7 @@
 #include <boost/random.hpp>
 
 #include "../include/matrixtask.hpp"
-
+#include "../include/io_utils.hpp"
 
 #define TEST_NUMBERS 100 //How many numbers to test one time
 
