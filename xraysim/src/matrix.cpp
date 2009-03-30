@@ -12,7 +12,7 @@ Matrix2d::~Matrix2d ()
     delete array;
 }
 
-Matrix2d::Matrix2d(uint x, uint y)
+Matrix2d::Matrix2d(const uint& x, const uint& y)
 {
     this->xExt = x;
     this->yExt = y;

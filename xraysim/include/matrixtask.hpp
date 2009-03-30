@@ -23,7 +23,7 @@ public:
      * \param y The y extent
      * \param z The z extent
      */
-    MatrixTask(uint x, uint y, uint z);
+    MatrixTask(const uint& x, const uint& y, const uint& z)
     /**
      * Constructs a new MatrixTask from an input stream
      * See data-spec.txt for a specification of the data format
@@ -35,7 +35,7 @@ public:
      * See data-spec.txt for a specification of the data format
      * \param filename The name of an existing file to read the matrix from
      */
-    MatrixTask (string filename);
+    MatrixTask (std::string& filename);
 
     ///////////////////////
     //Getters and setters//

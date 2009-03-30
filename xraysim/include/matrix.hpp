@@ -15,7 +15,7 @@ class Matrix2d
 {
 public:
     Matrix2d ();
-    Matrix2d(uint x, uint y); //TODO Document
+    Matrix2d(const uint& x, const uint& y); //TODO Document
     ~Matrix2d();
     uint* operator[](const int& index); //TODO Document
 private:

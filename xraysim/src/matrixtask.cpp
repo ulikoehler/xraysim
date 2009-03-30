@@ -20,7 +20,7 @@ MatrixTask::MatrixTask (string filename)
     this->matrix = new Matrix3d(readMatrix (in));
 }
 
-MatrixTask::MatrixTask(uint x, uint y, uint z)
+MatrixTask::MatrixTask(const uint& x, const uint& y, const uint& z)
 {
     this->matrix = new Matrix3d(boost::extents[x][y][z]);
 }
