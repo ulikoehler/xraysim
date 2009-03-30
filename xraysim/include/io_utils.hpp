@@ -60,7 +60,6 @@ readNextVal (std::istream& in)
 
 /**
  * Reads in a multi-dimensional array
- * Toplevel function, so no template needed (at least yet)
  * @\param x The x extent
  * @\param y The y extent
  * @\param z The z extent
