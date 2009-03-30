@@ -28,7 +28,8 @@ OBJECTDIR=build/Debug/${PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/src/main.o
+	${OBJECTDIR}/src/main.o \
+	${OBJECTDIR}/src/matrixtask.o
 
 # C Compiler Flags
 CFLAGS=
@@ -54,6 +55,10 @@ dist/Debug/${PLATFORM}/xraysim: ${OBJECTFILES}
 ${OBJECTDIR}/src/main.o: src/main.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	$(COMPILE.cc) -g -o ${OBJECTDIR}/src/main.o src/main.cpp
+
+${OBJECTDIR}/src/matrixtask.o: src/matrixtask.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	$(COMPILE.cc) -g -o ${OBJECTDIR}/src/matrixtask.o src/matrixtask.cpp
 
 # Subprojects
 .build-subprojects:
