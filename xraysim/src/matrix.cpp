@@ -12,20 +12,19 @@ Matrix2d::~Matrix2d ()
     delete array;
 }
 
-Matrix2d::Matrix2d (uint x, uint y)
+Matrix2d::Matrix2d(uint x, uint y)
 {
-    xEx = x;
-    yEx = y;
-    array = new val_type[x * y];
+    this->xExt = x;
+    this->yExt = y;
+    array = new uint[x * y];
 }
 
-~Matrix2d ()
+uint*
+Matrix2d::operator[](const int& index)
 {
-    delete array;
-}
-
-val_type*
-Matrix2d::operator[]()
-{
-    return array + (x * yExt);
+    /**
+     * Return an array beginning from the index the user selected
+     * (Can be dereferenced again) so the syntax may be matrix2dInst[..][..]
+     */
+    return array + (index * this->yExt);
 }

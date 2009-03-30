@@ -28,7 +28,7 @@ MatrixTask::MatrixTask(uint x, uint y, uint z)
 Matrix2d<uint>
 MatrixTask::sumUpMatrix ()
 {
-    Matrix2d ret;
+    Matrix2d<uint> ret(xExt, yExt);
     for (int x = 0; x < xExt; x++)
         {
             for (int y = 0; y < yExt; y++)

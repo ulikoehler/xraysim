@@ -8,6 +8,7 @@
 #ifndef _INCLUDE_HPP
 #define	_INCLUDE_HPP
 
+#include <cstdlib>
 #include <iostream>
 #include <fstream>
 #include <sstream>

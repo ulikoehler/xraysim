@@ -8,21 +8,20 @@
 #ifndef _MATRIX2D_HPP
 #define	_MATRIX2D_HPP
 
-template <class val_type = uint>
+#include "include.hpp"
+
+//TODO Document
 class Matrix2d
 {
 public:
-    //TODO Document
     Matrix2d ();
-    Matrix2d (const Matrix2d& orig);
-    Matrix2d(uint x, uint y);
+    Matrix2d(uint x, uint y); //TODO Document
     ~Matrix2d();
-    val_type operator[](uint index);
+    uint* operator[](const int& index); //TODO Document
 private:
-    uint xEx; //X Extent
-    uint yEx; //Y Extent
-    val_type *array;
-
+    uint xExt; //X Extent
+    uint yExt; //Y Extent
+    uint *array; //Data
 };
 
 #endif	/* _MATRIX2D_HPP */
