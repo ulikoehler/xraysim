@@ -47,17 +47,17 @@ public:
     Matrix3d
     getMatrix ()
     {
-        return this->matrix;
+        return *(this->matrix);
     }
     /**
      * Sums up the z vectors of a given matrix
      * \param matrix The matrix to sum up from
-     * \return A 2d matrix containing the summed data
+     * \return A 2d matrix containing the summed data with max indices [xExt][yExt]
      */
     Matrix2d sumUpMatrix ();
 private:
-    uint xExt, yExt, zExt; //Extents
-    Matrix3d matrix; //The matrix
+    uint xExt, yExt, zExt; //Extents //TODO Implement getters
+    Matrix3d *matrix; //The matrix
 
 };
 

@@ -24,6 +24,7 @@ BOOST_AUTO_TEST_CASE (init)
  * Tests readMatrix3d()
  * Test reading of 3d matrices
  */
+
 /**
  * Tests readNextVal()
  * Test parsing of streams into numbers
@@ -68,7 +69,7 @@ BOOST_AUTO_TEST_CASE (TestReadNextVal)
             while (true) //Generate characters
                 {
                     noise = intRng () % 256;
-                    if (!isdigit(noise)) //Break if the generated character is not a number
+                    if (!isdigit (noise)) //Break if the generated character is not a number
                         {
                             break;
                         }
@@ -114,13 +115,14 @@ BOOST_AUTO_TEST_CASE (TestReadMatrix3d)
     //Check the equality of the two matrices
     BOOST_CHECK (randMatrix == rereadMatrix);
 }
+
 /**
  * Tests readMatrix()
  * Test reading of data files
  */
 BOOST_AUTO_TEST_CASE (TestReadDataFile)
 {
-    stringstream ss (stringstream::in | stringstream::out); //Buffers the comma-separated data
+    stringstream ss (stringstream::in | stringstream::out); //Buffers the comma-separated integers
     mt19937 intRng (time (0)); //Init a MT19937 PRNG (warning: low entropy seed)
 
     BOOST_TEST_MESSAGE ("Testing readMatrix()");
@@ -144,33 +146,22 @@ BOOST_AUTO_TEST_CASE (TestReadDataFile)
         }
 
     //Re-read the matrix from the stringstream
-    //MatrixTask task(ss);
+    Matrix3d rereadMatrix = readMatrix (ss);
 
     //Check the equality of the two matrices
-    //Matrix3d taskMatrix = task.getMatrix();
-    for (int ix = 0; ix < 10; ix++)
-        {
-            for (int iy = 0; iy < 9; iy++)
-                {
-                    for (int iz = 0; iz < 8; iz++)
-                        {
-                            //BOOST_CHECK_EQUAL((uint)randMatrix[ix][iy][iz], (uint)taskMatrix[ix][iy][iz]);
-                        }
-                }
-        }
-    //BOOST_CHECK (randMatrix == task.getMatrix());
+    BOOST_CHECK (randMatrix == rereadMatrix);
 }
 
 /**
  * Tests MatrixTask constructors
  */
-BOOST_AUTO_TEST_CASE(TestConstructors)
+BOOST_AUTO_TEST_CASE (TestConstructors)
 {
     BOOST_TEST_MESSAGE ("Testing MatrixTask constructors");
     /**
      * Empty constructor
      */
-    MatrixTask task1(10,9,8);
+    MatrixTask task1 (10, 9, 8);
     BOOST_TEST_MESSAGE (" Empty matrix constructor passed");
     /**
      * Stream constructor
@@ -179,7 +170,7 @@ BOOST_AUTO_TEST_CASE(TestConstructors)
     mt19937 intRng (time (0)); //Init a MT19937 PRNG (warning: low entropy seed)
 
     stringstream ss (stringstream::in | stringstream::out); //Buffers the comma-separated data
-    
+
     ss << 10 << ',' << 9 << ',' << 8 << endl; //Prints out the extents
 
     for (int ix = 0; ix < 10; ix++)
@@ -192,7 +183,7 @@ BOOST_AUTO_TEST_CASE(TestConstructors)
                         }
                 }
         }
-    MatrixTask task2(ss);
+    MatrixTask task2 (ss);
     BOOST_TEST_MESSAGE (" Stream constructor passed");
 }
 
