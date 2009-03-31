@@ -23,9 +23,6 @@ Matrix2d::Matrix2d (const uint& x, const uint& y)
     array = new uint[x * y];
 }
 
-void
-setAt (const uint& val, const size_t& x, const size_t& y) { }
-
 uint*
 Matrix2d::operator[](const size_t& index)
 {
@@ -40,9 +37,18 @@ Matrix2d::operator[](const size_t& index)
 //Matrix 3d//
 /////////////
 
-Matrix3d::Matrix2dProxy& Matrix3d::operator[](const int& index)
+Matrix3d::Matrix3d (const uint& x, const uint& y, const uint& z)
 {
-    return Matrix3d::Matrix2dProxy proxy(index, *this);
+    this->xExt = x;
+    this->yExt = y;
+    this->zExt = z;
+    array = new uint[x * y * z];
+}
+
+
+Matrix3d::Matrix2dProxy Matrix3d::operator[](const int& index)
+{
+    return Matrix3d::Matrix2dProxy(index, *this);
 }
 
 bool operator== (Matrix3d& matrix, Matrix3d& otherMatrix)
@@ -101,17 +107,9 @@ bool operator== (Matrix2d& matrix, Matrix2d& otherMatrix)
     return true;
 }
 
-Matrix3d::Matrix3d (const uint& x, const uint& y, const uint& z)
-{
-    this->xExt = x;
-    this->yExt = y;
-    this->zExt = z;
-    array = new uint (x * y * z);
-}
-
 Matrix3d::~Matrix3d ()
 {
-    delete array;
+    delete [] array;
 }
 
 /**

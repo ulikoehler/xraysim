@@ -47,11 +47,11 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	${MAKE}  -f nbproject/Makefile-Test.mk dist/Test/${PLATFORM}/xraysim
+	${MAKE}  -f nbproject/Makefile-Test.mk dist/Test/${PLATFORM}/xraysim-test
 
-dist/Test/${PLATFORM}/xraysim: ${OBJECTFILES}
+dist/Test/${PLATFORM}/xraysim-test: ${OBJECTFILES}
 	${MKDIR} -p dist/Test/${PLATFORM}
-	${LINK.cc} -o dist/Test/${PLATFORM}/xraysim ${OBJECTFILES} ${LDLIBSOPTIONS} 
+	${LINK.cc} -o dist/Test/${PLATFORM}/xraysim-test ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
 ${OBJECTDIR}/src/matrix.o: src/matrix.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -71,7 +71,7 @@ ${OBJECTDIR}/src/matrixtask.o: src/matrixtask.cpp
 # Clean Targets
 .clean-conf:
 	${RM} -r build/Test
-	${RM} dist/Test/${PLATFORM}/xraysim
+	${RM} dist/Test/${PLATFORM}/xraysim-test
 
 # Subprojects
 .clean-subprojects:

@@ -9,8 +9,8 @@ TOP=`pwd`
 PLATFORM=GNU-Linux-x86
 TMPDIR=build/Test/${PLATFORM}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=dist/Test/${PLATFORM}/xraysim
-OUTPUT_BASENAME=xraysim
+OUTPUT_PATH=dist/Test/${PLATFORM}/xraysim-test
+OUTPUT_BASENAME=xraysim-test
 PACKAGE_TOP_DIR=xraysim/
 
 # Functions

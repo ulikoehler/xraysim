@@ -61,6 +61,7 @@
         <itemTool>1</itemTool>
       </item>
       <item path="test/testmain.cpp">
+        <itemExcluded>true</itemExcluded>
         <itemTool>1</itemTool>
       </item>
     </conf>
@@ -107,6 +108,7 @@
         <itemTool>1</itemTool>
       </item>
       <item path="test/testmain.cpp">
+        <itemExcluded>true</itemExcluded>
         <itemTool>1</itemTool>
       </item>
     </conf>
@@ -118,6 +120,7 @@
       </toolsSet>
       <compileType>
         <linkerTool>
+          <output>dist/Test/${PLATFORM}/xraysim-test</output>
           <linkerLibItems>
           </linkerLibItems>
         </linkerTool>

@@ -59,7 +59,7 @@ class Matrix3d
 public:
     Matrix3d (const uint& x, const uint& y, const uint& z); //TODO Document
     ~Matrix3d ();
-    Matrix2dProxy& operator[](const int& index); //TODO Document
+    Matrix2dProxy operator[](const int& index); //TODO Document
     //TODO Document
 
     inline uint

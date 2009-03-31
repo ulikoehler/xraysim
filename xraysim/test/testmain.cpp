@@ -27,16 +27,15 @@ BOOST_AUTO_TEST_CASE (init)
  */
 BOOST_AUTO_TEST_CASE (TestMatrix2d)
 {
-    BOOST_TEST_MESSAGE ("Testing class Matrix3d");
+    BOOST_TEST_MESSAGE ("Testing class Matrix2d");
 
     mt19937 intRng (time (0)); //Init a MT19937 PRNG (warning: low entropy seed)
 
     const uint xExt = 10;
     const uint yExt = 9;
 
-    uint32_t numbers[xExt * yExt];
-
     Matrix2d randMatrix (xExt, yExt);
+    BOOST_TEST_MESSAGE ("CP");
 
     //Fill the matrix
     for (int ix = 0; ix < xExt; ix++)
@@ -45,17 +44,12 @@ BOOST_AUTO_TEST_CASE (TestMatrix2d)
                 {
                     uint rand = intRng ();
                     randMatrix[ix][iy] = rand;
-                    numbers[iy * xExt + ix] = rand; //Numbers are stored in sequential order
+                    //Check if the number is saved correctly
+                    BOOST_CHECK_EQUAL (randMatrix[ix][iy], rand);
                 }
         }
 
-    for (int ix = 0; ix < xExt; ix++)
-        {
-            for (int iy = 0; iy < yExt; iy++)
-                {
-                     BOOST_CHECK_EQUAL (randMatrix[ix][iy], numbers[iy * xExt + ix]);
-                }
-        }
+    BOOST_TEST_MESSAGE ("CP");
 }
 
 /**
