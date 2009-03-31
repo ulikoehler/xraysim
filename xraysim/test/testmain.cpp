@@ -13,7 +13,8 @@ using namespace std;
 using namespace boost;
 using namespace boost::unit_test;
 
-BOOST_AUTO_TEST_SUITE (IOTestSuite)
+//Tests the matrix and 2d matrix classes
+BOOST_AUTO_TEST_SUITE(MatrixTestSuite)
 
 BOOST_AUTO_TEST_CASE (init)
 {
@@ -21,9 +22,33 @@ BOOST_AUTO_TEST_CASE (init)
 }
 
 /**
- * Tests readMatrix3d()
- * Test reading of 3d matrices
+ * Tests class Matrix2d
  */
+BOOST_AUTO_TEST_CASE(TestMatrix2d)
+{
+    mt19937 intRng (time (0)); //Init a MT19937 PRNG (warning: low entropy seed)
+    uint32_t intNumbers[TEST_NUMBERS];
+
+    const int xExt = 10;
+    const int yExt = 9;
+    const int zExt = 8;
+    
+    Matrix2d randMatrix(10,9,8);
+
+    for (int ix = 0; ix < 10; ix++)
+        {
+            for (int iy = 0; iy < 9; iy++)
+                {
+                    for (int iz = 0; iz < 8; iz++)
+                        {
+                            randMatrix[ix][iy][iz] = intRng ();
+                        }
+                }
+        }
+}
+BOOST_AUTO_TEST_SUITE_END ()
+
+BOOST_AUTO_TEST_SUITE (IOTestSuite)
 
 /**
  * Tests readNextVal()
@@ -86,6 +111,10 @@ BOOST_AUTO_TEST_CASE (TestReadNextVal)
         }
 }
 
+/**
+ * Tests readMatrix3d()
+ * Test reading of 3d matrices
+ */
 BOOST_AUTO_TEST_CASE (TestReadMatrix3d)
 {
     stringstream ss (stringstream::in | stringstream::out); //Buffers the comma-separated integers

@@ -2,9 +2,13 @@ CXXFLAGS=-I../include -O0
 CXXDEBUGFLAGS=-g -DDEBUG
 OBJECTS=../build/matrixtask.o ../build/matrix.o
 
-objects:
-	g++ -c -o ../build/matrixtask.o ../src/matrix.cpp
-	g++ -c -o ../build/matrixtask.o ../src/matrixtask.cpp
+matrix.o:
+		g++ -c -o ../build/matrix.o ../src/matrix.cpp
+
+matrixtask.o:
+		g++ -c -o ../build/matrixtask.o ../src/matrixtask.cpp
+
+objects: matrix.o matrixtask.o
 
 all: objects
 	g++ $(CXXFLAGS) testmain.cpp $(OBJECTS) -o xraysim-test

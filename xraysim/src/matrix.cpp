@@ -55,10 +55,14 @@ Matrix3d::~Matrix3d()
     delete array;
 }
 
-matrix2dProxy operator[](const size_t& index)
+Matrix2dProxy::Matrix2dProxy(const size_t& xIndex)
 {
-    this->index = index;
+    this->xIndex = index;
 }
 
+uint* Matrix2dProxy::operator[](const size_t& index)
+{
+    return array + ((x+y*xExt)*zExt);
+}
 
 
