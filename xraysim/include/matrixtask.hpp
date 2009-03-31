@@ -23,7 +23,7 @@ public:
      * \param y The y extent
      * \param z The z extent
      */
-    MatrixTask(uint& x, uint& y, uint& z);
+    MatrixTask (uint& x, uint& y, uint& z);
     /**
      * Constructs a new MatrixTask from an input stream
      * See data-spec.txt for a specification of the data format
@@ -55,7 +55,7 @@ public:
      * \param matrix The matrix to sum up from
      * \return A 2d matrix containing the summed data with max indices [xExt][yExt]
      */
-    Matrix2d sumUpMatrix();
+    Matrix2d sumUpMatrix ();
 private:
     uint xExt, yExt, zExt; //Extents //TODO Implement getters
     Matrix3d *matrix; //The matrix

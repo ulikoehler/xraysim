@@ -17,18 +17,8 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-#include <boost/lexical_cast.hpp>
-#include <boost/multi_array.hpp>
 
 using namespace std;
-using namespace boost;
-
-struct extents_3d_t
-{
-    uint x;
-    uint y;
-    uint z;
-};
 
 #endif	/* _INCLUDE_HPP */
 

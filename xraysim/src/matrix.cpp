@@ -24,8 +24,7 @@ Matrix2d::Matrix2d (const uint& x, const uint& y)
 }
 
 void
-setAt (const uint& val, const size_t& x, const size_t& y) {
- }
+setAt (const uint& val, const size_t& x, const size_t& y) { }
 
 uint*
 Matrix2d::operator[](const size_t& index)
@@ -41,7 +40,8 @@ Matrix2d::operator[](const size_t& index)
 //Matrix 3d//
 /////////////
 
-extents_3d_t Matrix3d::getExtents()
+extents_3d_t
+Matrix3d::getExtents ()
 {
     extents_3d_t ret;
     ret.x = xExt;
@@ -49,23 +49,60 @@ extents_3d_t Matrix3d::getExtents()
     ret.z = zExt;
 }
 
-bool operator==(Matrix3d& matrix, Matrix3d& otherMatrix)
+bool operator== (Matrix3d& matrix, Matrix3d& otherMatrix)
 {
     //Check the dimensions
-    if(matrix.getXExtent() != otherMatrix.getXExtent ()) {return false;}
-    if(matrix.getYExtent() != otherMatrix.getYExtent ()) {return false;}
-    if(matrix.getZExtent() != otherMatrix.getZExtent ()) {return false;}
-    //Check the elements
-    for (int ix = 0; ix < matrix.getXExtent(); ix++)
+    if (matrix.getXExtent () != otherMatrix.getXExtent ())
         {
-            for (int iy = 0; iy < matrix.getYExtent(); iy++)
+            return false;
+        }
+    if (matrix.getYExtent () != otherMatrix.getYExtent ())
+        {
+            return false;
+        }
+    if (matrix.getZExtent () != otherMatrix.getZExtent ())
+        {
+            return false;
+        }
+    //Check the elements
+    for (int ix = 0; ix < matrix.getXExtent (); ix++)
+        {
+            for (int iy = 0; iy < matrix.getYExtent (); iy++)
                 {
-                    for (int iz = 0; iz < matrix.getZExtent(); iz++)
+                    for (int iz = 0; iz < matrix.getZExtent (); iz++)
                         {
-                            if (matrix[ix][iy][iz] != otherMatrix[ix][iy][iz]) {return false;}
+                            if (matrix[ix][iy][iz] != otherMatrix[ix][iy][iz])
+                                {
+                                    return false;
+                                }
                         }
                 }
         }
+}
+
+bool operator== (Matrix2d& matrix, Matrix2d& otherMatrix)
+{
+    //Check the dimensions
+    if (matrix.getXExtent () != otherMatrix.getXExtent ())
+        {
+            return false;
+        }
+    if (matrix.getYExtent () != otherMatrix.getYExtent ())
+        {
+            return false;
+        }
+    //Check the elements
+    for (int ix = 0; ix < matrix.getXExtent (); ix++)
+        {
+            for (int iy = 0; iy < matrix.getYExtent (); iy++)
+                {
+                    if (matrix[ix][iy] != otherMatrix[ix][iy])
+                        {
+                            return false;
+                        }
+                }
+        }
+    return true;
 }
 
 Matrix3d::Matrix3d (const uint& x, const uint& y, const uint& z)

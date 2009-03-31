@@ -51,7 +51,7 @@ readNextVal (std::istream& in)
                     //Don't* \return if there were no digits before the first delimiter or newline character
                     if (buffer.length () > 0)
                         {
-                            return boost::lexical_cast<uint > (buffer);
+                            return atoi (buffer.c_str());
                         }
                 }
             //else: continue

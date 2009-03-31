@@ -14,7 +14,8 @@ using namespace boost;
 using namespace boost::unit_test;
 
 //Tests the matrix and 2d matrix classes
-BOOST_AUTO_TEST_SUITE(MatrixTestSuite)
+
+BOOST_AUTO_TEST_SUITE (MatrixTestSuite)
 
 BOOST_AUTO_TEST_CASE (init)
 {
@@ -24,7 +25,7 @@ BOOST_AUTO_TEST_CASE (init)
 /**
  * Tests class Matrix3d
  */
-BOOST_AUTO_TEST_CASE(TestMatrix3d)
+BOOST_AUTO_TEST_CASE (TestMatrix2d)
 {
     BOOST_TEST_MESSAGE ("Testing class Matrix3d");
 
@@ -35,8 +36,45 @@ BOOST_AUTO_TEST_CASE(TestMatrix3d)
     const int zExt = 8;
 
     uint32_t numbers[xExt * yExt * zExt];
-    
-    Matrix3d randMatrix(xExt,yExt,zExt);
+
+    Matrix3d randMatrix (xExt, yExt, zExt);
+
+    //Fill the matrix
+    for (int ix = 0; ix < xExt; ix++)
+        {
+            for (int iy = 0; iy < yExt; iy++)
+                {
+                    uint rand = intRng ();
+                    randMatrix[ix][iy] = rand;
+                    numbers[array + (iy * xExt + ix)] = rand; //Numbers are stored in sequential order
+                }
+        }
+
+    for (int ix = 0; ix < xExt; ix++)
+        {
+            for (int iy = 0; iy < yExt; iy++)
+                {
+                     BOOST_CHECK_EQUAL (randMatrix[ix][iy][iz], numbers[(ix + iy * xExt) * zExt + iz]);
+                }
+        }
+}
+
+/**
+ * Tests class Matrix3d
+ */
+BOOST_AUTO_TEST_CASE (TestMatrix3d)
+{
+    BOOST_TEST_MESSAGE ("Testing class Matrix3d");
+
+    mt19937 intRng (time (0)); //Init a MT19937 PRNG (warning: low entropy seed)
+
+    const int xExt = 10;
+    const int yExt = 9;
+    const int zExt = 8;
+
+    uint32_t numbers[xExt * yExt * zExt];
+
+    Matrix3d randMatrix (xExt, yExt, zExt);
 
     for (int ix = 0; ix < xExt; ix++)
         {
@@ -57,7 +95,7 @@ BOOST_AUTO_TEST_CASE(TestMatrix3d)
                 {
                     for (int iz = 0; iz < zExt; iz++)
                         {
-                            BOOST_CHECK_EQUAL(randMatrix[ix][iy][iz], numbers[(ix + iy * xExt) * zExt + iz]);
+                            BOOST_CHECK_EQUAL (randMatrix[ix][iy][iz], numbers[(ix + iy * xExt) * zExt + iz]);
                         }
                 }
         }
@@ -143,7 +181,7 @@ BOOST_AUTO_TEST_CASE (TestReadMatrix3d)
     const int xExt = 10;
     const int yExt = 9;
     const int zExt = 8;
-    
+
     Matrix3d randMatrix (boost::extents[xExt][yExt][zExt]);
 
     for (int ix = 0; ix < xExt; ix++)

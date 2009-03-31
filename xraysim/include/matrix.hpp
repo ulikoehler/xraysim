@@ -22,6 +22,18 @@ public:
     void setAt (const uint& val, const size_t& x, const size_t& y);
 
     uint * operator[](const size_t& index); //TODO Document
+
+    inline uint
+    getXExtent ()
+    {
+        return xExt;
+    }
+
+    inline uint
+    getYExtent ()
+    {
+        return yExt;
+    }
 private:
     uint xExt; //X Extent
     uint yExt; //Y Extent
@@ -48,17 +60,23 @@ public:
     Matrix3d (const uint& x, const uint& y, const uint& z); //TODO Document
     ~Matrix3d ();
     Matrix2dProxy operator[](const int& index); //TODO Document
-    extents_3d_t getExtents();
+    extents_3d_t getExtents ();
     //TODO Document
-    inline uint getXExtent()
+
+    inline uint
+    getXExtent ()
     {
         return xExt;
     }
-    inline uint getYExtent()
+
+    inline uint
+    getYExtent ()
     {
         return yExt;
     }
-    inline uint getZExtent()
+
+    inline uint
+    getZExtent ()
     {
         return zExt;
     }
@@ -73,6 +91,7 @@ protected:
  * Matrix comparison operators
  */
 bool operator== (Matrix3d& matrix, Matrix3d& otherMatrix);
+bool operator== (Matrix2d& matrix, Matrix2d& otherMatrix);
 
 #endif	/* _MATRIX2D_HPP */
 
