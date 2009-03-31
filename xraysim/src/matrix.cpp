@@ -7,6 +7,9 @@
 
 #include "../include/matrix.hpp"
 
+/////////////
+//Matrix 2d//
+/////////////
 Matrix2d::~Matrix2d ()
 {
     delete array;
@@ -19,8 +22,13 @@ Matrix2d::Matrix2d(const uint& x, const uint& y)
     array = new uint[x * y];
 }
 
+void setAt(const uint& val, const size_t& x, const size_t& y)
+{
+
+}
+
 uint*
-Matrix2d::operator[](const int& index)
+Matrix2d::operator[](const size_t& index)
 {
     /**
      * Return an array beginning from the index the user selected
@@ -28,3 +36,29 @@ Matrix2d::operator[](const int& index)
      */
     return array + (index * this->yExt);
 }
+
+/////////////
+//Matrix 3d//
+/////////////
+//TODO implement if needed (check Boost::multi_array performance)
+
+Matrix3d::Matrix3d(const uint& x, const uint& y, const uint& z)
+{
+    this->xExt = x;
+    this->yExt = y;
+    this->zExt = z;
+    array = new uint(x * y * z);
+}
+
+Matrix3d::~Matrix3d()
+{
+    delete array;
+}
+
+matrix2dProxy operator[](const size_t& index)
+{
+    this->index = index;
+}
+
+
+

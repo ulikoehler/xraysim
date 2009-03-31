@@ -36,10 +36,9 @@ MatrixTask::sumUpMatrix ()
                     ret[x][y] = 0;
                     for (int z = 0; z < zExt; z++)
                         {
-                            ret[x][y] += (uint)matrix[x][y][z];
+                            ret[x][y] += matrix[x][y][z];
                         }
                 }
         }
     return ret;
 }
-
