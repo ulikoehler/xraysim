@@ -16,9 +16,8 @@
       <itemPath>src/matrix.cpp</itemPath>
       <itemPath>src/matrixtask.cpp</itemPath>
     </logicalFolder>
-    <logicalFolder name="ResourceFiles"
-                   displayName="Ressourcendateien"
-                   projectFiles="true">
+    <logicalFolder name="test" displayName="Testing" projectFiles="true">
+      <itemPath>test/testmain.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Wichtige Dateien"
@@ -59,6 +58,9 @@
         <itemTool>1</itemTool>
       </item>
       <item path="src/matrixtask.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="test/testmain.cpp">
         <itemTool>1</itemTool>
       </item>
     </conf>
@@ -102,6 +104,47 @@
         <itemTool>1</itemTool>
       </item>
       <item path="src/matrixtask.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="test/testmain.cpp">
+        <itemTool>1</itemTool>
+      </item>
+    </conf>
+    <conf name="Test" type="1">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <compilerSet>GNU|GNU</compilerSet>
+        <platform>2</platform>
+      </toolsSet>
+      <compileType>
+        <linkerTool>
+          <linkerLibItems>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="include/include.hpp">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="include/io_utils.hpp">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="include/matrix.hpp">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="include/matrixtask.hpp">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/main.cpp">
+        <itemExcluded>true</itemExcluded>
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/matrix.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/matrixtask.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="test/testmain.cpp">
         <itemTool>1</itemTool>
       </item>
     </conf>

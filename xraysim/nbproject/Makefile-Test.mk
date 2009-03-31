@@ -24,12 +24,11 @@ PLATFORM=GNU-Linux-x86
 include Makefile
 
 # Object Directory
-OBJECTDIR=build/Release/${PLATFORM}
+OBJECTDIR=build/Test/${PLATFORM}
 
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/src/matrix.o \
-	${OBJECTDIR}/src/main.o \
 	${OBJECTDIR}/test/testmain.o \
 	${OBJECTDIR}/src/matrixtask.o
 
@@ -48,35 +47,31 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	${MAKE}  -f nbproject/Makefile-Release.mk dist/Release/${PLATFORM}/xraysim
+	${MAKE}  -f nbproject/Makefile-Test.mk dist/Test/${PLATFORM}/xraysim
 
-dist/Release/${PLATFORM}/xraysim: ${OBJECTFILES}
-	${MKDIR} -p dist/Release/${PLATFORM}
-	${LINK.cc} -o dist/Release/${PLATFORM}/xraysim ${OBJECTFILES} ${LDLIBSOPTIONS} 
+dist/Test/${PLATFORM}/xraysim: ${OBJECTFILES}
+	${MKDIR} -p dist/Test/${PLATFORM}
+	${LINK.cc} -o dist/Test/${PLATFORM}/xraysim ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
 ${OBJECTDIR}/src/matrix.o: src/matrix.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
-	$(COMPILE.cc) -O2 -o ${OBJECTDIR}/src/matrix.o src/matrix.cpp
-
-${OBJECTDIR}/src/main.o: src/main.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src
-	$(COMPILE.cc) -O2 -o ${OBJECTDIR}/src/main.o src/main.cpp
+	$(COMPILE.cc) -g -o ${OBJECTDIR}/src/matrix.o src/matrix.cpp
 
 ${OBJECTDIR}/test/testmain.o: test/testmain.cpp 
 	${MKDIR} -p ${OBJECTDIR}/test
-	$(COMPILE.cc) -O2 -o ${OBJECTDIR}/test/testmain.o test/testmain.cpp
+	$(COMPILE.cc) -g -o ${OBJECTDIR}/test/testmain.o test/testmain.cpp
 
 ${OBJECTDIR}/src/matrixtask.o: src/matrixtask.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
-	$(COMPILE.cc) -O2 -o ${OBJECTDIR}/src/matrixtask.o src/matrixtask.cpp
+	$(COMPILE.cc) -g -o ${OBJECTDIR}/src/matrixtask.o src/matrixtask.cpp
 
 # Subprojects
 .build-subprojects:
 
 # Clean Targets
 .clean-conf:
-	${RM} -r build/Release
-	${RM} dist/Release/${PLATFORM}/xraysim
+	${RM} -r build/Test
+	${RM} dist/Test/${PLATFORM}/xraysim
 
 # Subprojects
 .clean-subprojects:

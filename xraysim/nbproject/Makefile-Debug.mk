@@ -30,6 +30,7 @@ OBJECTDIR=build/Debug/${PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/src/matrix.o \
 	${OBJECTDIR}/src/main.o \
+	${OBJECTDIR}/test/testmain.o \
 	${OBJECTDIR}/src/matrixtask.o
 
 # C Compiler Flags
@@ -60,6 +61,10 @@ ${OBJECTDIR}/src/matrix.o: src/matrix.cpp
 ${OBJECTDIR}/src/main.o: src/main.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	$(COMPILE.cc) -g -o ${OBJECTDIR}/src/main.o src/main.cpp
+
+${OBJECTDIR}/test/testmain.o: test/testmain.cpp 
+	${MKDIR} -p ${OBJECTDIR}/test
+	$(COMPILE.cc) -g -o ${OBJECTDIR}/test/testmain.o test/testmain.cpp
 
 ${OBJECTDIR}/src/matrixtask.o: src/matrixtask.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
