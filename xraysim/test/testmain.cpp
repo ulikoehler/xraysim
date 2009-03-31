@@ -27,25 +27,40 @@ BOOST_AUTO_TEST_CASE (init)
 BOOST_AUTO_TEST_CASE(TestMatrix2d)
 {
     mt19937 intRng (time (0)); //Init a MT19937 PRNG (warning: low entropy seed)
-    uint32_t intNumbers[TEST_NUMBERS];
 
     const int xExt = 10;
     const int yExt = 9;
     const int zExt = 8;
-    
-    Matrix2d randMatrix(10,9,8);
 
-    for (int ix = 0; ix < 10; ix++)
+    uint32_t numbers[xExt * yExt * zExt];
+    
+    Matrix2d randMatrix(xExt,yExt,zExt);
+
+    for (int ix = 0; ix < xExt; ix++)
         {
-            for (int iy = 0; iy < 9; iy++)
+            for (int iy = 0; iy < yExt; iy++)
                 {
-                    for (int iz = 0; iz < 8; iz++)
+                    for (int iz = 0; iz < zExt; iz++)
                         {
-                            randMatrix[ix][iy][iz] = intRng ();
+                            uint rand = intRng ();
+                            randMatrix[ix][iy][iz] = rand;
+                            numbers[(ix + iy * xExt) * zExt + iz] = rand; //Numbers are stored sequential in numbers
+                        }
+                }
+        }
+
+    for (int ix = 0; ix < xExt; ix++)
+        {
+            for (int iy = 0; iy < yExt; iy++)
+                {
+                    for (int iz = 0; iz < zExt; iz++)
+                        {
+                            BOOST_CHECK_EQUAL(randMatrix[ix][iy][iz], numbers[(ix + iy * xExt) * zExt + iz]);
                         }
                 }
         }
 }
+
 BOOST_AUTO_TEST_SUITE_END ()
 
 BOOST_AUTO_TEST_SUITE (IOTestSuite)
@@ -123,13 +138,17 @@ BOOST_AUTO_TEST_CASE (TestReadMatrix3d)
     BOOST_TEST_MESSAGE ("Testing readMatrix3d()");
 
     //Generate a random 10,9,8 matrix
-    Matrix3d randMatrix (boost::extents[10][9][8]);
+    const int xExt = 10;
+    const int yExt = 9;
+    const int zExt = 8;
+    
+    Matrix3d randMatrix (boost::extents[xExt][yExt][zExt]);
 
-    for (int ix = 0; ix < 10; ix++)
+    for (int ix = 0; ix < xExt; ix++)
         {
-            for (int iy = 0; iy < 9; iy++)
+            for (int iy = 0; iy < yExt; iy++)
                 {
-                    for (int iz = 0; iz < 8; iz++)
+                    for (int iz = 0; iz < zExt; iz++)
                         {
                             uint32_t rand = intRng ();
                             randMatrix[ix][iy][iz] = rand;
