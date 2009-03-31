@@ -40,13 +40,11 @@ Matrix2d::operator[](const size_t& index)
 //Matrix 3d//
 /////////////
 
-extents_3d_t
-Matrix3d::getExtents ()
+std::auto_ptr<Matrix3d::Matrix2dProxy> Matrix3d::operator[](const int& index)
 {
-    extents_3d_t ret;
-    ret.x = xExt;
-    ret.y = yExt;
-    ret.z = zExt;
+    //Create a auto_ptr referencing a new Matrix2dProxy object
+    std::auto_ptr<Matrix3d::Matrix2dProxy> ptr(new Matrix3d::Matrix2dProxy(index, *this));
+    return ptr;
 }
 
 bool operator== (Matrix3d& matrix, Matrix3d& otherMatrix)

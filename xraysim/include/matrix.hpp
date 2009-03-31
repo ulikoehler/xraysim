@@ -51,16 +51,15 @@ class Matrix3d
     {
     public:
         uint * operator[](const size_t& index); //TODO Document
-    protected:
         Matrix2dProxy (const size_t& xIndex, Matrix3d& inst); //TODO Document
+    protected:
         size_t xIndex;
         Matrix3d* matrix;
     };
 public:
     Matrix3d (const uint& x, const uint& y, const uint& z); //TODO Document
     ~Matrix3d ();
-    Matrix2dProxy operator[](const int& index); //TODO Document
-    extents_3d_t getExtents ();
+    std::auto_ptr<Matrix2dProxy> operator[](const int& index); //TODO Document
     //TODO Document
 
     inline uint

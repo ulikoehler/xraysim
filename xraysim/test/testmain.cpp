@@ -31,13 +31,12 @@ BOOST_AUTO_TEST_CASE (TestMatrix2d)
 
     mt19937 intRng (time (0)); //Init a MT19937 PRNG (warning: low entropy seed)
 
-    const int xExt = 10;
-    const int yExt = 9;
-    const int zExt = 8;
+    const uint xExt = 10;
+    const uint yExt = 9;
 
-    uint32_t numbers[xExt * yExt * zExt];
+    uint32_t numbers[xExt * yExt];
 
-    Matrix3d randMatrix (xExt, yExt, zExt);
+    Matrix2d randMatrix (xExt, yExt);
 
     //Fill the matrix
     for (int ix = 0; ix < xExt; ix++)
@@ -46,7 +45,7 @@ BOOST_AUTO_TEST_CASE (TestMatrix2d)
                 {
                     uint rand = intRng ();
                     randMatrix[ix][iy] = rand;
-                    numbers[array + (iy * xExt + ix)] = rand; //Numbers are stored in sequential order
+                    numbers[iy * xExt + ix] = rand; //Numbers are stored in sequential order
                 }
         }
 
@@ -54,7 +53,7 @@ BOOST_AUTO_TEST_CASE (TestMatrix2d)
         {
             for (int iy = 0; iy < yExt; iy++)
                 {
-                     BOOST_CHECK_EQUAL (randMatrix[ix][iy][iz], numbers[(ix + iy * xExt) * zExt + iz]);
+                     BOOST_CHECK_EQUAL (randMatrix[ix][iy], numbers[iy * xExt + ix]);
                 }
         }
 }
@@ -68,9 +67,9 @@ BOOST_AUTO_TEST_CASE (TestMatrix3d)
 
     mt19937 intRng (time (0)); //Init a MT19937 PRNG (warning: low entropy seed)
 
-    const int xExt = 10;
-    const int yExt = 9;
-    const int zExt = 8;
+    const uint xExt = 10;
+    const uint yExt = 9;
+    const uint zExt = 8;
 
     uint32_t numbers[xExt * yExt * zExt];
 
@@ -178,11 +177,11 @@ BOOST_AUTO_TEST_CASE (TestReadMatrix3d)
     BOOST_TEST_MESSAGE ("Testing readMatrix3d()");
 
     //Generate a random 10,9,8 matrix
-    const int xExt = 10;
-    const int yExt = 9;
-    const int zExt = 8;
+    const uint xExt = 10;
+    const uint yExt = 9;
+    const uint zExt = 8;
 
-    Matrix3d randMatrix (boost::extents[xExt][yExt][zExt]);
+    Matrix3d randMatrix (xExt, yExt, zExt);
 
     for (int ix = 0; ix < xExt; ix++)
         {
@@ -216,15 +215,19 @@ BOOST_AUTO_TEST_CASE (TestReadDataFile)
     BOOST_TEST_MESSAGE ("Testing readMatrix()");
 
     //Generate a random 10,9,8 matrix
-    Matrix3d randMatrix (boost::extents[10][9][8]);
+    const uint xExt = 10;
+    const uint yExt = 9;
+    const uint zExt = 8;
+    
+    Matrix3d randMatrix (xExt, yExt, zExt);
 
     ss << 10 << ',' << 9 << ',' << 8 << endl; //Prints out the extents
 
-    for (int ix = 0; ix < 10; ix++)
+    for (int ix = 0; ix < xExt; ix++)
         {
-            for (int iy = 0; iy < 9; iy++)
+            for (int iy = 0; iy < yExt; iy++)
                 {
-                    for (int iz = 0; iz < 8; iz++)
+                    for (int iz = 0; iz < zExt; iz++)
                         {
                             uint32_t rand = intRng ();
                             randMatrix[ix][iy][iz] = rand;
@@ -249,7 +252,11 @@ BOOST_AUTO_TEST_CASE (TestConstructors)
     /**
      * Empty constructor
      */
-    MatrixTask task1 (10, 9, 8);
+    const uint xExt = 10;
+    const uint yExt = 9;
+    const uint zExt = 8;
+
+    MatrixTask task1(xExt, yExt, zExt);
     BOOST_TEST_MESSAGE (" Empty matrix constructor passed");
     /**
      * Stream constructor
@@ -259,13 +266,13 @@ BOOST_AUTO_TEST_CASE (TestConstructors)
 
     stringstream ss (stringstream::in | stringstream::out); //Buffers the comma-separated data
 
-    ss << 10 << ',' << 9 << ',' << 8 << endl; //Prints out the extents
+    ss << xExt << ',' << yExt << ',' << zExt << endl; //Prints out the extents
 
-    for (int ix = 0; ix < 10; ix++)
+    for (int ix = 0; ix < xExt; ix++)
         {
-            for (int iy = 0; iy < 9; iy++)
+            for (int iy = 0; iy < yExt; iy++)
                 {
-                    for (int iz = 0; iz < 8; iz++)
+                    for (int iz = 0; iz < zExt; iz++)
                         {
                             ss << intRng () << ',';
                         }
