@@ -22,7 +22,7 @@ MatrixTask::MatrixTask (std::string& filename)
 
 MatrixTask::MatrixTask(uint& x, uint& y, uint& z)
 {
-    this->matrix = new Matrix3d(boost::extents[x][y][z]);
+    this->matrix = new Matrix3d(x, y, z);
 }
 
 Matrix2d

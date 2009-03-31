@@ -22,10 +22,12 @@ BOOST_AUTO_TEST_CASE (init)
 }
 
 /**
- * Tests class Matrix2d
+ * Tests class Matrix3d
  */
-BOOST_AUTO_TEST_CASE(TestMatrix2d)
+BOOST_AUTO_TEST_CASE(TestMatrix3d)
 {
+    BOOST_TEST_MESSAGE ("Testing class Matrix3d");
+
     mt19937 intRng (time (0)); //Init a MT19937 PRNG (warning: low entropy seed)
 
     const int xExt = 10;
@@ -34,7 +36,7 @@ BOOST_AUTO_TEST_CASE(TestMatrix2d)
 
     uint32_t numbers[xExt * yExt * zExt];
     
-    Matrix2d randMatrix(xExt,yExt,zExt);
+    Matrix3d randMatrix(xExt,yExt,zExt);
 
     for (int ix = 0; ix < xExt; ix++)
         {

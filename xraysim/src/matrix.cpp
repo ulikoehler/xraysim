@@ -40,7 +40,33 @@ Matrix2d::operator[](const size_t& index)
 /////////////
 //Matrix 3d//
 /////////////
-//TODO implement if needed (check Boost::multi_array performance)
+
+extents_3d_t Matrix3d::getExtents()
+{
+    extents_3d_t ret;
+    ret.x = xExt;
+    ret.y = yExt;
+    ret.z = zExt;
+}
+
+bool operator==(Matrix3d& matrix, Matrix3d& otherMatrix)
+{
+    //Check the dimensions
+    if(matrix.getXExtent() != otherMatrix.getXExtent ()) {return false;}
+    if(matrix.getYExtent() != otherMatrix.getYExtent ()) {return false;}
+    if(matrix.getZExtent() != otherMatrix.getZExtent ()) {return false;}
+    //Check the elements
+    for (int ix = 0; ix < matrix.getXExtent(); ix++)
+        {
+            for (int iy = 0; iy < matrix.getYExtent(); iy++)
+                {
+                    for (int iz = 0; iz < matrix.getZExtent(); iz++)
+                        {
+                            if (matrix[ix][iy][iz] != otherMatrix[ix][iy][iz]) {return false;}
+                        }
+                }
+        }
+}
 
 Matrix3d::Matrix3d (const uint& x, const uint& y, const uint& z)
 {

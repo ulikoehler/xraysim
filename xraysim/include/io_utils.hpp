@@ -68,7 +68,7 @@ readNextVal (std::istream& in)
 inline Matrix3d
 readMatrix3d (uint x, uint y, uint z, std::istream& in)
 {
-    Matrix3d retMatrix (boost::extents[x][y][z]);
+    Matrix3d retMatrix (x,y,z);
 
     for (int ix = 0; ix < x; ix++)
         {

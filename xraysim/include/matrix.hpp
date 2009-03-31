@@ -12,15 +12,16 @@
 
 //TODO Document
 //TODO Make template
+
 class Matrix2d
 {
 public:
-    Matrix2d(const uint& x, const uint& y); //TODO Document
-    ~Matrix2d();
+    Matrix2d (const uint& x, const uint& y); //TODO Document
+    ~Matrix2d ();
 
-    void setAt(const uint& val, const size_t& x, const size_t& y);
-    
-    uint* operator[](const size_t& index); //TODO Document
+    void setAt (const uint& val, const size_t& x, const size_t& y);
+
+    uint * operator[](const size_t& index); //TODO Document
 private:
     uint xExt; //X Extent
     uint yExt; //Y Extent
@@ -29,27 +30,49 @@ private:
 
 //TODO Document
 //TODO Make template
+
 class Matrix3d
 {
     //TODO Document
+
     class Matrix2dProxy
     {
+    public:
+        uint * operator[](const size_t& index); //TODO Document
     protected:
-        Matrix2dProxy(const size_t& xIndex, Matrix3d& inst); //TODO Document
-        uint* operator[](const size_t& index); //TODO Document
+        Matrix2dProxy (const size_t& xIndex, Matrix3d& inst); //TODO Document
         size_t xIndex;
         Matrix3d* matrix;
     };
 public:
-    Matrix3d(const uint& x, const uint& y, const uint& z); //TODO Document
-    ~Matrix3d();
+    Matrix3d (const uint& x, const uint& y, const uint& z); //TODO Document
+    ~Matrix3d ();
     Matrix2dProxy operator[](const int& index); //TODO Document
+    extents_3d_t getExtents();
+    //TODO Document
+    inline uint getXExtent()
+    {
+        return xExt;
+    }
+    inline uint getYExtent()
+    {
+        return yExt;
+    }
+    inline uint getZExtent()
+    {
+        return zExt;
+    }
 protected:
     uint xExt; //X Extent
     uint yExt; //Y Extent
     uint zExt; //Z Extent
     uint *array; //Data
 };
+
+/**
+ * Matrix comparison operators
+ */
+bool operator== (Matrix3d& matrix, Matrix3d& otherMatrix);
 
 #endif	/* _MATRIX2D_HPP */
 
