@@ -45,14 +45,29 @@ private:
 
 class Matrix3d
 {
-    //TODO Document
-
+    /**
+     * A proxy class to enable expressions like
+     * matrix3dInstance[x][y][z]
+     *
+     * Note:
+     * matrix3dInstance[x][y] returns an array
+     * 
+     * Warning:
+     * matrix3dInstance[x]
+     * is not a valid number.
+     */
     class Matrix2dProxy
     {
+        friend class Matrix3d;
     public:
-        uint * operator[](const size_t& index); //TODO Document
-        Matrix2dProxy (const size_t& xIndex, Matrix3d& inst); //TODO Document
+        /**
+         * Operator to access the z values of a 3d matrix
+         * \return An unsigned integer array containing the z values and
+         *         with a length equal to the z extent of the matrix creating this instance
+         */
+        uint * operator[](const size_t& index);
     protected:
+        Matrix2dProxy (const size_t& xIndex, Matrix3d& inst); //TODO Document
         size_t xIndex;
         Matrix3d* matrix;
     };

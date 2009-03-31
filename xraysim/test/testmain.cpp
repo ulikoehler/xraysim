@@ -221,7 +221,7 @@ BOOST_AUTO_TEST_CASE (TestReadDataFile)
     
     Matrix3d randMatrix (xExt, yExt, zExt);
 
-    ss << 10 << ',' << 9 << ',' << 8 << endl; //Prints out the extents
+    ss << xExt << ',' << yExt << ',' << zExt << endl; //Prints out the extents
 
     for (int ix = 0; ix < xExt; ix++)
         {
