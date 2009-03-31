@@ -35,15 +35,16 @@ class Matrix3d
     class Matrix2dProxy
     {
     protected:
-        Matrix2dProxy(const size_t& xIndex); //TODO Document
+        Matrix2dProxy(const size_t& xIndex, Matrix3d& inst); //TODO Document
         uint* operator[](const size_t& index); //TODO Document
-        size_t index;
+        size_t xIndex;
+        Matrix3d* matrix;
     };
 public:
     Matrix3d(const uint& x, const uint& y, const uint& z); //TODO Document
     ~Matrix3d();
     Matrix2dProxy operator[](const int& index); //TODO Document
-private:
+protected:
     uint xExt; //X Extent
     uint yExt; //Y Extent
     uint zExt; //Z Extent

@@ -20,8 +20,6 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/multi_array.hpp>
 
-typedef boost::multi_array<uint32_t, 3> Matrix3d; //TODO: Implement as class
-
 using namespace std;
 using namespace boost;
 
