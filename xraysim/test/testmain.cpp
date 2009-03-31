@@ -35,7 +35,6 @@ BOOST_AUTO_TEST_CASE (TestMatrix2d)
     const uint yExt = 9;
 
     Matrix2d randMatrix (xExt, yExt);
-    BOOST_TEST_MESSAGE ("CP");
 
     //Fill the matrix
     for (int ix = 0; ix < xExt; ix++)
@@ -48,8 +47,6 @@ BOOST_AUTO_TEST_CASE (TestMatrix2d)
                     BOOST_CHECK_EQUAL (randMatrix[ix][iy], rand);
                 }
         }
-
-    BOOST_TEST_MESSAGE ("CP");
 }
 
 /**
@@ -194,7 +191,16 @@ BOOST_AUTO_TEST_CASE (TestReadMatrix3d)
     Matrix3d rereadMatrix = readMatrix3d (10, 9, 8, ss);
 
     //Check the equality of the two matrices
-    BOOST_CHECK (randMatrix == rereadMatrix);
+    for (int ix = 0; ix < xExt; ix++)
+        {
+            for (int iy = 0; iy < yExt; iy++)
+                {
+                    for (int iz = 0; iz < zExt; iz++)
+                        {
+                            BOOST_CHECK_EQUAL (randMatrix[ix][iy][iz], rereadMatrix[ix][iy][iz]);
+                        }
+                }
+        }
 }
 
 /**
@@ -234,7 +240,16 @@ BOOST_AUTO_TEST_CASE (TestReadDataFile)
     Matrix3d rereadMatrix = readMatrix (ss);
 
     //Check the equality of the two matrices
-    BOOST_CHECK (randMatrix == rereadMatrix);
+    for (int ix = 0; ix < xExt; ix++)
+        {
+            for (int iy = 0; iy < yExt; iy++)
+                {
+                    for (int iz = 0; iz < zExt; iz++)
+                        {
+                            BOOST_CHECK_EQUAL (randMatrix[ix][iy][iz], rereadMatrix[ix][iy][iz]);
+                        }
+                }
+        }
 }
 
 /**
