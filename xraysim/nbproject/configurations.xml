@@ -8,6 +8,7 @@
       <itemPath>include/io_utils.hpp</itemPath>
       <itemPath>include/matrix.hpp</itemPath>
       <itemPath>include/matrixtask.hpp</itemPath>
+      <itemPath>include/seedstack.hpp</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Quelldateien"
@@ -15,6 +16,7 @@
       <itemPath>src/main.cpp</itemPath>
       <itemPath>src/matrix.cpp</itemPath>
       <itemPath>src/matrixtask.cpp</itemPath>
+      <itemPath>src/seedstack.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="test" displayName="Testing" projectFiles="true">
       <itemPath>test/testmain.cpp</itemPath>
@@ -51,6 +53,9 @@
       <item path="include/matrixtask.hpp">
         <itemTool>3</itemTool>
       </item>
+      <item path="include/seedstack.hpp">
+        <itemTool>3</itemTool>
+      </item>
       <item path="src/main.cpp">
         <itemTool>1</itemTool>
       </item>
@@ -58,6 +63,9 @@
         <itemTool>1</itemTool>
       </item>
       <item path="src/matrixtask.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/seedstack.cpp">
         <itemTool>1</itemTool>
       </item>
       <item path="test/testmain.cpp">
@@ -98,6 +106,9 @@
       <item path="include/matrixtask.hpp">
         <itemTool>3</itemTool>
       </item>
+      <item path="include/seedstack.hpp">
+        <itemTool>3</itemTool>
+      </item>
       <item path="src/main.cpp">
         <itemTool>1</itemTool>
       </item>
@@ -105,6 +116,9 @@
         <itemTool>1</itemTool>
       </item>
       <item path="src/matrixtask.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/seedstack.cpp">
         <itemTool>1</itemTool>
       </item>
       <item path="test/testmain.cpp">
@@ -137,6 +151,9 @@
       <item path="include/matrixtask.hpp">
         <itemTool>3</itemTool>
       </item>
+      <item path="include/seedstack.hpp">
+        <itemTool>3</itemTool>
+      </item>
       <item path="src/main.cpp">
         <itemExcluded>true</itemExcluded>
         <itemTool>1</itemTool>
@@ -145,6 +162,9 @@
         <itemTool>1</itemTool>
       </item>
       <item path="src/matrixtask.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/seedstack.cpp">
         <itemTool>1</itemTool>
       </item>
       <item path="test/testmain.cpp">

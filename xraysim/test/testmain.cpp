@@ -2,9 +2,10 @@
 #define BOOST_TEST_MODULE XRaySim Test
 #include <boost/test/included/unit_test.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
-#include <boost/random.hpp>
+#include <tr1/random>
 
 #include "../include/matrixtask.hpp"
+#include "../include/seedstack.hpp"
 #include "../include/io_utils.hpp"
 
 #define TEST_NUMBERS 100 //How many numbers to test one time
@@ -12,6 +13,18 @@
 using namespace std;
 using namespace boost;
 using namespace boost::unit_test;
+
+BOOST_AUTO_TEST_SUITE(SeedTestSuite)
+
+/**
+ * Test class SeedStack
+ */
+BOOST_AUTO_TEST_CASE(TestSeed)
+{
+    BOOST_TEST_MESSAGE ("Testing class SeedStack");
+    SeedStack<ulong> seedStack(100);
+}
+BOOST_AUTO_TEST_SUITE_END()
 
 //Tests the matrix and 2d matrix classes
 

@@ -23,12 +23,19 @@ public:
 
     uint * operator[](const size_t& index); //TODO Document
 
+    /**
+     * X extent getter
+     * \return A copy of the x extent of this matrix instance
+     */
     inline uint
     getXExtent ()
     {
         return xExt;
     }
-
+    /**
+     * Y extent getter
+     * \return A copy of the y extent of this matrix instance
+     */
     inline uint
     getYExtent ()
     {
