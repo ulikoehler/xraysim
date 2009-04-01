@@ -107,6 +107,8 @@ bool operator== (Matrix2d& matrix, Matrix2d& otherMatrix)
     return true;
 }
 
+Matrix2d addUpZValues();
+
 Matrix3d::~Matrix3d ()
 {
     delete [] array;

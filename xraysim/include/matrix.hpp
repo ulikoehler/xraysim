@@ -67,28 +67,56 @@ class Matrix3d
          */
         uint * operator[](const size_t& index);
     protected:
-        Matrix2dProxy (const size_t& xIndex, Matrix3d& inst); //TODO Document
+        Matrix2dProxy (const size_t& xIndex, Matrix3d& inst);
         size_t xIndex;
         Matrix3d* matrix;
     };
 public:
+    /**
+     * Constructs a three-dimensional matrix with given extents
+     * \param x The x extent
+     * \param y The y extent
+     * \param z The z extent
+     */
     Matrix3d (const uint& x, const uint& y, const uint& z); //TODO Document
     ~Matrix3d ();
+    /**
+     * Accesses a 3d matrix for a given x index
+     * \param index The x index to access
+     * \return A proxy object to be used like an array again
+     */
     Matrix2dProxy operator[](const int& index); //TODO Document
-    //TODO Document
 
+    /**
+     * Adds up the z values of the matrix instance producing a 2d-matrix
+     * \return A 2d matrix containing the z value sums
+     */
+    Matrix2d addUpZValues();
+
+    /**
+     * X extent getter
+     * \return A copy of the x extent of this matrix instance
+     */
     inline uint
     getXExtent ()
     {
         return xExt;
     }
 
+    /**
+     * Y extent getter
+     * \return A copy of the y extent of this matrix instance
+     */
     inline uint
     getYExtent ()
     {
         return yExt;
     }
 
+    /**
+     * Z extent getter
+     * \return A copy of the z extent of this matrix instance
+     */
     inline uint
     getZExtent ()
     {
