@@ -30,8 +30,7 @@ OBJECTDIR=build/Test/${PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/src/matrix.o \
 	${OBJECTDIR}/test/testmain.o \
-	${OBJECTDIR}/src/matrixtask.o \
-	${OBJECTDIR}/src/seedstack.o
+	${OBJECTDIR}/src/matrixtask.o
 
 # C Compiler Flags
 CFLAGS=
@@ -65,10 +64,6 @@ ${OBJECTDIR}/test/testmain.o: test/testmain.cpp
 ${OBJECTDIR}/src/matrixtask.o: src/matrixtask.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	$(COMPILE.cc) -g -o ${OBJECTDIR}/src/matrixtask.o src/matrixtask.cpp
-
-${OBJECTDIR}/src/seedstack.o: src/seedstack.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src
-	$(COMPILE.cc) -g -o ${OBJECTDIR}/src/seedstack.o src/seedstack.cpp
 
 # Subprojects
 .build-subprojects:
