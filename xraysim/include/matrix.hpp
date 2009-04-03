@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   matrix2d.hpp
  * Author: uli
  *
@@ -33,7 +33,8 @@ public:
 
     uint * operator[](const size_t& index); //TODO Document
 
-    void operator<<(std::ostream& out);
+    void writeTo(std::ostream& out);
+    //void operator<<(std::ostream& out);
     /**
      * X extent getter
      * \return A copy of the x extent of this matrix instance

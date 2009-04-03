@@ -17,7 +17,7 @@ Matrix2d::~Matrix2d ()
     delete array;
 }
 
-void Matrix2d::operator<<(std::ostream& out)
+void Matrix2d::writeTo(std::ostream& out)
 {
 	//Print the extents (first line)
 	out << xExt << ',' << yExt << '\n';

@@ -79,7 +79,7 @@ BOOST_AUTO_TEST_CASE (TestMatrix2d)
 	
     //Serialize the matrix
     stringstream ss;
-    ss << randMatrix;
+    randMatrix.writeTo(ss);
 	
     //Re-read the matrix from the serialized data and check if the data in it is equal tothe control data
     Matrix2d rereadMatrix(ss);
