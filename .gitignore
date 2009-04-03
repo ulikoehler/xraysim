@@ -1,0 +1,10 @@
+*~
+*.o
+*.a
+a.out
+xraysim-test
+doc
+build
+dist
+.dep.inc
+nbproject/private/private.xml
