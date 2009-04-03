@@ -16,11 +16,20 @@
 class Matrix2d
 {
 public:
-    Matrix2d (const uint& x, const uint& y); //TODO Document
+    /**
+     * Constructs a new Matrix2d object from given extents
+     * \param x The X extent to use
+     * \param y The Y extent to use
+     */
+    Matrix2d (const uint& x, const uint& y);
+    /**
+     * Reads a Matrix2d object from a stream
+     * This actually deserializes a Matrix2d object.
+     * Serializing is done by stream << object
+     * \param in The input stream to read the object from
+     */
     Matrix2d(std::istream& in);
     ~Matrix2d ();
-
-    void setAt (const uint& val, const size_t& x, const size_t& y);
 
     uint * operator[](const size_t& index); //TODO Document
 
