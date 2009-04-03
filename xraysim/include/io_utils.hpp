@@ -32,8 +32,8 @@ isnewline (char c)
 inline uint
 readNextVal (std::istream& in)
 {
-    static string buffer; //Buffers the digits read from in
-    static char c;
+    string buffer; //Buffers the digits read from in
+    char c;
     buffer = "";
 
     while (true) //Break condition: return

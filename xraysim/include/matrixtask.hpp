@@ -59,7 +59,6 @@ public:
 private:
     uint xExt, yExt, zExt; //Extents //TODO Implement getters
     Matrix3d *matrix; //The matrix
-
 };
 
 #endif	/* _MATRIXTASK_HPP */

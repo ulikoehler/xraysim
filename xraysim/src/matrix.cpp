@@ -6,6 +6,7 @@
  */
 
 #include "../include/matrix.hpp"
+#include "../include/io_utils.hpp"
 
 /////////////
 //Matrix 2d//
@@ -14,6 +15,36 @@
 Matrix2d::~Matrix2d ()
 {
     delete array;
+}
+
+void Matrix2d::operator<<(std::ostream& out)
+{
+	//Print the extents (first line)
+	out << xExt << ',' << yExt << '\n';
+	//Print the data
+	for(int ix = 0; ix < xExt; ix++)
+	{
+		for(int iy = 0; iy < yExt; iy++)
+		{
+			out << (*this)[ix][iy] << ',';
+		}
+		out << '\n';
+	}
+}
+
+Matrix2d::Matrix2d(std::istream& in)
+{
+	//Read in the first line (the coordinates)
+	int x = readNextVal(in);
+	int y = readNextVal(in);
+	Matrix2d(x, y);
+	for(int ix = 0; ix < xExt; ix++)
+	{
+		for(int iy = 0; iy < yExt; iy++)
+		{
+			(*this)[ix][iy] = readNextVal(in);
+		}
+	}
 }
 
 Matrix2d::Matrix2d (const uint& x, const uint& y)

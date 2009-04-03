@@ -26,6 +26,7 @@ BOOST_AUTO_TEST_CASE(TestSeed)
 {
     BOOST_TEST_MESSAGE ("Testing generateSeed");
     ulong s1 = generateSeed<ulong>();
+    BOOST_CHECK(s1 > 0);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -40,16 +41,18 @@ BOOST_AUTO_TEST_CASE (init)
 }
 
 /**
- * Tests class Matrix3d
+ * Tests class Matrix2d
  */
 BOOST_AUTO_TEST_CASE (TestMatrix2d)
 {
     BOOST_TEST_MESSAGE ("Testing class Matrix2d");
-
-    mt19937 intRng (time (0)); //Init a MT19937 PRNG (warning: low entropy seed)
+	
+    mt19937 intRng (generateSeed<ulong>()); //Init a MT19937 PRNG
 
     const uint xExt = 10;
     const uint yExt = 9;
+	
+    vector<vector<int> > controlData;
 
     Matrix2d randMatrix (xExt, yExt);
 
@@ -58,12 +61,37 @@ BOOST_AUTO_TEST_CASE (TestMatrix2d)
         {
             for (int iy = 0; iy < yExt; iy++)
                 {
+		    //Generate a random number and save it in the matrix and the controll 2d-vector
                     uint rand = intRng ();
+		    controlData[ix][iy] = rand;
                     randMatrix[ix][iy] = rand;
-                    //Check if the number is saved correctly
-                    BOOST_CHECK_EQUAL (randMatrix[ix][iy], rand);
                 }
         }
+    //Check if the correct values were saved
+    for (int ix = 0; ix < xExt; ix++)
+        {
+            for (int iy = 0; iy < yExt; iy++)
+                {			
+                    //Check if the number is saved correctly
+                    BOOST_CHECK_EQUAL (randMatrix[ix][iy], controlData[ix][iy]);
+		}
+	}
+	
+    //Serialize the matrix
+    stringstream ss;
+    ss << randMatrix;
+	
+    //Re-read the matrix from the serialized data and check if the data in it is equal tothe control data
+    Matrix2d rereadMatrix(ss);
+    //Check if the correct values were saved
+    for (int ix = 0; ix < xExt; ix++)
+        {
+            for (int iy = 0; iy < yExt; iy++)
+                {			
+			//Check if the number in the matrix and the number in the control 2d-vector
+			BOOST_CHECK_EQUAL (rereadMatrix[ix][iy], controlData[ix][iy]);
+		}
+	}
 }
 
 /**
@@ -126,7 +154,7 @@ BOOST_AUTO_TEST_CASE (TestReadNextVal)
      * Generate TEST_NUMBERS integers and save them in an array and the stringstream
      */
     BOOST_TEST_MESSAGE ("    Testing integer parsing");
-    mt19937 intRng (time (0)); //Init a MT19937 PRNG (warning: low entropy seed)
+    mt19937 intRng (generateSeed<uint>()); //Init a MT19937 PRNG (warning: low entropy seed)
     uint32_t intNumbers[TEST_NUMBERS];
     for (int i = 0; i < TEST_NUMBERS; i++)
         {

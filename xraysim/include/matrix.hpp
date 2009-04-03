@@ -17,12 +17,14 @@ class Matrix2d
 {
 public:
     Matrix2d (const uint& x, const uint& y); //TODO Document
+    Matrix2d(std::istream& in);
     ~Matrix2d ();
 
     void setAt (const uint& val, const size_t& x, const size_t& y);
 
     uint * operator[](const size_t& index); //TODO Document
 
+    void operator<<(std::ostream& out);
     /**
      * X extent getter
      * \return A copy of the x extent of this matrix instance
