@@ -1,0 +1,3 @@
+This directory contains unstable source code.
+Each functional unit (one .cpp file) can be compiled into an own executable.
+The source code will be merged to the main project when it is stable enough to work there.
