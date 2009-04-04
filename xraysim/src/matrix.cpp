@@ -26,9 +26,10 @@ void Matrix2d::writeTo(std::ostream& out)
 	{
 		for(int iy = 0; iy < yExt; iy++)
 		{
-			out << (*this)[ix][iy] << ',';
+			out << (*this)[ix][iy];
+			if((yExt - iy) > 1) {out << ',';}
 		}
-		out << '\n';
+		if((xExt - ix) > 1) {out << '\n';}
 	}
 }
 
