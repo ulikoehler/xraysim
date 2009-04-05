@@ -17,7 +17,7 @@ int main(int argc, char** argv)
 	{
 		for(int iy = 0; iy < ydim; iy++)
 		{
-			matrix[ix][iy] = rng() % 255;
+			matrix[ix][iy] = rng();
 		}
 	}
 	

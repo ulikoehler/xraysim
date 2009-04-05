@@ -67,6 +67,15 @@ public:
      * \param out The output stream to serialize to
      */
     void writeTo(std::ostream& out);
+    
+    #ifndef NO_CAIRO
+    /**
+     * Exports the matrix to a 2d graphics file
+     * \param filename The filename of the PNG file to write to (is overwritten if it exists)
+     * Requires Cairo
+     */
+    void writeToPNG(std::string filename);
+    #endif
     /**
      * Serializes a matrix into an output stream
      * \param out The output stream to serialize to
