@@ -97,8 +97,6 @@ private:
     uint *array; //Data
 };
 
-__ostream_type
-
 //TODO Document
 //TODO Make template
 
