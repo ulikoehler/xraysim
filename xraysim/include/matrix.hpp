@@ -29,9 +29,16 @@ public:
      * \param in The input stream to read the object from
      */
     Matrix2d(std::istream& in);
+
     ~Matrix2d ();
 
-    uint * operator[](const size_t& index); //TODO Document
+    uint* operator[](const size_t& index); //TODO Document
+
+    uint* getArrayAt(const uint& index);
+
+    uint getElementAt(const uint& x, const uint& y);
+    
+    void setElementAt(const uint& x, const uint& y, const uint& val);
 
     void writeTo(std::ostream& out);
     //void operator<<(std::ostream& out);
@@ -39,7 +46,7 @@ public:
      * X extent getter
      * \return A copy of the x extent of this matrix instance
      */
-    inline uint
+    uint
     getXExtent ()
     {
         return xExt;
@@ -48,7 +55,7 @@ public:
      * Y extent getter
      * \return A copy of the y extent of this matrix instance
      */
-    inline uint
+    uint
     getYExtent ()
     {
         return yExt;

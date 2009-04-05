@@ -25,8 +25,8 @@ BOOST_AUTO_TEST_SUITE(SeedTestSuite)
 BOOST_AUTO_TEST_CASE(TestSeed)
 {
     BOOST_TEST_MESSAGE ("Testing generateSeed");
-    ulong s1 = generateSeed<ulong>();
-    BOOST_CHECK(s1 > 0);
+    ulong seed = generateSeed<ulong>();
+    BOOST_CHECK(seed);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -55,7 +55,7 @@ BOOST_AUTO_TEST_CASE (TestMatrix2d)
     vector<vector<int> > controlData;
 
     Matrix2d randMatrix (xExt, yExt);
-
+BOOST_TEST_MESSAGE ("Testing class Matrix2d fill");
     //Fill the matrix
     for (int ix = 0; ix < xExt; ix++)
         {
@@ -66,7 +66,7 @@ BOOST_AUTO_TEST_CASE (TestMatrix2d)
 		    controlData[ix][iy] = rand;
                     randMatrix[ix][iy] = rand;
                 }
-        }
+        }BOOST_TEST_MESSAGE ("Testing class Matrix2d check1");
     //Check if the correct values were saved
     for (int ix = 0; ix < xExt; ix++)
         {
@@ -76,13 +76,14 @@ BOOST_AUTO_TEST_CASE (TestMatrix2d)
                     BOOST_CHECK_EQUAL (randMatrix[ix][iy], controlData[ix][iy]);
 		}
 	}
-	
+	BOOST_TEST_MESSAGE ("Testing class Matrix2d seri");
     //Serialize the matrix
     stringstream ss;
     randMatrix.writeTo(ss);
-	
+	BOOST_TEST_MESSAGE ("Testing class Matrixreread");
     //Re-read the matrix from the serialized data and check if the data in it is equal tothe control data
     Matrix2d rereadMatrix(ss);
+    BOOST_TEST_MESSAGE ("Testing class Matrix2d check2");
     //Check if the correct values were saved
     for (int ix = 0; ix < xExt; ix++)
         {

@@ -8,6 +8,10 @@
 #ifndef _SEED_HPP
 #define	_SEED_HPP
 
+#include <memory>
+
+using namespace std::tr1;
+
 template<class T>
 T generateSeed()
 {

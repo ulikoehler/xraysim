@@ -37,13 +37,17 @@ Matrix2d::Matrix2d(std::istream& in)
 {
 	//Read in the first line (the coordinates)
 	int x = readNextVal(in);
+	cout << "Xdim: " << x << endl;
 	int y = readNextVal(in);
+	cout << "Ydim: " << y << endl;
 	Matrix2d(x, y);
 	for(int ix = 0; ix < xExt; ix++)
 	{
 		for(int iy = 0; iy < yExt; iy++)
 		{
-			(*this)[ix][iy] = readNextVal(in);
+			uint val;
+			//Store the value in the matrix if the value has been read successfully
+			if(readNextVal(in, val)) {this->setElementAt(ix, iy, val);}
 		}
 	}
 }
@@ -58,11 +62,27 @@ Matrix2d::Matrix2d (const uint& x, const uint& y)
 uint*
 Matrix2d::operator[](const size_t& index)
 {
+	return getArrayAt(index);
+}
+
+uint* Matrix2d::getArrayAt(const uint& index)
+{
     /**
      * Return an array beginning from the index the user selected
      * (Can be dereferenced again) so the syntax may be matrix2dInst[..][..]
      */
-    return array + (index * this->yExt);
+    return array + (index * xExt);
+}
+
+//TODO Test
+uint Matrix2d::getElementAt(const uint& x, const uint& y)
+{
+	return getArrayAt(x)[y];
+}
+
+void Matrix2d::setElementAt(const uint& x, const uint& y, const uint& val)
+{
+	getArrayAt(x)[y] = val;
 }
 
 /////////////

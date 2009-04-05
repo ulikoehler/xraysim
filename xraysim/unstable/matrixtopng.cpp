@@ -11,11 +11,11 @@ using namespace std::tr1;
 
 int main(int argc, char** argv)
 {
-	//ifstream f(argv[1]);
-	//Matrix2d matrix(f);
-	//f.close();
+	ifstream f(argv[1]);
+	Matrix2d matrix(f);
+	f.close();
 	
-	//Generate a random matrix
+	/* //Generate a random matrix
 	//To be replaced by the code above when the matrix deserializing works
 	//Start	
 	mt19937 rng(time(0));
@@ -30,9 +30,8 @@ int main(int argc, char** argv)
 		{
 			matrix[ix][iy] = rng() % 255;
 		}
-	}
+	} */
 	//End
-	
 	cairo_surface_t* s = cairo_image_surface_create(CAIRO_FORMAT_RGB24, matrix.getXExtent(), matrix.getYExtent());
 	cairo_t* c = cairo_create(s);
 	
@@ -40,8 +39,8 @@ int main(int argc, char** argv)
 	cairo_set_operator(c, CAIRO_OPERATOR_SOURCE);
 	cairo_paint(c);	
 	
-	//uint xExt = matrix.getXExtent();
-	//uint yExt = matrix.getXExtent();
+	uint xExt = matrix.getXExtent();
+	uint yExt = matrix.getXExtent();
 	
 	for(int ix = 0; ix < xExt; ix++)
 	{

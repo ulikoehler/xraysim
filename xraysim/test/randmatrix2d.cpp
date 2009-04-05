@@ -10,14 +10,14 @@ using namespace std::tr1;
 int main(int argc, char** argv)
 {
 	mt19937 rng(time(0));
-	const int xdim = 10;
-	const int ydim = 10;
+	int xdim = atoi(argv[2]);
+	int ydim = xdim;
 	Matrix2d matrix(xdim, ydim);
 	for(int ix = 0; ix < xdim; ix++)
 	{
 		for(int iy = 0; iy < ydim; iy++)
 		{
-			matrix[ix][iy] = rng() % 100;
+			matrix[ix][iy] = rng() % 255;
 		}
 	}
 	

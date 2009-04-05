@@ -27,16 +27,17 @@ isnewline (char c)
  * Reads the next value from the supplied input stream until FIELD_DELIM (constant)
  * is read and returns the digits casted into a number
  * \param in The input stream to read from
- * \return The converted unsigned integer
+ * \param val The variable to save the result in
+ * \return A status code; 0 means success
  */
 inline uint
-readNextVal (std::istream& in)
+readNextVal (std::istream& in, uint& val)
 {
     string buffer; //Buffers the digits read from in
     char c;
     buffer = "";
 
-    while (true) //Break condition: return
+    while (in.good()) //Break condition: return
         {
             in.get (c);
 
@@ -51,11 +52,20 @@ readNextVal (std::istream& in)
                     //Don't* \return if there were no digits before the first delimiter or newline character
                     if (buffer.length () > 0)
                         {
-                            return atoi (buffer.c_str());
+                            val = atoi (buffer.c_str());
+			    return 0;
                         }
                 }
             //else: continue
         }
+	return 1;
+}
+
+inline uint readNextVal(std::istream& in)
+{
+	uint val;
+	readNextVal(in, val);
+	return val;
 }
 
 /**
@@ -76,7 +86,9 @@ readMatrix3d (uint x, uint y, uint z, std::istream& in)
                 {
                     for (int iz = 0; iz < z; iz++)
                         {
-                            retMatrix[ix][iy][iz] = readNextVal (in);
+			    uint val;
+			    //Store the value in the matrix if the value has been read successfully
+			    if(readNextVal(in, val)) {retMatrix[ix][iy][iz] = val;}
                         }
                 }
         }
