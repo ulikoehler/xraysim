@@ -33,6 +33,12 @@ void Matrix2d::writeTo(std::ostream& out)
 	}
 }
 
+std::ostream& Matrix2d::operator<<(std::ostream& out)
+{
+	writeTo(out);
+	return out;
+}
+
 Matrix2d::Matrix2d(std::istream& in)
 {
 	//Read in the first line (the coordinates)
