@@ -26,7 +26,7 @@ void Matrix2d::writeTo(std::ostream& out)
 	{
 		for(int iy = 0; iy < yExt; iy++)
 		{
-			out << (*this)[ix][iy];
+			out << this->getElementAt(ix,iy);
 			if((yExt - iy) > 1) {out << ',';}
 		}
 		if((xExt - ix) > 1) {out << '\n';}
@@ -40,14 +40,16 @@ Matrix2d::Matrix2d(std::istream& in)
 	cout << "Xdim: " << x << endl;
 	int y = readNextVal(in);
 	cout << "Ydim: " << y << endl;
-	Matrix2d(x, y);
+	//Matrix2d(x, y);
+	this->xExt = x;
+	this->yExt = y;
+	array = new uint[x * y];
+		
 	for(int ix = 0; ix < xExt; ix++)
 	{
 		for(int iy = 0; iy < yExt; iy++)
 		{
-			uint val;
-			//Store the value in the matrix if the value has been read successfully
-			if(readNextVal(in, val)) {this->setElementAt(ix, iy, val);}
+			this->setElementAt(ix, iy, readNextVal(in));
 		}
 	}
 }
@@ -71,7 +73,7 @@ uint* Matrix2d::getArrayAt(const uint& index)
      * Return an array beginning from the index the user selected
      * (Can be dereferenced again) so the syntax may be matrix2dInst[..][..]
      */
-    return array + (index * xExt);
+    return array + (index * yExt);
 }
 
 //TODO Test
@@ -82,7 +84,7 @@ uint Matrix2d::getElementAt(const uint& x, const uint& y)
 
 void Matrix2d::setElementAt(const uint& x, const uint& y, const uint& val)
 {
-	getArrayAt(x)[y] = val;
+	array[x * xExt +y] = val;
 }
 
 /////////////
