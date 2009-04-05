@@ -15,9 +15,6 @@ int main(int argc, char** argv)
 	Matrix2d matrix(f);
 	f.close();
 	
-	stringstream s;
-	s << matrix;
-	
 	/* //Generate a random matrix
 	//To be replaced by the code above when the matrix deserializing works
 	//Start	

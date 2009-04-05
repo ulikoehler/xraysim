@@ -11,7 +11,6 @@
 #include "include.hpp"
 
 //TODO Document
-//TODO Make template
 
 class Matrix2d
 {
