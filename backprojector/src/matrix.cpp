@@ -46,7 +46,7 @@ Matrix2d::writeTo (std::ostream& out)
 }
 
 void
-Matrix2d::ReadFromPlainStream ()
+Matrix2d::ReadFromPlainStream (std::istream& in)
 {
     //Read in the first line (the coordinates)
     int x = readNextVal (in);
@@ -72,15 +72,49 @@ Matrix2d::ReadFromPlainStream ()
         }
 }
 
+#ifndef NOZLIB
+void
+Matrix2d::ReadFromGzipStream (std::string& filename)
+{
+    gzFile file = gzopen(filename.c_str(), "rb");
+    //Read in the first line (the coordinates)
+    int x = readNextVal (file);
+    cout << "Xdim: " << x << endl;
+    int y = readNextVal (file);
+    cout << "Ydim: " << y << endl;
+    //Matrix2d(x, y);
+    this->xExt = x;
+    this->yExt = y;
+    //Check if there already is an array to be deleted
+    if (array != NULL)
+        {
+            delete array;
+        }
+    array = new uint[x * y];
+
+    for (int ix = 0; ix < xExt; ix++)
+        {
+            for (int iy = 0; iy < yExt; iy++)
+                {
+                    setElementAt (ix, iy, readNextVal (file));
+                }
+        }
+    //Close the input file
+    gzclose(file);
+}
+#endif //NOZLIB
+
 Matrix2d::Matrix2d (std::string& filename)
 {
     if (filename.find (".gz") == (filename.length () - 3)) //string.length() - ".gz".length()
         {
-            ReadFromGzStream ();
+            ReadFromGzipStream (filename);
         }
     else
         {
-            ReadFromPlainStream ();
+            ifstream f(filename.c_str());
+            ReadFromPlainStream (f);
+            f.close();
         }
 
 }

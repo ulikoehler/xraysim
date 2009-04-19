@@ -23,11 +23,17 @@ public:
     Matrix2d (const uint& x, const uint& y);
     /**
      * Reads a Matrix2d object from a stream
-     * This actually deserializes a Matrix2d object.
-     * Serializing is done by stream << object
+     * The stream must be uncompressed-
      * \param in The input stream to read the object from
      */
     Matrix2d(std::istream& in);
+
+    /**
+     * Constructs a Matrix2d object from a given filename
+     * The filename is either asserted uncompressed or, if it ends to ".gz", Gzipped.
+     * \param filename The filename of the file to read the data from
+     */
+    Matrix2d(std::string& filename);
 
     ~Matrix2d ();
 
@@ -100,9 +106,11 @@ public:
         return yExt;
     }
 private:
+    void ReadFromPlainStream (std::istream& in);
+    void ReadFromGzipStream (std::string& filename);
     uint xExt; //X Extent
     uint yExt; //Y Extent
-    uint *array = NULL; //Data
+    uint *array; //Data
 };
 
 //TODO Document

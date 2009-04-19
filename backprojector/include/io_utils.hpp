@@ -11,7 +11,6 @@
 
 #ifndef _IO_UTILS_HPP
 #define	_IO_UTILS_HPP
-
 /**
  * Checks if a given character is either CR or LF
  * \return A bool indication whether the gived character is a newline character
@@ -22,6 +21,48 @@ isnewline (char c)
 {
     return (c == '\n' || c == '\f');
 }
+
+#ifndef NOZLIB
+#include <zlib.h>
+//TODO Fix doc: reads from a gz file
+/**
+ * Reads the next value from the supplied input stream until FIELD_DELIM (constant)
+ * is read and returns the digits casted into a number
+ * \param in The input stream to read from
+ * \param val The variable to save the result in
+ * \return A status code; 0 means success
+ */
+inline uint
+readNextVal (gzFile file)
+{
+    string buffer; //Buffers the digits read from in
+    char c;
+    buffer = "";
+
+    while (!gzeof(file)) //Break condition: return
+        {
+            c = gzgetc(file);
+
+            //Check if the character read in is an number
+            if (isdigit (c))
+                {
+                    buffer += c;
+                }
+                //Break if the field delimiter or a newline character is read
+            else if (c == FIELD_DELIM || isnewline (c)) //Field delimiter declared in include.hpp
+                {
+                    //Don't* \return if there were no digits before the first delimiter or newline character
+                    if (buffer.length () > 0)
+                        {
+                            return atoi (buffer.c_str());
+                        }
+                }
+            //else: continue
+        }
+	return 0;
+}
+
+#endif //NOZLIB
 
 /**
  * Reads the next value from the supplied input stream until FIELD_DELIM (constant)
