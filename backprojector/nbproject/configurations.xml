@@ -5,7 +5,9 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>include/fpmath.hpp</itemPath>
+      <itemPath>include/gzutil.hpp</itemPath>
       <itemPath>include/include.hpp</itemPath>
+      <itemPath>include/io_utils.hpp</itemPath>
       <itemPath>include/matrix.hpp</itemPath>
       <itemPath>include/tiffio.hpp</itemPath>
     </logicalFolder>
@@ -42,7 +44,13 @@
       <item path="include/fpmath.hpp">
         <itemTool>3</itemTool>
       </item>
+      <item path="include/gzutil.hpp">
+        <itemTool>3</itemTool>
+      </item>
       <item path="include/include.hpp">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="include/io_utils.hpp">
         <itemTool>3</itemTool>
       </item>
       <item path="include/matrix.hpp">
@@ -79,7 +87,13 @@
       <item path="include/fpmath.hpp">
         <itemTool>3</itemTool>
       </item>
+      <item path="include/gzutil.hpp">
+        <itemTool>3</itemTool>
+      </item>
       <item path="include/include.hpp">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="include/io_utils.hpp">
         <itemTool>3</itemTool>
       </item>
       <item path="include/matrix.hpp">
