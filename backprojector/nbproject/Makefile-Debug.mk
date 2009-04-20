@@ -28,6 +28,7 @@ OBJECTDIR=build/Debug/${PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/src/fpmath.o \
 	${OBJECTDIR}/src/main.o \
 	${OBJECTDIR}/src/matrix.o
 
@@ -51,6 +52,10 @@ LDLIBSOPTIONS=
 dist/Debug/${PLATFORM}/backprojector: ${OBJECTFILES}
 	${MKDIR} -p dist/Debug/${PLATFORM}
 	${LINK.cc} -lz -lcairo -o dist/Debug/${PLATFORM}/backprojector ${OBJECTFILES} ${LDLIBSOPTIONS} 
+
+${OBJECTDIR}/src/fpmath.o: src/fpmath.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	$(COMPILE.cc) -g -o ${OBJECTDIR}/src/fpmath.o src/fpmath.cpp
 
 ${OBJECTDIR}/src/main.o: src/main.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src

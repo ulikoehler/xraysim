@@ -17,6 +17,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>src/fpmath.cpp</itemPath>
       <itemPath>src/main.cpp</itemPath>
       <itemPath>src/matrix.cpp</itemPath>
     </logicalFolder>
@@ -55,6 +56,9 @@
       </item>
       <item path="include/tiffio.hpp">
         <itemTool>3</itemTool>
+      </item>
+      <item path="src/fpmath.cpp">
+        <itemTool>1</itemTool>
       </item>
       <item path="src/main.cpp">
         <itemTool>1</itemTool>
@@ -98,6 +102,9 @@
       </item>
       <item path="include/tiffio.hpp">
         <itemTool>3</itemTool>
+      </item>
+      <item path="src/fpmath.cpp">
+        <itemTool>1</itemTool>
       </item>
       <item path="src/main.cpp">
         <itemTool>1</itemTool>
