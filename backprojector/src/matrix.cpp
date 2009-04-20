@@ -10,7 +10,6 @@
 #include <climits>
 
 #ifndef NO_CAIRO
-#include <cairo/cairo.h>
 #endif
 
 /////////////
@@ -119,8 +118,10 @@ Matrix2d::Matrix2d (std::string& filename)
 
 }
 
-Matrix2d::Matrix2d (std::istream& in) {
- }
+Matrix2d::Matrix2d (std::istream& in)
+{
+    ReadFromPlainStream(in);
+}
 
 Matrix2d::Matrix2d (const uint& x, const uint& y)
 {
@@ -161,6 +162,7 @@ Matrix2d::setElementAt (const uint& x, const uint& y, const uint& val)
 }
 
 #ifndef NO_CAIRO
+#include <cairo/cairo.h>
 
 void
 Matrix2d::writeToPNG (std::string filename)
@@ -185,6 +187,20 @@ Matrix2d::writeToPNG (std::string filename)
     cairo_surface_write_to_png (s, filename.c_str ());
 }
 #endif
+
+//TODO Test
+//Overloaded IO operators
+std::ostream& operator<< (std::ostream& out, Matrix2d& matrix)
+{
+    matrix.writeTo(out);
+    return out;
+}
+
+std::istream& operator>> (std::istream& in, Matrix2d& matrix)
+{
+    matrix.ReadFromPlainStream(in);
+    return in;
+}
 
 /////////////
 //Matrix 3d//

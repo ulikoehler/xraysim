@@ -86,7 +86,11 @@ public:
      * Serializes a matrix into an output stream
      * \param out The output stream to serialize to
      */
-    //std::ostream& operator<<	(std::ostream& out);
+    friend std::ostream& operator<< (std::ostream& out, Matrix2d& matrix);
+    /**
+     *
+     */
+    friend std::istream& operator>> (std::istream& in, Matrix2d& matrix);
     /**
      * X extent getter
      * \return A copy of the x extent of this matrix instance
@@ -112,10 +116,11 @@ private:
     uint yExt; //Y Extent
     uint *array; //Data
 };
+//Overloaded IO operators
+std::ostream& operator<< (std::ostream& out, Matrix2d& matrix);
+std::istream& operator>> (std::istream& in, Matrix2d& matrix);
 
 //TODO Document
-//TODO Make template
-
 class Matrix3d
 {
     /**

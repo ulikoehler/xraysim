@@ -28,8 +28,8 @@ OBJECTDIR=build/Release/${PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/src/matrix.o \
-	${OBJECTDIR}/main.o
+	${OBJECTDIR}/src/main.o \
+	${OBJECTDIR}/src/matrix.o
 
 # C Compiler Flags
 CFLAGS=
@@ -52,13 +52,13 @@ dist/Release/${PLATFORM}/backprojector: ${OBJECTFILES}
 	${MKDIR} -p dist/Release/${PLATFORM}
 	${LINK.cc} -o dist/Release/${PLATFORM}/backprojector ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
+${OBJECTDIR}/src/main.o: src/main.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	$(COMPILE.cc) -O2 -o ${OBJECTDIR}/src/main.o src/main.cpp
+
 ${OBJECTDIR}/src/matrix.o: src/matrix.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	$(COMPILE.cc) -O2 -o ${OBJECTDIR}/src/matrix.o src/matrix.cpp
-
-${OBJECTDIR}/main.o: main.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	$(COMPILE.cc) -O2 -o ${OBJECTDIR}/main.o main.cpp
 
 # Subprojects
 .build-subprojects:
