@@ -1,0 +1,2 @@
+This directory contains some files to test special features of inline Assembler or SSE intrinsics.
+Look at the source files for test-specific descriptions.
