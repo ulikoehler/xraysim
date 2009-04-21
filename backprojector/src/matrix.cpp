@@ -47,7 +47,7 @@ readNextVal (gzFile file)
     while (!gzeof(file)) //Break condition: return
         {
             c = gzgetc(file);
-
+            
             //Check if the character read in is an number
             if (isdigit (c))
                 {

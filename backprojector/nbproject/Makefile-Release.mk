@@ -29,8 +29,8 @@ OBJECTDIR=build/Release/${PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/src/fpmath.o \
-	${OBJECTDIR}/src/main.o \
-	${OBJECTDIR}/io_utils.o
+	${OBJECTDIR}/src/matrix.o \
+	${OBJECTDIR}/src/main.o
 
 # C Compiler Flags
 CFLAGS=
@@ -51,19 +51,19 @@ LDLIBSOPTIONS=
 
 dist/Release/${PLATFORM}/backprojector: ${OBJECTFILES}
 	${MKDIR} -p dist/Release/${PLATFORM}
-	${LINK.cc} -funsafe-math-optimizations -o dist/Release/${PLATFORM}/backprojector ${OBJECTFILES} ${LDLIBSOPTIONS} 
+	${LINK.cc} -lz -o dist/Release/${PLATFORM}/backprojector ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
 ${OBJECTDIR}/src/fpmath.o: src/fpmath.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	$(COMPILE.cc) -O2 -DNDEBUG -o ${OBJECTDIR}/src/fpmath.o src/fpmath.cpp
 
+${OBJECTDIR}/src/matrix.o: src/matrix.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	$(COMPILE.cc) -O2 -DNDEBUG -o ${OBJECTDIR}/src/matrix.o src/matrix.cpp
+
 ${OBJECTDIR}/src/main.o: src/main.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	$(COMPILE.cc) -O2 -DNDEBUG -o ${OBJECTDIR}/src/main.o src/main.cpp
-
-${OBJECTDIR}/io_utils.o: io_utils.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	$(COMPILE.cc) -O2 -DNDEBUG -o ${OBJECTDIR}/io_utils.o io_utils.cpp
 
 # Subprojects
 .build-subprojects:
