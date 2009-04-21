@@ -28,9 +28,8 @@ OBJECTDIR=build/Debug/${PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/src/fpmath.o \
 	${OBJECTDIR}/src/main.o \
-	${OBJECTDIR}/src/matrix.o
+	${OBJECTDIR}/io_utils.o
 
 # C Compiler Flags
 CFLAGS=
@@ -53,17 +52,13 @@ dist/Debug/${PLATFORM}/backprojector: ${OBJECTFILES}
 	${MKDIR} -p dist/Debug/${PLATFORM}
 	${LINK.cc} -lz -lcairo -o dist/Debug/${PLATFORM}/backprojector ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
-${OBJECTDIR}/src/fpmath.o: src/fpmath.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src
-	$(COMPILE.cc) -g -o ${OBJECTDIR}/src/fpmath.o src/fpmath.cpp
-
 ${OBJECTDIR}/src/main.o: src/main.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	$(COMPILE.cc) -g -o ${OBJECTDIR}/src/main.o src/main.cpp
 
-${OBJECTDIR}/src/matrix.o: src/matrix.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src
-	$(COMPILE.cc) -g -o ${OBJECTDIR}/src/matrix.o src/matrix.cpp
+${OBJECTDIR}/io_utils.o: io_utils.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	$(COMPILE.cc) -g -o ${OBJECTDIR}/io_utils.o io_utils.cpp
 
 # Subprojects
 .build-subprojects:

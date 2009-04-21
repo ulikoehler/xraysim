@@ -30,14 +30,14 @@ OBJECTDIR=build/Release/${PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/src/fpmath.o \
 	${OBJECTDIR}/src/main.o \
-	${OBJECTDIR}/src/matrix.o
+	${OBJECTDIR}/io_utils.o
 
 # C Compiler Flags
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=
-CXXFLAGS=
+CCFLAGS=-m64 -march=core2 -mfpmath=sse -msse3 -fexpensive-optimizations -fomit-frame-pointer -ffast-math -funroll-loops -funsafe-math-optimizations
+CXXFLAGS=-m64 -march=core2 -mfpmath=sse -msse3 -fexpensive-optimizations -fomit-frame-pointer -ffast-math -funroll-loops -funsafe-math-optimizations
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -51,19 +51,19 @@ LDLIBSOPTIONS=
 
 dist/Release/${PLATFORM}/backprojector: ${OBJECTFILES}
 	${MKDIR} -p dist/Release/${PLATFORM}
-	${LINK.cc} -o dist/Release/${PLATFORM}/backprojector ${OBJECTFILES} ${LDLIBSOPTIONS} 
+	${LINK.cc} -funsafe-math-optimizations -o dist/Release/${PLATFORM}/backprojector ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
 ${OBJECTDIR}/src/fpmath.o: src/fpmath.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
-	$(COMPILE.cc) -O2 -o ${OBJECTDIR}/src/fpmath.o src/fpmath.cpp
+	$(COMPILE.cc) -O2 -DNDEBUG -o ${OBJECTDIR}/src/fpmath.o src/fpmath.cpp
 
 ${OBJECTDIR}/src/main.o: src/main.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
-	$(COMPILE.cc) -O2 -o ${OBJECTDIR}/src/main.o src/main.cpp
+	$(COMPILE.cc) -O2 -DNDEBUG -o ${OBJECTDIR}/src/main.o src/main.cpp
 
-${OBJECTDIR}/src/matrix.o: src/matrix.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src
-	$(COMPILE.cc) -O2 -o ${OBJECTDIR}/src/matrix.o src/matrix.cpp
+${OBJECTDIR}/io_utils.o: io_utils.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	$(COMPILE.cc) -O2 -DNDEBUG -o ${OBJECTDIR}/io_utils.o io_utils.cpp
 
 # Subprojects
 .build-subprojects:

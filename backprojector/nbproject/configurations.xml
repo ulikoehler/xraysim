@@ -7,8 +7,6 @@
       <itemPath>include/fpmath.hpp</itemPath>
       <itemPath>include/include.hpp</itemPath>
       <itemPath>include/io_utils.hpp</itemPath>
-      <itemPath>include/matrix.hpp</itemPath>
-      <itemPath>include/tiffio.hpp</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -18,8 +16,8 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>src/fpmath.cpp</itemPath>
+      <itemPath>io_utils.cpp</itemPath>
       <itemPath>src/main.cpp</itemPath>
-      <itemPath>src/matrix.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -51,19 +49,14 @@
       <item path="include/io_utils.hpp">
         <itemTool>3</itemTool>
       </item>
-      <item path="include/matrix.hpp">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="include/tiffio.hpp">
-        <itemTool>3</itemTool>
+      <item path="io_utils.cpp">
+        <itemTool>1</itemTool>
       </item>
       <item path="src/fpmath.cpp">
+        <itemExcluded>true</itemExcluded>
         <itemTool>1</itemTool>
       </item>
       <item path="src/main.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="src/matrix.cpp">
         <itemTool>1</itemTool>
       </item>
     </conf>
@@ -79,6 +72,11 @@
         </cCompilerTool>
         <ccCompilerTool>
           <developmentMode>5</developmentMode>
+          <architecture>2</architecture>
+          <commandLine>-march=core2 -mfpmath=sse -msse3 -fexpensive-optimizations -fomit-frame-pointer -ffast-math -funroll-loops -funsafe-math-optimizations</commandLine>
+          <preprocessorList>
+            <Elem>NDEBUG</Elem>
+          </preprocessorList>
         </ccCompilerTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
@@ -86,6 +84,7 @@
         <linkerTool>
           <linkerLibItems>
           </linkerLibItems>
+          <commandLine>-funsafe-math-optimizations</commandLine>
         </linkerTool>
       </compileType>
       <item path="include/fpmath.hpp">
@@ -97,19 +96,13 @@
       <item path="include/io_utils.hpp">
         <itemTool>3</itemTool>
       </item>
-      <item path="include/matrix.hpp">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="include/tiffio.hpp">
-        <itemTool>3</itemTool>
+      <item path="io_utils.cpp">
+        <itemTool>1</itemTool>
       </item>
       <item path="src/fpmath.cpp">
         <itemTool>1</itemTool>
       </item>
       <item path="src/main.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="src/matrix.cpp">
         <itemTool>1</itemTool>
       </item>
     </conf>
