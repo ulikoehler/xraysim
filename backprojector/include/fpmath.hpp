@@ -123,32 +123,11 @@ computePixelEffect (const Point& a, const IntersectionPointPrototypes& ip, const
         }
     //The 1.0 case can't occur if the angle is not exactly 90.0 or 0.0 degrees
 
-    //Case 1; The l
-    if (GDx < a.x)
-        {
-            register double LVI = 1 - (tana * (LVI.x - GDx)); //This is used in both branches
-            //Check if GA.x is outside B.x -> We have to calculate a trapeze
-            if (GAx > (LVI.x + 1.0))
-                {
-                    register double RVI;
-                    RVI = 1 - (tana * (GAx - (LVI.x + 1)));
-                    //Here a trapeze has been constructed using the secondary intersection points
-                    //The trapeze height is the lower edge of the pixel (and thus equal to 1)
-                    effect = (LVI + RVI) / 2;
-                }
-            else
-                {
-                    /**
-                     * We have to calculate the area of a triangle
-                     * with vertices A, SA and the secondary intersection point
-                     * A(Triangle) = (g * h) /2
-                     * here g = distance A-SA; h = distance A-sec. int. point
-                     * h has already been calculated and is saved in ae
-                     */
-                    effect = 0;
-
-                }
-        }
+    //Case 1; see doc
+//    if ()
+//        {
+//            return ;
+//        }
     return effect;
 }
 #endif	/* _FPMATH_HPP */
