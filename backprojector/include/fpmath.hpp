@@ -19,15 +19,28 @@ struct Point
 };
 
 /**
+ * Describes precalculated intersection point prototypes:
+ * The x coordinate of a left vertice of the pixel has to be substracted to get relative coordinates
+ */
+struct IntersectionPointPrototypes
+{
+    double GAxProto; //Lower horizontal intersection point emitted by g
+    double GDxProto; //Upper horizontal intersection point emitted by g
+    double HAxProto; //Lower horizontal intersection point emitted by h
+    double HDxProto; //Upper horizontal intersection point emitted by h
+};
+
+/**
  * Calculates the coordinates of the middle of the image
  * \param alpha Alpha in radiants
  */
 inline
-struct Point calculateE(const float alpha, const float r)
+struct Point
+calculateE (const float alpha, const float r)
 {
     Point p SSE;
-    p.x = r * cos(alpha);
-    p.y = r * sin(alpha);
+    p.x = r * cos (alpha);
+    p.y = r * sin (alpha);
 
     return p;
 };
@@ -38,13 +51,29 @@ struct Point calculateE(const float alpha, const float r)
  * \param re The shortest distance between E and G
  */
 inline
-struct Point calculateG(Point& e, const float re)
+struct Point
+calculateG (Point& e, const float re)
 {
     Point p SSE;
-    p.x = e.x + re * cos(alpha);
-    p.y = e.x + re * sin(alpha);
+    p.x = e.x + re * cos (alpha);
+    p.y = e.x + re * sin (alpha);
     return p;
 };
+
+/**
+ * The x coordinate of a left vertice of the pixel has to be substracted to get relative coordinates
+ * \param tana The tangens of alpha
+ */
+inline struct IntersectionPointPrototypes
+computeIntersectionPointCoordinates (const Point& g, const Point&a, const double tana)
+{
+    struct IntersectionPointPrototypes ip;
+    ip.GAxProto = tana * (g.y - a.y);
+    ip.GDxProto = tana * (g.y - (a.y + 1.0));
+    ip.HAxProto = tana * (h.y - a.y);
+    ip.HDxProto = tana * (h.y - (a.y + 1.0));
+    return ip;
+}
 
 /**
  * \param a The lower left corner of the pixel
@@ -53,7 +82,8 @@ struct Point calculateG(Point& e, const float re)
  * \param tana The tangens(!) of alpha. Note that alpha itself is not required
  */
 inline
-float calculatePixelEffect(const Point& a, const Point& g, const Point& h, const register double tana)
+float
+computePixelEffect (const Point& a, const IntersectionPointPrototypes& ip, const double tana)
 {
     /**
      * CPU Note: There are 16 FPU and 8-16 SSE registers so there should be
@@ -61,40 +91,50 @@ float calculatePixelEffect(const Point& a, const Point& g, const Point& h, const
      *
      * Note: All these are x-coordinates
      */
-    register double GAx; //Lower intersection point emitted by g
-    register double GDx; //Upper intersection point emitted by g
-    register double HAx; //Lower intersection point emitted by h
-    register double HDx; //Upper intersection point emitted by h
+
+    register float effect = 0;
+
+    //Distances A-point
+    register double GAx = ip.GAxProto - a.x; //Lower intersection point emitted by g
+    register double GDx = ip.GDxProto - a.x; //Upper intersection point emitted by g
+    register double HAx = ip.HAxProto - a.x; //Lower intersection point emitted by h
+    register double HDx = ip.HDxProto - a.x; //Upper intersection point emitted by h
     register double effect = 0;
-    /**
-     * Notes:
-     * SAx is the lower intersection point; SDx the upper.
-     * a is the lower left corner of the pixel, so a.y + 1 is the y coordinate of the upper left corner
-     */
-    GAx = tana * (g.y - a.y)  - (a.x - g.x);
-    GDx = tana * (g.y - (a.y + 1.0))  - (a.x - g.x);
-    HAx = tana * (h.y - a.y)  - (a.x - h.x);
-    HDx = tana * (h.y - (a.y + 1.0))  - (a.x - h.x);
+
+    //Macros to check where the points are (in fact only on which side or in the pixel square)
+    #define ISHDRIGHTOUTSIDE (HDx > (a.x + 1))
+    #define ISHARIGHTOUTSIDE (HAx > (a.x + 1))
+        #define ISHRIGHTOUTSIDE (ISHDRIGHTOUTSIDE && ISHARIGHTOUTSIDE)
+    #define ISGDRIGHTOUTSIDE (HDx > (a.x + 1))
+    #define ISGARIGHTOUTSIDE (HAx > (a.x + 1))
+        #define ISGRIGHTOUTSIDE (ISGDRIGHTOUTSIDE && ISGARIGHTOUTSIDE)
+    #define ISHDLEFTOUTSIDE (HDx < (a.x))
+    #define ISHALEFTOUTSIDE (HAx < (a.x))
+        #define ISHLEFTOUTSIDE (ISHDLEFTOUTSIDE && ISHALEFTOUTSIDE)
+    #define ISGALEFTOUTSIDE (GAx < (a.x))
+    #define ISGDLEFTOUTSIDE (GDx < (a.x))
+        #define ISGLEFTOUTSIDE (ISGDLEFTOUTSIDE && ISGALEFTOUTSIDE)
 
     //Test if the pixel is completely outside of the 'ray'
     //(if all 4 intersection point x coordinates are either all less or all greater than the appropriate coordinates)
-    if(((GDx > (a.x + 1) && GAx > (a.x + 1)) || (GDx < (a.x) && GAx < (a.x + 1)))
-            && ((HDx > (a.x + 1) && HAx > (a.x + 1)) || (HDx < (a.x) && HAx < (a.x + 1))))
+    if ((ISGLEFTOUTSIDE && ISHLEFTOUTSIDE) || (ISHRIGHTOUTSIDE && ISGRIGHTOUTSIDE))
         {
             return 0.0; //No effect on the pixels
         }
-    //Check if SD.x is outside the CD edge; if yes, use a special effect calculation algorithm
-    else if(GDx < a.x)
+    //The 1.0 case can't occur if the angle is not exactly 90.0 or 0.0 degrees
+
+    //Case 1; The l
+    if (GDx < a.x)
         {
-            register double ae = 1 - (tana * (a.x - GDx)); //This is used in both branches
-            //Check if SA.x is outside B.x -> We have to calculate a trapeze
-            if(GAx > (a.x + 1.0))
+            register double LVI = 1 - (tana * (LVI.x - GDx)); //This is used in both branches
+            //Check if GA.x is outside B.x -> We have to calculate a trapeze
+            if (GAx > (LVI.x + 1.0))
                 {
-                    register double be;
-                    be = 1 - (tana * (GAx - (a.x + 1)));
+                    register double RVI;
+                    RVI = 1 - (tana * (GAx - (LVI.x + 1)));
                     //Here a trapeze has been constructed using the secondary intersection points
                     //The trapeze height is the lower edge of the pixel (and thus equal to 1)
-                    effect = (ae + be) / 2;
+                    effect = (LVI + RVI) / 2;
                 }
             else
                 {
@@ -105,7 +145,7 @@ float calculatePixelEffect(const Point& a, const Point& g, const Point& h, const
                      * here g = distance A-SA; h = distance A-sec. int. point
                      * h has already been calculated and is saved in ae
                      */
-                    effect =
+                    effect = 0;
 
                 }
         }

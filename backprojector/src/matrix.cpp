@@ -6,7 +6,6 @@
  */
 
 #include "../include/matrix.hpp"
-#include "../include/io_utils.hpp"
 #include <climits>
 
 #ifndef NO_CAIRO

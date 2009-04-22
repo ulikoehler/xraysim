@@ -34,6 +34,9 @@
         <platform>2</platform>
       </toolsSet>
       <compileType>
+        <ccCompilerTool>
+          <commandLine>-lz -lcairo</commandLine>
+        </ccCompilerTool>
         <linkerTool>
           <linkerLibItems>
           </linkerLibItems>
@@ -73,7 +76,7 @@
         <ccCompilerTool>
           <developmentMode>5</developmentMode>
           <architecture>2</architecture>
-          <commandLine>-march=core2 -mfpmath=sse -msse3 -fexpensive-optimizations -fomit-frame-pointer -ffast-math -funroll-loops -funsafe-math-optimizations</commandLine>
+          <commandLine>-lz -lcairo</commandLine>
           <preprocessorList>
             <Elem>NDEBUG</Elem>
           </preprocessorList>

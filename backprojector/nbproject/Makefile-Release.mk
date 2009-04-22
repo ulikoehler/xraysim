@@ -36,8 +36,8 @@ OBJECTFILES= \
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=-m64 -march=core2 -mfpmath=sse -msse3 -fexpensive-optimizations -fomit-frame-pointer -ffast-math -funroll-loops -funsafe-math-optimizations
-CXXFLAGS=-m64 -march=core2 -mfpmath=sse -msse3 -fexpensive-optimizations -fomit-frame-pointer -ffast-math -funroll-loops -funsafe-math-optimizations
+CCFLAGS=-m64 -lz -lcairo
+CXXFLAGS=-m64 -lz -lcairo
 
 # Fortran Compiler Flags
 FFLAGS=

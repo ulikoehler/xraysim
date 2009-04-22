@@ -7,6 +7,26 @@ using namespace std;
 
 #define PI 3.14159265
 
+struct Point
+{
+	float x;
+	float y;
+}
+
+struct Point calcG(double alpha, float r, float r_e,)
+{
+	struct Point g;
+	uint rads = r + r_e;
+	asm volatile
+	(
+		"fsincos;" //cos(alpha) on top, sin(alpha) on st(1)
+		"fmul %4;" //Multiply the cos with rads (=param 4)
+		"fmul %%st(1), %4;" //Multiply the sin with rads (=param 4)
+		:"=m"(g.x),"=m"(g.y)
+		:"t"(alpha), "f"(rads)
+	);
+}
+
 int main()
 {
 	int ain;
@@ -23,7 +43,7 @@ int main()
 	cout << "Testing fsin\n";
 	asm volatile
 	(
-		"fsin;wait;fstp %0"
+		"fsin;fstp %0"
 		:"=m"(s)
 		:"t"(a)
 	);
@@ -32,7 +52,7 @@ int main()
 	s = 0.0;c = 0.0;
 	asm volatile
 	(
-		"fsincos;wait;fstp %0;fstp %1;wait"
+		"fsincos;fstp %0;fstp %1;"
 		:"=m"(c),"=m"(s)
 		:"t"(a)
 	);
