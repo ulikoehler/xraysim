@@ -6,6 +6,10 @@ Use svg2pdf: Get the source by executing
 git clone git://people.freedesktop.org/~cworth/svg2pdf
 , compile it, copy it to /usr/bin (or something similar) and the just execute 'make' in this directory.
 
+Some versions of PDFLaTeX throw a warning like:
+fbp.tex:0: pdflatex (file ./case1.pdf): PDF inclusion: Page Group detectedwhich pdfTeX can't handle. Ignoring it.
+That doesn't affect the document in any way so just ignore is (it is caused by a too-new PDF version like PDF 1.4)
+
 You probably should use convert to convert the SVGs to EPS but the use of PDFLaTeX is recommended so you have to find you own way if you can't.
 
 The PDF files have been deleted from all Git revision so don't wonder if you see strange log messages.
