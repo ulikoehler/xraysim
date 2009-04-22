@@ -37,6 +37,7 @@ G &= (x_E + r_e * \sin(\delta) | y_E + r_e * \cos(\delta)) \\
 %A_E = \frac{1}{2} \overline{D\,H_D} + \overline{A\,S_A} %Effect Amount
 \end{align}
 \newpage
+%
 \subsection{Case 1:}
 \begin{minipage}{\textwidth}
 \includegraphics[width=\textwidth]{case1}
@@ -52,7 +53,7 @@ Effect &= 1 - (\overline{A\,LVI} * \overline{A\,H_A})\\
  \item $H_D$ is on the left outside of the pixel
  \item $H_A$ is inside of the pixel
 \end{itemize}
-
+%
 \subsection{Case 2:}
 \begin{minipage}{\textwidth}
 \includegraphics[width=\textwidth]{case2}
@@ -69,7 +70,41 @@ Effect &= 1 - (\frac{1}{2} * \overline{C\,RVI} * \overline{G_D\,C} + \frac{1}{2}
  \item $H_D$ is on the left outside of the pixel
  \item $H_A$ is inside of the pixel
 \end{itemize}
+%
 \subsection{Case 3:}
+\begin{minipage}{\textwidth}
+\includegraphics[width=\textwidth]{case3}
+\end{minipage}
+\begin{align}
+Effect &= 1 - (\frac{1}{2} * \overline{C\,RVI} * \overline{G_D\,C})\\
+\overline{C\,RVI} &=  1 - \tan(\alpha) * \overline{B\,G_A}
+\end{align}
+\paragraph{Criteria:}
+\begin{itemize}
+ \item $G_D$ is on the right outside of the pixel
+ \item $G_A$ is on the right outside of the pixel
+ \item $H_D$ is on the left outside of the pixel
+ \item $H_A$ is on the left outside of the pixel
+\end{itemize}
+%
+\subsection{Case 4:}
+\begin{minipage}{\textwidth}
+\includegraphics[width=\textwidth]{case4}
+\end{minipage}
+\begin{align}
+Effect &= 1 - (\frac{1}{2} * \overline{C\,RVI} * \overline{G_D\,C})\\
+\overline{C\,RVI} &=  1 - \tan(\alpha) * \overline{B\,G_A}
+\end{align}
+%
+\paragraph{Criteria:}
+\begin{itemize}
+ \item $G_D$ is on the right outside of the pixel
+ \item $G_A$ is on the right outside of the pixel
+ \item $H_D$ is on the left outside of the pixel
+ \item $H_A$ is on the left outside of the pixel
+\end{itemize}
+%
+\subsection{Case 5:}
 \begin{minipage}{\textwidth}
 \includegraphics[width=\textwidth]{case3}
 \end{minipage}
