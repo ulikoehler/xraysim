@@ -1,0 +1,9 @@
+LaTeX uses PDF graphics if you use PDFLaTeX or EPS graphics else.
+To generate PDF graphics from the SVG files you could either open it in inkscape,
+save it as Cairo-PS and then use pstopdf to convert it to a pdf graphic or you can use
+a much simpler and faster way:
+Use svg2pdf: Get the source by executing
+git clone git://people.freedesktop.org/~cworth/svg2pdf
+, compile it, copy it to /usr/bin (or something similar) and the just execute 'make' in this directory.
+
+The PDF files have been deleted from all Git revision so don't wonder if you see strange log messages.
