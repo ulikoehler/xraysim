@@ -44,6 +44,11 @@ void XRayGLWidget::setTransformationMode(TransformationMode mode)
     this->transformationMode = mode;
 }
 
+void XRayGLWidget::setTransformationAxis(TransformationAxis axis)
+{
+    this->transformationAxis = axis;
+}
+
 /////////////////
 //Rotation code//
 /////////////////
@@ -105,15 +110,12 @@ void XRayGLWidget::mouseMoveEvent(QMouseEvent *event)
 
     if(transformationMode == MODE_ROTATE)
     {
-        if (event->buttons() & Qt::LeftButton)
+        switch(transformationAxis)
         {
-            setXRotation(xRot + 8 * dy);
-            setYRotation(yRot + 8 * dx);
-        }
-        else if (event->buttons() & Qt::RightButton)
-        {
-            setXRotation(xRot + 8 * dy);
-            setZRotation(zRot + 8 * dx);
+            case X_AXIS: {setXRotation(xRot + 4 * dx);break;}
+
+            case Y_AXIS: {setYRotation(yRot + 4 * dy);break;}
+            case Z_AXIS: {setZRotation(xRot + 4 * dy);break;}
         }
     }
     else if(transformationMode == MODE_TRANSLATE)

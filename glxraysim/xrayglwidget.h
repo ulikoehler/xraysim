@@ -38,6 +38,11 @@ class XRayGLWidget : public QGLWidget
       */
      void setTransformationMode(TransformationMode mode);
 
+    /**
+     * Sets a new transformation axis
+     */
+     void setTransformationAxis(TransformationAxis axis);
+
  public slots:
      void setXRotation(int angle);
      void setYRotation(int angle);
@@ -59,6 +64,7 @@ protected:
 private:
     //Transformation variables
     TransformationMode transformationMode;
+    TransformationAxis transformationAxis;
     float xRot, yRot, zRot;
     float xMov, yMov, zMov;
     float xScale, yScale, zScale;
