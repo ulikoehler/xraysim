@@ -26,6 +26,8 @@ void XRayGLWidget::resetView()
 {
     xRot = 0;
     yRot = 0;
+    zRot = 0;
+    updateGL();
 }
 
 /////////////////
@@ -133,9 +135,7 @@ void XRayGLWidget::paintGL()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     //Add the lights
-    //glTranslated(-1.0, -1.0, -5.0);
-    glScaled(0.5,0.5,0.5);
-    glRotatef(45.0, 0.0, 1.0, 1.0);
+    glTranslated(0, 0, -10.0);
     glRotated(xRot, 1.0, 0.0, 0.0);
     glRotated(yRot, 0.0, 1.0, 0.0);
     glRotated(zRot, 0.0, 0.0, 1.0);
@@ -149,7 +149,7 @@ void drawCube(const float color)
 {
     glBegin(GL_TRIANGLE_STRIP);
         //Set the material
-        glMaterialf(GL_FRONT_AND_BACK,GL_SPECULAR, 0.8);
+        glMaterialf(GL_FRONT_AND_BACK,GL_SPECULAR, 0);
         //Draw the side 'walls'
         glColor4f(color, color, color, color);
         //Front side
@@ -190,7 +190,7 @@ void XRayGLWidget::resizeGL(int width, int height)
 
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-        //glOrtho(-10, +10, +10, -10, 0.1, 25.0);
+        gluPerspective(45, width/height, 0.1, 100.0);
         glMatrixMode(GL_MODELVIEW);
 
 }

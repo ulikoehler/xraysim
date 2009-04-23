@@ -132,6 +132,19 @@
      </layout>
     </widget>
    </widget>
+   <widget class="QPushButton" name="resetViewButton">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>270</y>
+      <width>78</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Reset view</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
