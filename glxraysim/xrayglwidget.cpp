@@ -1,5 +1,6 @@
 #include <QtGui>
 #include <QtOpenGL>
+#include <cstdlib>
 
 #include "xrayglwidget.h"
 
@@ -99,28 +100,51 @@ void XRayGLWidget::initializeGL()
     glShadeModel(GL_FLAT);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
+    glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHTING);
+    glShadeModel(GL_SMOOTH);
+
+    const GLfloat global_ambient[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient);
+
+
 }
 
 inline
 void drawCube(const float color)
 {
     glBegin(GL_QUAD_STRIP);
-    //Draw the side 'walls'
-    glColor4f(color, color, color, color);
-    //Front side
-    glVertex3f(0.0,1.0,0.0);
-    glVertex3f(0.0,0.0,0.0);
-    glVertex3f(1.0,1.0,0.0);
-    glVertex3f(1.0,0.0,0.0);
-    //Right side
-    glVertex3f(1.0,1.0,1.0);
-    glVertex3f(1.0,0.0,1.0);
-    //Back side
-    glVertex3f(0.0,1.0,1.0);
-    glVertex3f(0.0,0.0,1.0);
-    //Left side
-    glVertex3f(0.0,1.0,0.0);
-    glVertex3f(0.0,0.0,0.0);
+        //Set the material
+        glMaterialf(GL_FRONT_AND_BACK,GL_SPECULAR, 0.8);
+        //Draw the side 'walls'
+        glColor4f(color, color, color, color);
+        //Front side
+        glVertex3s(0,1,0);
+        glVertex3s(0,0,0);
+        glVertex3s(1,1,0);
+        glVertex3s(1,0,0);
+        //Right side
+        glVertex3s(1,1,1);
+        glVertex3s(1,0,1);
+        //Back side
+        glVertex3s(0,1,1);
+        glVertex3s(0,0,1);
+        //Left side
+        glVertex3s(0,1,0);
+        glVertex3s(0,0,0);
+    glEnd();
+    //Draw the top and the bottom
+    glBegin(GL_QUADS);
+        //Draw the top
+        glVertex3s(0,1,1);
+        glVertex3s(0,1,0);
+        glVertex3s(1,1,1);
+        glVertex3s(1,1,0);
+        //Draw the bottom
+        glVertex3s(0,0,1);
+        glVertex3s(0,0,0);
+        glVertex3s(1,0,1);
+        glVertex3s(1,0,0);
     glEnd();
 }
 
@@ -151,11 +175,17 @@ void XRayGLWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
+    //Add the lights
+    const GLfloat lightSpecular[] = { 1, 1, 1, 1 };
+    const GLfloat lightPosition[] = { 0,0,1,0};
+    glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpecular);
+    glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
     //glTranslated(-1.0, -1.0, -5.0);
     glScaled(0.5,0.5,0.5);
     glRotatef(45.0, 0.0, 1.0, 1.0);
     glRotated(xRot, 1.0, 0.0, 0.0);
     glRotated(yRot, 0.0, 1.0, 0.0);
     glRotated(zRot, 0.0, 0.0, 1.0);
+    //Draw the cubes
     drawCube(0.8);
 }
