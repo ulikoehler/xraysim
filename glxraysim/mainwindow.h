@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QtGui/QMainWindow>
-#include <QGLWidget>
+#include "xrayglwidget.h"
 
 namespace Ui
 {
@@ -19,7 +19,7 @@ public:
 
 private:
     Ui::MainWindowClass *ui;
-    QGL
+    XRayGLWidget *glWidget;
 };
 
 #endif // MAINWINDOW_H
