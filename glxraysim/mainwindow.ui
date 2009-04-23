@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>538</width>
-    <height>400</height>
+    <width>709</width>
+    <height>514</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,9 +19,18 @@
      <rect>
       <x>20</x>
       <y>10</y>
-      <width>351</width>
-      <height>381</height>
+      <width>511</width>
+      <height>491</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>1</horstretch>
+      <verstretch>1</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="cursor">
+     <cursorShape>OpenHandCursor</cursorShape>
     </property>
     <property name="title">
      <string>Graphics view</string>
@@ -30,8 +39,8 @@
    <widget class="QWidget" name="formLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>380</x>
-      <y>20</y>
+      <x>550</x>
+      <y>10</y>
       <width>151</width>
       <height>31</height>
      </rect>
@@ -65,89 +74,63 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="gridLayoutWidget">
+   <widget class="QGroupBox" name="transformationModeGroupBox">
     <property name="geometry">
      <rect>
-      <x>380</x>
-      <y>60</y>
+      <x>550</x>
+      <y>50</y>
       <width>151</width>
-      <height>331</height>
+      <height>101</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout">
-     <property name="sizeConstraint">
-      <enum>QLayout::SetDefaultConstraint</enum>
+    <property name="title">
+     <string>Transformation mode</string>
+    </property>
+    <widget class="QWidget" name="verticalLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>131</width>
+       <height>70</height>
+      </rect>
      </property>
-     <item row="1" column="0">
-      <widget class="QSlider" name="xSlider">
-       <property name="minimum">
-        <number>-360</number>
-       </property>
-       <property name="maximum">
-        <number>360</number>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="invertedAppearance">
-        <bool>true</bool>
-       </property>
-       <property name="tickPosition">
-        <enum>QSlider::NoTicks</enum>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QSlider" name="ySlider">
-       <property name="minimum">
-        <number>-360</number>
-       </property>
-       <property name="maximum">
-        <number>360</number>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="invertedAppearance">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="2">
-      <widget class="QSlider" name="zSlider">
-       <property name="minimum">
-        <number>-360</number>
-       </property>
-       <property name="maximum">
-        <number>360</number>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="xSliderLabel">
-       <property name="text">
-        <string>X</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLabel" name="ySliderLabel">
-       <property name="text">
-        <string>Y</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QLabel" name="zLabel">
-       <property name="text">
-        <string>Z</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QRadioButton" name="translateModeRadioButton">
+        <property name="text">
+         <string>Translate</string>
+        </property>
+        <property name="shortcut">
+         <string>Ctrl+T</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="rotateModeRadioButton">
+        <property name="text">
+         <string>Rotate</string>
+        </property>
+        <property name="shortcut">
+         <string>Ctrl+R</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="scaleModeRadioButton">
+        <property name="text">
+         <string>Scale</string>
+        </property>
+        <property name="shortcut">
+         <string>Ctrl+S</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </widget>
   </widget>
  </widget>

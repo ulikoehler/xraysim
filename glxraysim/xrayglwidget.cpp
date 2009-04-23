@@ -4,6 +4,9 @@
 
 #include "xrayglwidget.h"
 
+//Fwd declarations
+inline void drawCube(const float color);
+
 XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
 {
     xRot = 0;
@@ -14,6 +17,12 @@ XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
 XRayGLWidget::~XRayGLWidget()
 {
     makeCurrent();
+}
+
+void XRayGLWidget::resetView()
+{
+    xRot = 0;
+    yRot = 0;
 }
 
 /////////////////
@@ -107,8 +116,28 @@ void XRayGLWidget::initializeGL()
     const GLfloat global_ambient[] = { 0.5f, 0.5f, 0.5f, 1.0f };
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient);
 
+    const GLfloat lightSpecular[] = { 1, 1, 1, 1 };
+    const GLfloat lightPosition[] = { 0,0,1,0};
+    glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpecular);
+    glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
 
 }
+
+void XRayGLWidget::paintGL()
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();
+    //Add the lights
+    //glTranslated(-1.0, -1.0, -5.0);
+    glScaled(0.5,0.5,0.5);
+    glRotatef(45.0, 0.0, 1.0, 1.0);
+    glRotated(xRot, 1.0, 0.0, 0.0);
+    glRotated(yRot, 0.0, 1.0, 0.0);
+    glRotated(zRot, 0.0, 0.0, 1.0);
+    //Draw the cubes
+    drawCube(0.8);
+}
+
 
 inline
 void drawCube(const float color)
@@ -141,10 +170,10 @@ void drawCube(const float color)
         glVertex3s(1,1,1);
         glVertex3s(1,1,0);
         //Draw the bottom
-        glVertex3s(0,0,1);
-        glVertex3s(0,0,0);
-        glVertex3s(1,0,1);
         glVertex3s(1,0,0);
+        glVertex3s(1,0,1);
+        glVertex3s(0,0,0);
+        glVertex3s(0,0,1);
     glEnd();
 }
 
@@ -168,24 +197,4 @@ QSize XRayGLWidget::minimumSizeHint() const
 QSize XRayGLWidget::sizeHint() const
 {
     return QSize(400, 400);
-}
-
-
-void XRayGLWidget::paintGL()
-{
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glLoadIdentity();
-    //Add the lights
-    const GLfloat lightSpecular[] = { 1, 1, 1, 1 };
-    const GLfloat lightPosition[] = { 0,0,1,0};
-    glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpecular);
-    glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
-    //glTranslated(-1.0, -1.0, -5.0);
-    glScaled(0.5,0.5,0.5);
-    glRotatef(45.0, 0.0, 1.0, 1.0);
-    glRotated(xRot, 1.0, 0.0, 0.0);
-    glRotated(yRot, 0.0, 1.0, 0.0);
-    glRotated(zRot, 0.0, 0.0, 1.0);
-    //Draw the cubes
-    drawCube(0.8);
 }

@@ -14,6 +14,8 @@ class XRayGLWidget : public QGLWidget
      QSize minimumSizeHint() const;
      QSize sizeHint() const;
 
+     void resetView();
+
  public slots:
      void setXRotation(int angle);
      void setYRotation(int angle);
@@ -33,9 +35,10 @@ protected:
      void mouseMoveEvent(QMouseEvent *event);
 
 private:
-    int xRot;
-    int yRot;
-    int zRot;
+    //Transformation variables
+    float xRot, yRot, zRot;
+    float xMov, yMov, zMov;
+    float xScale, yScale, zScale;
     QPoint lastPos;
 };
 

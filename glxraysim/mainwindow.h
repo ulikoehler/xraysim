@@ -20,6 +20,9 @@ public:
 private:
     Ui::MainWindowClass *ui;
     XRayGLWidget *glWidget;
+
+private slots:
+    void on_resetViewButton_clicked();
 };
 
 #endif // MAINWINDOW_H
