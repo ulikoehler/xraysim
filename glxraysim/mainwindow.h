@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QtGui/QMainWindow>
+#include <QGLWidget>
 
 namespace Ui
 {
@@ -18,6 +19,7 @@ public:
 
 private:
     Ui::MainWindowClass *ui;
+    QGL
 };
 
 #endif // MAINWINDOW_H
