@@ -154,8 +154,8 @@ void XRayGLWidget::paintGL()
     //glTranslated(-1.0, -1.0, -5.0);
     glScaled(0.5,0.5,0.5);
     glRotatef(45.0, 0.0, 1.0, 1.0);
-    drawCube(0.8);
     glRotated(xRot, 1.0, 0.0, 0.0);
     glRotated(yRot, 0.0, 1.0, 0.0);
     glRotated(zRot, 0.0, 0.0, 1.0);
+    drawCube(0.8);
 }
