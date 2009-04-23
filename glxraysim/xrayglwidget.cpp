@@ -9,6 +9,9 @@ inline void drawCube(const float color);
 
 XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
 {
+    QMessageBox *mb = new QMessageBox();
+    mb->setText(QString("L0: %1; L1: %1, L2: %2, ").arg(GL_LIGHT0).arg(GL_LIGHT1).arg(GL_LIGHT2));
+                      mb->exec();
     xRot = 0;
     yRot = 0;
     zRot = 0;
@@ -121,6 +124,8 @@ void XRayGLWidget::initializeGL()
     glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpecular);
     glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
 
+    glEnable (GL_BLEND); glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 }
 
 void XRayGLWidget::paintGL()
@@ -162,13 +167,14 @@ void drawCube(const float color)
         glVertex3s(0,1,0);
         glVertex3s(0,0,0);
     glEnd();
-    //Draw the top and the bottom
-    glBegin(GL_QUADS);
-        //Draw the top
+    //Draw the top
+    glBegin(GL_TRIANGLE_STRIP);
         glVertex3s(0,1,1);
         glVertex3s(0,1,0);
         glVertex3s(1,1,1);
         glVertex3s(1,1,0);
+    glEnd();
+    glBegin(GL_TRIANGLE_STRIP);
         //Draw the bottom
         glVertex3s(1,0,0);
         glVertex3s(1,0,1);

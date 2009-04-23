@@ -8,8 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     //Create a new GL widget and put it into the graphics box
     glWidget = new XRayGLWidget(ui->groupBox);
     QHBoxLayout *hbox = new QHBoxLayout();
-    hbox->addWidget(glWidget);
-    hbox->addStretch(1);
+    hbox->addWidget(glWidget, 0);
     ui->groupBox->setLayout(hbox);
 }
 
