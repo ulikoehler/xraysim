@@ -16,6 +16,14 @@ XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
     xRot = 0;
     yRot = 0;
     zRot = 0;
+
+    xMov = 0;
+    yMov = 0;
+    zMov = 0;
+
+    xScale = 1;
+    yScale = 1;
+    zScale = 1;
 }
 
 XRayGLWidget::~XRayGLWidget()
@@ -95,15 +103,38 @@ void XRayGLWidget::mouseMoveEvent(QMouseEvent *event)
     int dx = event->x() - lastPos.x();
     int dy = event->y() - lastPos.y();
 
-    if (event->buttons() & Qt::LeftButton)
+    if(transformationMode == MODE_ROTATE)
     {
-        setXRotation(xRot + 8 * dy);
-        setYRotation(yRot + 8 * dx);
+        if (event->buttons() & Qt::LeftButton)
+        {
+            setXRotation(xRot + 8 * dy);
+            setYRotation(yRot + 8 * dx);
+        }
+        else if (event->buttons() & Qt::RightButton)
+        {
+            setXRotation(xRot + 8 * dy);
+            setZRotation(zRot + 8 * dx);
+        }
     }
-    else if (event->buttons() & Qt::RightButton)
+    else if(transformationMode == MODE_TRANSLATE)
     {
-        setXRotation(xRot + 8 * dy);
-        setZRotation(zRot + 8 * dx);
+        if (event->buttons() & Qt::LeftButton)
+        {
+            xMov -= 0.1 * dy;
+        }
+        else if (event->buttons() & Qt::RightButton)
+        {
+            zMov += dx;
+        }
+        else if (event->buttons() & Qt::RightButton)
+        {
+            zMov += dx;
+        }
+        updateGL();
+    }
+    else if (transformationMode == MODE_SCALE)
+    {
+
     }
     lastPos = event->pos();
 }
@@ -117,7 +148,6 @@ void XRayGLWidget::mouseMoveEvent(QMouseEvent *event)
 void XRayGLWidget::initializeGL()
 {
     qglClearColor(Qt::black);
-    glShadeModel(GL_FLAT);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
     glEnable(GL_LIGHT0);
@@ -147,14 +177,13 @@ void XRayGLWidget::paintGL()
     glRotated(xRot, 1.0, 0.0, 0.0);
     glRotated(yRot, 0.0, 1.0, 0.0);
     glRotated(zRot, 0.0, 0.0, 1.0);
-    glScaled(xScale, yScale, zScale);
+    //glScaled(xScale, yScale, zScale);
     //Draw the cubes
-    drawCube(0.8);
+    drawCube(0.5);
 }
 
 
-inline
-        void drawCube(const float color)
+inline void drawCube(const float color)
 {
     glBegin(GL_TRIANGLE_STRIP);
         //Set the material

@@ -10,6 +10,8 @@ MainWindow::MainWindow(QWidget *parent)
     QHBoxLayout *hbox = new QHBoxLayout();
     hbox->addWidget(glWidget, 0);
     ui->groupBox->setLayout(hbox);
+    //Set the default mode
+    glWidget->setTransformationMode(MODE_ROTATE);
 }
 
 MainWindow::~MainWindow()
@@ -21,6 +23,9 @@ void MainWindow::on_resetViewButton_clicked()
 {
     glWidget->resetView();
 }
+///////////////////////
+//Transformation mode//
+///////////////////////
 
 void MainWindow::on_translateModeRadioButton_toggled(bool checked)
 {
@@ -35,4 +40,23 @@ void MainWindow::on_rotateModeRadioButton_toggled(bool checked)
 void MainWindow::on_scaleModeRadioButton_clicked(bool checked)
 {
     if(checked) {glWidget->setTransformationMode(MODE_SCALE);}
+}
+
+///////////////////////
+//Transformation axis//
+///////////////////////
+
+void MainWindow::on_xAxisRadioButton_toggled(bool checked)
+{
+
+}
+
+void MainWindow::on_yAxisRadioButton_toggled(bool checked)
+{
+
+}
+
+void MainWindow::on_zAxisRadioButton_toggled(bool checked)
+{
+
 }

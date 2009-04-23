@@ -10,6 +10,13 @@ enum TransformationMode
     MODE_SCALE
 };
 
+enum TransformationAxis
+{
+    X_AXIS,
+    Y_AXIS,
+    Z_AXIS
+};
+
 class XRayGLWidget : public QGLWidget
 {
     Q_OBJECT
@@ -51,7 +58,7 @@ protected:
 
 private:
     //Transformation variables
-    TransformationMode transformationMode = MODE_ROTATE;
+    TransformationMode transformationMode;
     float xRot, yRot, zRot;
     float xMov, yMov, zMov;
     float xScale, yScale, zScale;

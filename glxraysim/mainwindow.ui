@@ -59,7 +59,7 @@
         <number>3</number>
        </property>
        <property name="minimum">
-        <double>0.001000000000000</double>
+        <double>1.000000000000000</double>
        </property>
        <property name="maximum">
         <double>100.000000000000000</double>
@@ -68,7 +68,7 @@
         <double>0.010000000000000</double>
        </property>
        <property name="value">
-        <double>0.010000000000000</double>
+        <double>1.000000000000000</double>
        </property>
       </widget>
      </item>
@@ -80,7 +80,7 @@
       <x>550</x>
       <y>50</y>
       <width>151</width>
-      <height>101</height>
+      <height>141</height>
      </rect>
     </property>
     <property name="title">
@@ -95,7 +95,7 @@
        <height>70</height>
       </rect>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
+     <layout class="QVBoxLayout" name="transformationModeLayout">
       <item>
        <widget class="QRadioButton" name="translateModeRadioButton">
         <property name="text">
@@ -131,12 +131,66 @@
       </item>
      </layout>
     </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>100</y>
+       <width>131</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="transformationAxisRadioButton">
+      <item>
+       <widget class="QRadioButton" name="xAxisRadioButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>X</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="yAxisRadioButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Y</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="zAxisRadioButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Z</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </widget>
    <widget class="QPushButton" name="resetViewButton">
     <property name="geometry">
      <rect>
       <x>550</x>
-      <y>230</y>
+      <y>200</y>
       <width>151</width>
       <height>26</height>
      </rect>
