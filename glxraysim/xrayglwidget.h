@@ -9,10 +9,10 @@ class XRayGLWidget : public QGLWidget
 public:
     XRayGLWidget(QWidget *parent);
 
-//signals:
-//    void xRotationChanged(int angle);
-//    void yRotationChanged(int angle);
-//    void zRotationChanged(int angle);
+signals:
+    void xRotationChanged(int angle);
+    void yRotationChanged(int angle);
+    void zRotationChanged(int angle);
 
 QSize minimumSizeHint() const;
 QSize sizeHint() const;
