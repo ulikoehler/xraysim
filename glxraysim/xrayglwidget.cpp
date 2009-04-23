@@ -147,7 +147,7 @@ void XRayGLWidget::paintGL()
 inline
 void drawCube(const float color)
 {
-    glBegin(GL_QUAD_STRIP);
+    glBegin(GL_TRIANGLE_STRIP);
         //Set the material
         glMaterialf(GL_FRONT_AND_BACK,GL_SPECULAR, 0.8);
         //Draw the side 'walls'
