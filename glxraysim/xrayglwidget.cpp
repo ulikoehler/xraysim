@@ -9,9 +9,6 @@ inline void drawCube(const float color);
 
 XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
 {
-    QMessageBox *mb = new QMessageBox();
-    mb->setText(QString("L0: %1; L1: %1, L2: %2, ").arg(GL_LIGHT0).arg(GL_LIGHT1).arg(GL_LIGHT2));
-                      mb->exec();
     xRot = 0;
     yRot = 0;
     zRot = 0;
@@ -116,6 +113,7 @@ void XRayGLWidget::initializeGL()
     glEnable(GL_CULL_FACE);
     glEnable(GL_LIGHT0);
     glEnable(GL_LIGHTING);
+    glEnable(GL_COLOR_MATERIAL);
     glShadeModel(GL_SMOOTH);
 
     const GLfloat global_ambient[] = { 0.5f, 0.5f, 0.5f, 1.0f };
@@ -126,8 +124,8 @@ void XRayGLWidget::initializeGL()
     glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpecular);
     glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
 
-    glEnable (GL_BLEND); glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+    glEnable (GL_BLEND);
+    glBlendFunc (GL_SRC_ALPHA, GL_ONE);
 }
 
 void XRayGLWidget::paintGL()
@@ -149,7 +147,7 @@ void drawCube(const float color)
 {
     glBegin(GL_TRIANGLE_STRIP);
         //Set the material
-        glMaterialf(GL_FRONT_AND_BACK,GL_SPECULAR, 0);
+        glMaterialf(GL_FRONT_AND_BACK,GL_SHININESS , 1);
         //Draw the side 'walls'
         glColor4f(color, color, color, color);
         //Front side

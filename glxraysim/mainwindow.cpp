@@ -19,5 +19,5 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_resetViewButton_clicked()
 {
- //   glWidget->set
+    glWidget->resetView();
 }
