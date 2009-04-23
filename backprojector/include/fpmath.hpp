@@ -124,7 +124,7 @@ computePixelEffect (const Point& a, const IntersectionPointPrototypes& ip, const
     //The 1.0 case can't occur if the angle is not exactly 90.0 or 0.0 degrees
 
     //Case 1; see doc
-//    if ()
+//     if ()
 //        {
 //            return ;
 //        }
