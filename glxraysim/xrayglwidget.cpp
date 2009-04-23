@@ -25,13 +25,13 @@ inline int normalizeAngle(int angle)
     if(ret < 0) {ret *= (-1);}
     return ret;
 }
-
 void XRayGLWidget::setXRotation(int angle)
 {
     normalizeAngle(angle);
     if (angle != xRot)
     {
         xRot = angle;
+        emit xRotationChanged(angle);
         updateGL();
     }
 }
@@ -42,6 +42,7 @@ void XRayGLWidget::setYRotation(int angle)
     if (angle != yRot)
     {
         yRot = angle;
+        emit yRotationChanged(angle);
         updateGL();
     }
 }
@@ -52,9 +53,11 @@ void XRayGLWidget::setZRotation(int angle)
     if (angle != zRot)
     {
         zRot = angle;
+        emit zRotationChanged(angle);
         updateGL();
     }
 }
+
 
 ////////////////////
 //Mouse event code//
@@ -98,6 +101,7 @@ void XRayGLWidget::initializeGL()
     glEnable(GL_CULL_FACE);
 }
 
+inline
 void drawCube(const float color)
 {
     glBegin(GL_QUAD_STRIP);
@@ -122,13 +126,13 @@ void drawCube(const float color)
 
 void XRayGLWidget::resizeGL(int width, int height)
 {
-    int side = qMin(width, height);
-    glViewport((width - side) / 2, (height - side) / 2, side, side);
+        int side = qMin(width, height);
+        glViewport((width - side) / 2, (height - side) / 2, side, side);
 
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho(-0.5, +0.5, +0.5, -0.5, 4.0, 15.0);
-    glMatrixMode(GL_MODELVIEW);
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        //glOrtho(-10, +10, +10, -10, 0.1, 25.0);
+        glMatrixMode(GL_MODELVIEW);
 
 }
 
@@ -147,11 +151,11 @@ void XRayGLWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
-    glTranslated(-1.0, -1.0, -5.0);
+    //glTranslated(-1.0, -1.0, -5.0);
     glScaled(0.5,0.5,0.5);
-    //glRotatef(45.0, 0.0, 1.0, 1.0);
+    glRotatef(45.0, 0.0, 1.0, 1.0);
     drawCube(0.8);
-    //glRotated(xRot, 1.0, 0.0, 0.0);
-    //glRotated(yRot, 0.0, 1.0, 0.0);
-    //glRotated(zRot, 0.0, 0.0, 1.0);
+    glRotated(xRot, 1.0, 0.0, 0.0);
+    glRotated(yRot, 0.0, 1.0, 0.0);
+    glRotated(zRot, 0.0, 0.0, 1.0);
 }

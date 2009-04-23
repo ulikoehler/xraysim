@@ -80,20 +80,47 @@
      </property>
      <item row="1" column="0">
       <widget class="QSlider" name="xSlider">
+       <property name="minimum">
+        <number>-360</number>
+       </property>
+       <property name="maximum">
+        <number>360</number>
+       </property>
        <property name="orientation">
         <enum>Qt::Vertical</enum>
+       </property>
+       <property name="invertedAppearance">
+        <bool>true</bool>
+       </property>
+       <property name="tickPosition">
+        <enum>QSlider::NoTicks</enum>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
       <widget class="QSlider" name="ySlider">
+       <property name="minimum">
+        <number>-360</number>
+       </property>
+       <property name="maximum">
+        <number>360</number>
+       </property>
        <property name="orientation">
         <enum>Qt::Vertical</enum>
+       </property>
+       <property name="invertedAppearance">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
      <item row="1" column="2">
       <widget class="QSlider" name="zSlider">
+       <property name="minimum">
+        <number>-360</number>
+       </property>
+       <property name="maximum">
+        <number>360</number>
+       </property>
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
