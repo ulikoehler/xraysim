@@ -135,9 +135,9 @@
    <widget class="QPushButton" name="resetViewButton">
     <property name="geometry">
      <rect>
-      <x>560</x>
-      <y>270</y>
-      <width>78</width>
+      <x>550</x>
+      <y>230</y>
+      <width>151</width>
       <height>26</height>
      </rect>
     </property>

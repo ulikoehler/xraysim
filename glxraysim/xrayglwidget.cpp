@@ -2,6 +2,10 @@
 #include <QtOpenGL>
 #include <cstdlib>
 
+#include <tr1/random>
+
+using namespace std;
+
 #include "xrayglwidget.h"
 
 //Fwd declarations
@@ -25,6 +29,11 @@ void XRayGLWidget::resetView()
     yRot = 0;
     zRot = 0;
     updateGL();
+}
+
+void XRayGLWidget::setTransformationMode(TransformationMode mode)
+{
+    this->transformationMode = mode;
 }
 
 /////////////////
@@ -132,18 +141,20 @@ void XRayGLWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
-    //Add the lights
-    glTranslated(0, 0, -10.0);
+
+    //Apply the transformation parameters
+    glTranslatef(xMov, yMov, zMov);
     glRotated(xRot, 1.0, 0.0, 0.0);
     glRotated(yRot, 0.0, 1.0, 0.0);
     glRotated(zRot, 0.0, 0.0, 1.0);
+    glScaled(xScale, yScale, zScale);
     //Draw the cubes
     drawCube(0.8);
 }
 
 
 inline
-void drawCube(const float color)
+        void drawCube(const float color)
 {
     glBegin(GL_TRIANGLE_STRIP);
         //Set the material
@@ -165,13 +176,15 @@ void drawCube(const float color)
         glVertex3s(0,1,0);
         glVertex3s(0,0,0);
     glEnd();
-    //Draw the top
+
     glBegin(GL_TRIANGLE_STRIP);
+    //Draw the top
         glVertex3s(0,1,1);
         glVertex3s(0,1,0);
         glVertex3s(1,1,1);
         glVertex3s(1,1,0);
     glEnd();
+
     glBegin(GL_TRIANGLE_STRIP);
         //Draw the bottom
         glVertex3s(1,0,0);
@@ -183,13 +196,13 @@ void drawCube(const float color)
 
 void XRayGLWidget::resizeGL(int width, int height)
 {
-        int side = qMin(width, height);
-        glViewport((width - side) / 2, (height - side) / 2, side, side);
+    int side = qMin(width, height);
+    glViewport((width - side) / 2, (height - side) / 2, side, side);
 
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        gluPerspective(45, width/height, 0.1, 100.0);
-        glMatrixMode(GL_MODELVIEW);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(60, height/width, 5, 100.0);
+    glMatrixMode(GL_MODELVIEW);
 
 }
 

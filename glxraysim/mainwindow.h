@@ -22,6 +22,9 @@ private:
     XRayGLWidget *glWidget;
 
 private slots:
+    void on_scaleModeRadioButton_clicked(bool checked);
+    void on_rotateModeRadioButton_toggled(bool checked);
+    void on_translateModeRadioButton_toggled(bool checked);
     void on_resetViewButton_clicked();
 };
 

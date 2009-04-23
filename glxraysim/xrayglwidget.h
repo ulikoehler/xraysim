@@ -3,6 +3,13 @@
 
 #include <QGLWidget>
 
+enum TransformationMode
+{
+    MODE_TRANSLATE,
+    MODE_ROTATE,
+    MODE_SCALE
+};
+
 class XRayGLWidget : public QGLWidget
 {
     Q_OBJECT
@@ -14,7 +21,15 @@ class XRayGLWidget : public QGLWidget
      QSize minimumSizeHint() const;
      QSize sizeHint() const;
 
+     /**
+      * Resets the modelview matrix and the transformation variables and updates the view
+      */
      void resetView();
+
+     /**
+      * Sets a new transformation mode
+      */
+     void setTransformationMode(TransformationMode mode);
 
  public slots:
      void setXRotation(int angle);
@@ -36,6 +51,7 @@ protected:
 
 private:
     //Transformation variables
+    TransformationMode transformationMode = MODE_ROTATE;
     float xRot, yRot, zRot;
     float xMov, yMov, zMov;
     float xScale, yScale, zScale;

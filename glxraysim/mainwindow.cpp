@@ -21,3 +21,18 @@ void MainWindow::on_resetViewButton_clicked()
 {
     glWidget->resetView();
 }
+
+void MainWindow::on_translateModeRadioButton_toggled(bool checked)
+{
+    if(checked) {glWidget->setTransformationMode(MODE_TRANSLATE);}
+}
+
+void MainWindow::on_rotateModeRadioButton_toggled(bool checked)
+{
+    if(checked) {glWidget->setTransformationMode(MODE_ROTATE);}
+}
+
+void MainWindow::on_scaleModeRadioButton_clicked(bool checked)
+{
+    if(checked) {glWidget->setTransformationMode(MODE_SCALE);}
+}
