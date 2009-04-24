@@ -4,12 +4,12 @@
 
 #include <tr1/random>
 
+//Macros
+#define drawCube(color) glColor4f(color, color, color, color);glCallList(drawCubeListID);
+
 using namespace std;
 
 #include "xrayglwidget.h"
-
-//Fwd declarations
-inline void drawCube(const float color);
 
 XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
 {
@@ -27,6 +27,8 @@ XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
 XRayGLWidget::~XRayGLWidget()
 {
     makeCurrent();
+    //Delete the display lists
+    glDeleteLists(drawCubeListID, 1);
 }
 
 void XRayGLWidget::resetView()
@@ -40,11 +42,6 @@ void XRayGLWidget::resetView()
 void XRayGLWidget::setTransformationMode(TransformationMode mode)
 {
     this->transformationMode = mode;
-}
-
-void XRayGLWidget::setTransformationAxis(TransformationAxis axis)
-{
-    this->transformationAxis = axis;
 }
 
 /////////////////
@@ -111,33 +108,35 @@ void XRayGLWidget::mouseMoveEvent(QMouseEvent *event)
 {
     int dx = event->x() - lastPos.x();
     int dy = event->y() - lastPos.y();
-
+    
     if(transformationMode == MODE_ROTATE)
-    {
-        switch(transformationAxis)
-        {
-            case X_AXIS: {setXRotation(xRot + 4 * dx);break;}
-            case Y_AXIS: {setYRotation(yRot + 4 * dy);break;}
-            case Z_AXIS: {setZRotation(zRot + 4 * dy);break;}
-        }
-    }
-    else if(transformationMode == MODE_TRANSLATE)
     {
         if (event->buttons() & Qt::LeftButton)
         {
-            xMov += 0.01 * dx;
-            yMov += 0.01 * dy;
+            setXRotation(xRot + 8 * dy);
+            setYRotation(yRot + 8 * dx);
         }
         else if (event->buttons() & Qt::RightButton)
         {
-            zMov += 0.01 * dy;
+            setXRotation(xRot + 8 * dy);
+            setZRotation(zRot + 8 * dx);
         }
-        updateGL();
+        else if(transformationMode == MODE_TRANSLATE)
+        {
+            if (event->buttons() & Qt::LeftButton)
+            {
+                xMov += 0.01 * dx;
+                yMov -= 0.01 * dy;
+            }
+            else if (event->buttons() & Qt::RightButton)
+            {
+                zMov -= 0.01 * dy;
+            }
+            updateGL();
+        }
+        lastPos = event->pos();
     }
-    lastPos = event->pos();
 }
-
-
 
 /////////////////
 //Painting code//
@@ -145,7 +144,10 @@ void XRayGLWidget::mouseMoveEvent(QMouseEvent *event)
 
 void XRayGLWidget::initializeGL()
 {
+    //Set the background color
     qglClearColor(Qt::black);
+
+    //Enable the required featuresg
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
     glEnable(GL_LIGHT0);
@@ -163,6 +165,48 @@ void XRayGLWidget::initializeGL()
 
     glEnable (GL_BLEND);
     glBlendFunc (GL_SRC_ALPHA, GL_ONE);
+
+    /**
+     * Initialize the display lists
+     */
+    //Initialize the cube generation list
+    drawCubeListID = glGenLists(1);
+
+    glNewList(drawCubeListID, GL_COMPILE);
+        glBegin(GL_TRIANGLE_STRIP);
+            //Front side
+            glVertex3s(0,1,0);
+            glVertex3s(0,0,0);
+            glVertex3s(1,1,0);
+            glVertex3s(1,0,0);
+            //Right side
+            glVertex3s(1,1,1);
+            glVertex3s(1,0,1);
+            //Back side
+            glVertex3s(0,1,1);
+            glVertex3s(0,0,1);
+            //Left side
+            glVertex3s(0,1,0);
+            glVertex3s(0,0,0);
+        glEnd();
+
+        glBegin(GL_TRIANGLE_STRIP);
+        //Draw the top
+            glVertex3s(0,1,1);
+            glVertex3s(0,1,0);
+            glVertex3s(1,1,1);
+            glVertex3s(1,1,0);
+        glEnd();
+
+        glBegin(GL_TRIANGLE_STRIP);
+            //Draw the bottom
+            glVertex3s(0,0,0);
+            glVertex3s(0,0,1);
+            glVertex3s(1,0,0);
+            glVertex3s(1,0,1);
+        glEnd();
+    glEndList();
+
 }
 
 void XRayGLWidget::paintGL()
@@ -177,47 +221,7 @@ void XRayGLWidget::paintGL()
     glRotated(zRot, 0.0, 0.0, 1.0);
     //Draw the cubes
     drawCube(0.5);
-}
-
-
-inline void drawCube(const float color)
-{
-    glBegin(GL_TRIANGLE_STRIP);
-        //Set the material
-        glMaterialf(GL_FRONT_AND_BACK,GL_SHININESS , 1);
-        //Draw the side 'walls'
-        glColor4f(color, color, color, color);
-        //Front side
-        glVertex3s(0,1,0);
-        glVertex3s(0,0,0);
-        glVertex3s(1,1,0);
-        glVertex3s(1,0,0);
-        //Right side
-        glVertex3s(1,1,1);
-        glVertex3s(1,0,1);
-        //Back side
-        glVertex3s(0,1,1);
-        glVertex3s(0,0,1);
-        //Left side
-        glVertex3s(0,1,0);
-        glVertex3s(0,0,0);
-    glEnd();
-
-    glBegin(GL_TRIANGLE_STRIP);
-    //Draw the top
-        glVertex3s(0,1,1);
-        glVertex3s(0,1,0);
-        glVertex3s(1,1,1);
-        glVertex3s(1,1,0);
-    glEnd();
-
-    glBegin(GL_TRIANGLE_STRIP);
-        //Draw the bottom
-        glVertex3s(1,0,0);
-        glVertex3s(1,0,1);
-        glVertex3s(0,0,0);
-        glVertex3s(0,0,1);
-    glEnd();
+    //glTranslatef(1.0
 }
 
 void XRayGLWidget::resizeGL(int width, int height)
@@ -227,7 +231,8 @@ void XRayGLWidget::resizeGL(int width, int height)
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(60, height/width, 5, 100.0);
+    //glTranslatef(0,0,5);
+    gluPerspective(90, height/width, 0.1, 100.0);
     glMatrixMode(GL_MODELVIEW);
 
 }

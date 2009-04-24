@@ -9,13 +9,6 @@ enum TransformationMode
     MODE_ROTATE
 };
 
-enum TransformationAxis
-{
-    X_AXIS,
-    Y_AXIS,
-    Z_AXIS
-};
-
 class XRayGLWidget : public QGLWidget
 {
     Q_OBJECT
@@ -36,11 +29,6 @@ class XRayGLWidget : public QGLWidget
       * Sets a new transformation mode
       */
      void setTransformationMode(TransformationMode mode);
-
-    /**
-     * Sets a new transformation axis
-     */
-     void setTransformationAxis(TransformationAxis axis);
 
      /**
       * Sets the scale
@@ -71,11 +59,16 @@ protected:
 private:
     //Transformation variables
     TransformationMode transformationMode;
-    TransformationAxis transformationAxis;
     float xRot, yRot, zRot;
     float xMov, yMov, zMov;
     float scale;
     QPoint lastPos;
+
+    /**
+     * OpenGL variables
+     */
+    //Display list IDs
+    GLuint drawCubeListID;
 };
 
 #endif // XRAYGLWIDGET_H

@@ -80,7 +80,7 @@
       <x>550</x>
       <y>50</y>
       <width>151</width>
-      <height>111</height>
+      <height>81</height>
      </rect>
     </property>
     <property name="title">
@@ -121,60 +121,6 @@
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="horizontalLayoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>70</y>
-       <width>131</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <layout class="QHBoxLayout" name="transformationAxisRadioButton">
-      <item>
-       <widget class="QRadioButton" name="xAxisRadioButton">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>X</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="yAxisRadioButton">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Y</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="zAxisRadioButton">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Z</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
    </widget>
    <widget class="QPushButton" name="resetViewButton">
     <property name="geometry">
@@ -193,7 +139,7 @@
     <property name="geometry">
      <rect>
       <x>550</x>
-      <y>210</y>
+      <y>140</y>
       <width>41</width>
       <height>16</height>
      </rect>
@@ -206,7 +152,7 @@
     <property name="geometry">
      <rect>
       <x>590</x>
-      <y>210</y>
+      <y>140</y>
       <width>111</width>
       <height>20</height>
      </rect>
@@ -215,7 +161,7 @@
      <number>1</number>
     </property>
     <property name="maximum">
-     <number>100</number>
+     <number>200</number>
     </property>
     <property name="value">
      <number>100</number>

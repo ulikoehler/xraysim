@@ -43,24 +43,6 @@ void MainWindow::on_rotateModeRadioButton_toggled(bool checked)
 //Transformation axis//
 ///////////////////////
 
-void MainWindow::on_xAxisRadioButton_toggled(bool checked)
-{
-
-    if(checked) {glWidget->setTransformationAxis(X_AXIS);}
-}
-
-void MainWindow::on_yAxisRadioButton_toggled(bool checked)
-{
-
-    if(checked) {glWidget->setTransformationAxis(Y_AXIS);}
-}
-
-void MainWindow::on_zAxisRadioButton_toggled(bool checked)
-{
-
-    if(checked) {glWidget->setTransformationAxis(Z_AXIS);}
-}
-
 void MainWindow::on_scaleSlider_valueChanged(int value)
 {
     glWidget->setScale(value);
