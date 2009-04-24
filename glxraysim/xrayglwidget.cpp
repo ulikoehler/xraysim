@@ -117,24 +117,20 @@ void XRayGLWidget::mouseMoveEvent(QMouseEvent *event)
         switch(transformationAxis)
         {
             case X_AXIS: {setXRotation(xRot + 4 * dx);break;}
-
             case Y_AXIS: {setYRotation(yRot + 4 * dy);break;}
-            case Z_AXIS: {setZRotation(xRot + 4 * dy);break;}
+            case Z_AXIS: {setZRotation(zRot + 4 * dy);break;}
         }
     }
     else if(transformationMode == MODE_TRANSLATE)
     {
         if (event->buttons() & Qt::LeftButton)
         {
-            xMov += 0.1 * dy;
+            xMov += 0.01 * dx;
+            yMov += 0.01 * dy;
         }
         else if (event->buttons() & Qt::RightButton)
         {
-            zMov += dx;
-        }
-        else if (event->buttons() & Qt::RightButton)
-        {
-            zMov += dx;
+            zMov += 0.01 * dy;
         }
         updateGL();
     }
