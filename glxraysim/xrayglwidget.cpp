@@ -8,6 +8,7 @@
 #define drawCube(color) glColor4f(color, color, color, color);glCallList(drawCubeListID);
 
 using namespace std;
+using namespace std::tr1;
 
 #include "xrayglwidget.h"
 
@@ -21,8 +22,8 @@ XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
     yMov = 0;
     zMov = 0;
 
-    scale = 1;
     baseScale = 0.01;
+    scale = baseScale;
 }
 
 XRayGLWidget::~XRayGLWidget()
@@ -130,23 +131,22 @@ void XRayGLWidget::mouseMoveEvent(QMouseEvent *event)
             setXRotation(xRot + 8 * dy);
             setZRotation(zRot + 8 * dx);
         }
-        else if(transformationMode == MODE_TRANSLATE)
-        {
-            if (event->buttons() & Qt::LeftButton)
-            {
-                xMov += 0.01 * dx;
-                yMov -= 0.01 * dy;
-            }
-            else if (event->buttons() & Qt::RightButton)
-            {
-                zMov -= 0.01 * dy;
-            }
-            updateGL();
-        }
-        lastPos = event->pos();
     }
+    else if(transformationMode == MODE_TRANSLATE)
+    {
+        if (event->buttons() & Qt::LeftButton)
+        {
+            xMov += (0.01/scale) * dx;
+            yMov -= (0.01/scale) * dy;
+        }
+        else if (event->buttons() & Qt::RightButton)
+        {
+            zMov -= (0.01/scale) * dy;
+        }
+        updateGL();
+    }
+    lastPos = event->pos();
 }
-
 /////////////////
 //Painting code//
 /////////////////
@@ -168,9 +168,12 @@ void XRayGLWidget::initializeGL()
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient);
 
     const GLfloat lightSpecular[] = { 1, 1, 1, 1 };
-    const GLfloat lightPosition[] = { 0,0,1,0};
+    const GLfloat lightPosition[] = { 0,0,-10,1};
+    const GLfloat lightDirection[] = {0,0,1};
     glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpecular);
     glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
+    glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, lightDirection);
+    glLighti(GL_LIGHT0, GL_SPOT_CUTOFF, 90);
 
     glEnable (GL_BLEND);
     glBlendFunc (GL_SRC_ALPHA, GL_ONE);
@@ -222,8 +225,14 @@ void XRayGLWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
-    //Set some material parameters
-    glMaterialf(GL_FRONT,GL_SHININESS , 1);
+    //Add the light
+    glTranslatef(0,0,-10);
+    glMateriali(GL_FRONT_AND_BACK, GL_EMISSION, 1);
+    drawCube(0);
+    glMaterialf(GL_FRONT_AND_BACK, GL_EMISSION, 0);
+    glLoadIdentity();
+    //Set some material parameters (for the meshes, not for the light emitter
+    glMaterialf(GL_FRONT_AND_BACK,GL_SHININESS , 1);
     //Apply the transformation parameters
     glScalef(scale, scale, scale);
     glTranslatef(xMov, yMov, zMov);
@@ -231,8 +240,18 @@ void XRayGLWidget::paintGL()
     glRotated(yRot, 0.0, 1.0, 0.0);
     glRotated(zRot, 0.0, 0.0, 1.0);
     //Draw the cubes
-    drawCube(0.5);
-    glTranslatef(-1,0,0.1);
+    mt19937 rng(time(0));
+    for(int i = 0; i < 100; i++) //x loop
+    {
+        glPushMatrix();
+            for(int j = 0; j < 100; j++)//y lopp
+            {
+                drawCube((rng() % 9) * 0.1);
+                glTranslatef(0,1,0);
+            }
+        glPopMatrix();
+        glTranslatef(1,0,0);
+    }
     drawCube(0.4);
     glTranslatef(0,1,0.1);
     drawCube(0.8);
