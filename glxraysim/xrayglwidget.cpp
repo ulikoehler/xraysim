@@ -21,9 +21,7 @@ XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
     yMov = 0;
     zMov = 0;
 
-    xScale = 1;
-    yScale = 1;
-    zScale = 1;
+    scale = 1;
 }
 
 XRayGLWidget::~XRayGLWidget()
@@ -92,6 +90,12 @@ void XRayGLWidget::setZRotation(int angle)
     }
 }
 
+void XRayGLWidget::setScale(int scalePercent)
+{
+    this->scale = scalePercent / 100.0;
+    updateGL();
+}
+
 
 ////////////////////
 //Mouse event code//
@@ -122,7 +126,7 @@ void XRayGLWidget::mouseMoveEvent(QMouseEvent *event)
     {
         if (event->buttons() & Qt::LeftButton)
         {
-            xMov -= 0.1 * dy;
+            xMov += 0.1 * dy;
         }
         else if (event->buttons() & Qt::RightButton)
         {
@@ -133,10 +137,6 @@ void XRayGLWidget::mouseMoveEvent(QMouseEvent *event)
             zMov += dx;
         }
         updateGL();
-    }
-    else if (transformationMode == MODE_SCALE)
-    {
-
     }
     lastPos = event->pos();
 }
@@ -173,13 +173,12 @@ void XRayGLWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
-
     //Apply the transformation parameters
+    glScalef(scale, scale, scale);
     glTranslatef(xMov, yMov, zMov);
     glRotated(xRot, 1.0, 0.0, 0.0);
     glRotated(yRot, 0.0, 1.0, 0.0);
     glRotated(zRot, 0.0, 0.0, 1.0);
-    //glScaled(xScale, yScale, zScale);
     //Draw the cubes
     drawCube(0.5);
 }

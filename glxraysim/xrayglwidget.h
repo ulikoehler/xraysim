@@ -6,8 +6,7 @@
 enum TransformationMode
 {
     MODE_TRANSLATE,
-    MODE_ROTATE,
-    MODE_SCALE
+    MODE_ROTATE
 };
 
 enum TransformationAxis
@@ -43,10 +42,18 @@ class XRayGLWidget : public QGLWidget
      */
      void setTransformationAxis(TransformationAxis axis);
 
+     /**
+      * Sets the scale
+      * \param scalePercent The new scale in percent
+      */
+     void setScale(int scalePercent);
+
  public slots:
      void setXRotation(int angle);
      void setYRotation(int angle);
      void setZRotation(int angle);
+
+
 
  signals:
      void xRotationChanged(int angle);
@@ -67,7 +74,7 @@ private:
     TransformationAxis transformationAxis;
     float xRot, yRot, zRot;
     float xMov, yMov, zMov;
-    float xScale, yScale, zScale;
+    float scale;
     QPoint lastPos;
 };
 

@@ -12,6 +12,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->groupBox->setLayout(hbox);
     //Set the default mode
     glWidget->setTransformationMode(MODE_ROTATE);
+
+   //connect(ui->scaleDial,
 }
 
 MainWindow::~MainWindow()
@@ -37,11 +39,6 @@ void MainWindow::on_rotateModeRadioButton_toggled(bool checked)
     if(checked) {glWidget->setTransformationMode(MODE_ROTATE);}
 }
 
-void MainWindow::on_scaleModeRadioButton_clicked(bool checked)
-{
-    if(checked) {glWidget->setTransformationMode(MODE_SCALE);}
-}
-
 ///////////////////////
 //Transformation axis//
 ///////////////////////
@@ -62,4 +59,9 @@ void MainWindow::on_zAxisRadioButton_toggled(bool checked)
 {
 
     if(checked) {glWidget->setTransformationAxis(Z_AXIS);}
+}
+
+void MainWindow::on_scaleSlider_valueChanged(int value)
+{
+    glWidget->setScale(value);
 }
