@@ -22,6 +22,7 @@ XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
     zMov = 0;
 
     scale = 1;
+    baseScale = 0.01;
 }
 
 XRayGLWidget::~XRayGLWidget()
@@ -87,9 +88,17 @@ void XRayGLWidget::setZRotation(int angle)
     }
 }
 
-void XRayGLWidget::setScale(int scalePercent)
+void XRayGLWidget::setScale(int scalePercentValue)
 {
-    this->scale = scalePercent / 100.0;
+    scalePercent = scalePercentValue;
+    this->scale = (scalePercent / 100.0) * baseScale;
+    updateGL();
+}
+
+void XRayGLWidget::setBaseScale(double baseScaleValue)
+{
+    baseScale = baseScaleValue;
+    this->scale = (scalePercent / 100.0) * baseScale;
     updateGL();
 }
 
@@ -213,6 +222,8 @@ void XRayGLWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
+    //Set some material parameters
+    glMaterialf(GL_FRONT,GL_SHININESS , 1);
     //Apply the transformation parameters
     glScalef(scale, scale, scale);
     glTranslatef(xMov, yMov, zMov);
@@ -221,6 +232,10 @@ void XRayGLWidget::paintGL()
     glRotated(zRot, 0.0, 0.0, 1.0);
     //Draw the cubes
     drawCube(0.5);
+    glTranslatef(-1,0,0.1);
+    drawCube(0.4);
+    glTranslatef(0,1,0.1);
+    drawCube(0.8);
     //glTranslatef(1.0
 }
 

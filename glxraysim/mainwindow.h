@@ -22,6 +22,7 @@ private:
     XRayGLWidget *glWidget;
 
 private slots:
+    void on_baseScaleSpinBox_valueChanged(double );
     void on_scaleSlider_valueChanged(int value);
     void on_rotateModeRadioButton_toggled(bool checked);
     void on_translateModeRadioButton_toggled(bool checked);

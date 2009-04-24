@@ -34,7 +34,13 @@ class XRayGLWidget : public QGLWidget
       * Sets the scale
       * \param scalePercent The new scale in percent
       */
-     void setScale(int scalePercent);
+     void setScale(int scalePercentValue);
+
+     /**
+      * Sets the scale
+      * \param scalePercent The new scale in percent
+      */
+     void setBaseScale(double baseScale);
 
  public slots:
      void setXRotation(int angle);
@@ -61,7 +67,9 @@ private:
     TransformationMode transformationMode;
     float xRot, yRot, zRot;
     float xMov, yMov, zMov;
-    float scale;
+    float scale; //Changed by the slider
+    int scalePercent; //Caching variable
+    double baseScale; //Changed by a spin box, multiplied with scale
     QPoint lastPos;
 
     /**

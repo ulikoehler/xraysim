@@ -47,3 +47,8 @@ void MainWindow::on_scaleSlider_valueChanged(int value)
 {
     glWidget->setScale(value);
 }
+
+void MainWindow::on_baseScaleSpinBox_valueChanged(double value)
+{
+    glWidget->setBaseScale(value);
+}
