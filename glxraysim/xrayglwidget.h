@@ -3,6 +3,12 @@
 
 #include <QGLWidget>
 
+enum SimulationMode
+{
+    SIM_MODE_TEXTURE_BLEND,
+    SIM_MODE_PIXEL_CUBES
+};
+
 enum TransformationMode
 {
     MODE_TRANSLATE,
@@ -25,22 +31,10 @@ class XRayGLWidget : public QGLWidget
       */
      void resetView();
 
-     /**
-      * Sets a new transformation mode
-      */
      void setTransformationMode(TransformationMode mode);
+     void setSimulationMode(SimulationMode mode);
 
-     /**
-      * Sets the scale
-      * \param scalePercent The new scale in percent
-      */
-     void setScale(int scalePercentValue);
-
-     /**
-      * Sets the scale
-      * \param scalePercent The new scale in percent
-      */
-     void setBaseScale(double baseScale);
+     void setScale(int scalePercent);
 
  public slots:
      void setXRotation(int angle);
@@ -65,12 +59,15 @@ protected:
 private:
     //Transformation variables
     TransformationMode transformationMode;
+    SimulationMode simulationMode;
     float xRot, yRot, zRot;
     float xMov, yMov, zMov;
     float scale; //Changed by the slider
-    int scalePercent; //Caching variable
     double baseScale; //Changed by a spin box, multiplied with scale
     QPoint lastPos;
+
+    //Private functions
+    void textureBlendXRay();
 
     /**
      * OpenGL variables

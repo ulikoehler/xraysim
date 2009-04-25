@@ -36,49 +36,11 @@
      <string>Graphics view</string>
     </property>
    </widget>
-   <widget class="QWidget" name="formLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>550</x>
-      <y>10</y>
-      <width>151</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <layout class="QFormLayout" name="formLayout">
-     <item row="0" column="0">
-      <widget class="QLabel" name="baseScaleLabel">
-       <property name="text">
-        <string>Base scale:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QDoubleSpinBox" name="baseScaleSpinBox">
-       <property name="decimals">
-        <number>3</number>
-       </property>
-       <property name="minimum">
-        <double>0.000000000000000</double>
-       </property>
-       <property name="maximum">
-        <double>100.000000000000000</double>
-       </property>
-       <property name="singleStep">
-        <double>0.001000000000000</double>
-       </property>
-       <property name="value">
-        <double>0.010000000000000</double>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
    <widget class="QGroupBox" name="transformationModeGroupBox">
     <property name="geometry">
      <rect>
       <x>550</x>
-      <y>50</y>
+      <y>100</y>
       <width>151</width>
       <height>81</height>
      </rect>
@@ -96,6 +58,9 @@
       </rect>
      </property>
      <layout class="QVBoxLayout" name="transformationModeLayout">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetFixedSize</enum>
+      </property>
       <item>
        <widget class="QRadioButton" name="translateModeRadioButton">
         <property name="text">
@@ -126,7 +91,7 @@
     <property name="geometry">
      <rect>
       <x>550</x>
-      <y>170</y>
+      <y>220</y>
       <width>151</width>
       <height>26</height>
      </rect>
@@ -139,7 +104,7 @@
     <property name="geometry">
      <rect>
       <x>550</x>
-      <y>140</y>
+      <y>190</y>
       <width>41</width>
       <height>16</height>
      </rect>
@@ -152,7 +117,7 @@
     <property name="geometry">
      <rect>
       <x>590</x>
-      <y>140</y>
+      <y>190</y>
       <width>111</width>
       <height>20</height>
      </rect>
@@ -161,7 +126,7 @@
      <number>0</number>
     </property>
     <property name="maximum">
-     <number>500</number>
+     <number>1500</number>
     </property>
     <property name="value">
      <number>100</number>
@@ -169,6 +134,54 @@
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
     </property>
+    <property name="tickPosition">
+     <enum>QSlider::TicksAbove</enum>
+    </property>
+    <property name="tickInterval">
+     <number>100</number>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="simulationModeGroupBox">
+    <property name="geometry">
+     <rect>
+      <x>550</x>
+      <y>10</y>
+      <width>151</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Simulation mode</string>
+    </property>
+    <widget class="QWidget" name="verticalLayoutWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>131</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QRadioButton" name="textureBlendModeRadioButton">
+        <property name="text">
+         <string>Texture blending</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="pixelCubesModeRadioButton">
+        <property name="text">
+         <string>Pixel cubes</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </widget>
   </widget>
  </widget>

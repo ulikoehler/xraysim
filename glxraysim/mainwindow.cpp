@@ -49,7 +49,12 @@ void MainWindow::on_scaleSlider_valueChanged(int value)
     glWidget->setScale(value);
 }
 
-void MainWindow::on_baseScaleSpinBox_valueChanged(double value)
+void MainWindow::on_pixelCubesModeRadioButton_toggled(bool checked)
 {
-    glWidget->setBaseScale(value);
+    glWidget->setSimulationMode(SIM_MODE_PIXEL_CUBES);
+}
+
+void MainWindow::on_textureBlendModeRadioButton_toggled(bool checked)
+{
+    glWidget->setSimulationMode(SIM_MODE_TEXTURE_BLEND);
 }
