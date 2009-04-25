@@ -14,7 +14,7 @@
    <string>GLXRaySim</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QGroupBox" name="groupBox">
+   <widget class="QGroupBox" name="graphicsGroupBox">
     <property name="geometry">
      <rect>
       <x>20</x>

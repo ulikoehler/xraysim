@@ -4,8 +4,12 @@
 
 #include <tr1/random>
 
+//Global variables
+const GLfloat null4f[] = {0,0,0,0};
+
 //Macros
-#define drawCube(color) glColor4f(color, color, color, color);glCallList(drawCubeListID);
+#define drawCube(color) glColor4f(color, 0, 0, color);glCallList(drawCubeListID);
+#define drawCubeRaw() glCallList(drawCubeListID);
 
 using namespace std;
 using namespace std::tr1;
@@ -154,7 +158,7 @@ void XRayGLWidget::mouseMoveEvent(QMouseEvent *event)
 void XRayGLWidget::initializeGL()
 {
     //Set the background color
-    qglClearColor(Qt::black);
+    qglClearColor(Qt::green);
 
     //Enable the required featuresg
     glEnable(GL_DEPTH_TEST);
@@ -162,21 +166,26 @@ void XRayGLWidget::initializeGL()
     glEnable(GL_LIGHT0);
     glEnable(GL_LIGHTING);
     glEnable(GL_COLOR_MATERIAL);
+    glEnable (GL_BLEND);
+    glEnable(GL_TEXTURE_2D);
+    glEnable(GL_ALPHA_TEST);
     glShadeModel(GL_SMOOTH);
 
+    glAlphaFunc ( GL_GREATER, 0.1 ) ;
+    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    //Set ambient light
     const GLfloat global_ambient[] = { 0.5f, 0.5f, 0.5f, 1.0f };
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient);
 
     const GLfloat lightSpecular[] = { 1, 1, 1, 1 };
-    const GLfloat lightPosition[] = { 0,0,-10,1};
+    const GLfloat lightPosition[] = { 0,0,-50,0};
     const GLfloat lightDirection[] = {0,0,1};
     glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpecular);
     glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
     glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, lightDirection);
     glLighti(GL_LIGHT0, GL_SPOT_CUTOFF, 90);
 
-    glEnable (GL_BLEND);
-    glBlendFunc (GL_SRC_ALPHA, GL_ONE);
 
     /**
      * Initialize the display lists
@@ -218,7 +227,6 @@ void XRayGLWidget::initializeGL()
             glVertex3s(1,0,1);
         glEnd();
     glEndList();
-
 }
 
 void XRayGLWidget::paintGL()
@@ -226,35 +234,70 @@ void XRayGLWidget::paintGL()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     //Add the light
-    glTranslatef(0,0,-10);
-    glMateriali(GL_FRONT_AND_BACK, GL_EMISSION, 1);
-    drawCube(0);
-    glMaterialf(GL_FRONT_AND_BACK, GL_EMISSION, 0);
     glLoadIdentity();
     //Set some material parameters (for the meshes, not for the light emitter
-    glMaterialf(GL_FRONT_AND_BACK,GL_SHININESS , 1);
+    glMaterialf(GL_FRONT_AND_BACK,GL_SHININESS , 100);
     //Apply the transformation parameters
     glScalef(scale, scale, scale);
     glTranslatef(xMov, yMov, zMov);
     glRotated(xRot, 1.0, 0.0, 0.0);
     glRotated(yRot, 0.0, 1.0, 0.0);
     glRotated(zRot, 0.0, 0.0, 1.0);
+
+
+    /*glPushMatrix();
+        const GLfloat emission[] = {1,1,1};
+        glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, emission);
+        glTranslatef(0,0,-20);
+        glColor4f(1,1,1,0);
+        glScalef(10,10,10);
+        drawCubeRaw();
+        glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, null4f);
+    glPopMatrix();*/
+
+    //Draw a layer
+    GLuint texture[2];
+    texture[0] = bindTexture(QPixmap(QString("test.gif")), GL_TEXTURE_2D);
+
+    //glBindTexture(GL_TEXTURE_2D, texture[0]);
+    glColor3f(1,1,1);
+    glBegin(GL_QUADS);
+             glTexCoord2f(0,0); glVertex3f(-15,-10,-15); //lo
+             glTexCoord2f(0,1); glVertex3f(-15,-10,15); //lu
+             glTexCoord2f(1,1); glVertex3f(15,-10,15);  //ru
+             glTexCoord2f(1,0); glVertex3f(15,-10,-15);   //ro
+    glEnd();
+
+    texture[1] = bindTexture(QPixmap(QString("cb.gif")), GL_TEXTURE_2D);
+    //glBindTexture(GL_TEXTURE_2D, texture[1]);
+    glBegin(GL_QUADS);
+             glTexCoord2f(0,0); glVertex3f(-1,1,0); //lo
+             glTexCoord2f(0,1); glVertex3f(-1,-1,0); //lu
+             glTexCoord2f(1,1); glVertex3f(1,-1,0);  //ru
+             glTexCoord2f(1,0); glVertex3f(1,1,0);   //ro
+    glEnd();
+
+
+
     //Draw the cubes
-    mt19937 rng(time(0));
-    for(int i = 0; i < 100; i++) //x loop
-    {
-        glPushMatrix();
-            for(int j = 0; j < 100; j++)//y lopp
+        /*mt19937 rng(time(0));
+        for(int z = 0; z < 25; z++)
+        {
+            glPushMatrix();
+            for(int i = 0; i < 25; i++) //x loop
             {
-                drawCube((rng() % 9) * 0.1);
-                glTranslatef(0,1,0);
+                glPushMatrix();
+                    for(int j = 0; j < 25; j++)//y lopp
+                    {
+                        drawCube(((rng() % 9) * 0.1));
+                        glTranslatef(0,1,0);
+                    }
+                glPopMatrix();
+                glTranslatef(1,0,0);
             }
-        glPopMatrix();
-        glTranslatef(1,0,0);
-    }
-    drawCube(0.4);
-    glTranslatef(0,1,0.1);
-    drawCube(0.8);
+            glPopMatrix();
+            glTranslatef(0,0,1);
+        }*/
     //glTranslatef(1.0
 }
 
@@ -266,7 +309,7 @@ void XRayGLWidget::resizeGL(int width, int height)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     //glTranslatef(0,0,5);
-    gluPerspective(90, height/width, 0.1, 100.0);
+    gluPerspective(90, height/width, 0, 1000.0);
     glMatrixMode(GL_MODELVIEW);
 
 }

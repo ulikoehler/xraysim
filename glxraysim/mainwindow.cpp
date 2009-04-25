@@ -6,10 +6,11 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     //Create a new GL widget and put it into the graphics box
-    glWidget = new XRayGLWidget(ui->groupBox);
+    glWidget = new XRayGLWidget(ui->graphicsGroupBox);
+    glWidget->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     QHBoxLayout *hbox = new QHBoxLayout();
     hbox->addWidget(glWidget, 0);
-    ui->groupBox->setLayout(hbox);
+    ui->graphicsGroupBox->setLayout(hbox);
     //Set the default mode
     glWidget->setTransformationMode(MODE_ROTATE);
 
