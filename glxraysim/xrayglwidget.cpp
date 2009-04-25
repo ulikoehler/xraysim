@@ -158,30 +158,48 @@ void XRayGLWidget::mouseMoveEvent(QMouseEvent *event)
 void XRayGLWidget::initializeGL()
 {
     //Set the background color
-    qglClearColor(Qt::green);
+    qglClearColor(Qt::black);
 
     //Enable the required featuresg
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
-    glEnable(GL_LIGHT0);
+    //glEnable(GL_CULL_FACE);
     glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
     glEnable(GL_COLOR_MATERIAL);
     glEnable (GL_BLEND);
     glEnable(GL_TEXTURE_2D);
-    glEnable(GL_ALPHA_TEST);
+    //glEnable(GL_TEXTURE_3D);
+    //glEnable(GL_ALPHA_TEST);
     glShadeModel(GL_SMOOTH);
 
-    glAlphaFunc ( GL_GREATER, 0.1 ) ;
+    glAlphaFunc ( GL_GREATER, 0.5 ) ;
+    //glAlphaFunc(GL_ALWAYS, 1);
     glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+
+    //Set texture parameters
+    const GLfloat texBorderColor[] = { 1, 1, 1, 0 };
+    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, texBorderColor);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP);
+
     //Set ambient light
-    const GLfloat global_ambient[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+    //const GLfloat global_ambient[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+    const GLfloat global_ambient[] = {0,0,0,0};
+    //const GLfloat global_ambient[] = {1,1,1,1};
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient);
 
-    const GLfloat lightSpecular[] = { 1, 1, 1, 1 };
-    const GLfloat lightPosition[] = { 0,0,-50,0};
+    //set light
+
+    const GLfloat lightSpecular[] = {0,0,0,0};
+    const GLfloat lightPosition[] = { 0,0,-30,0};
     const GLfloat lightDirection[] = {0,0,1};
+    const GLfloat lightAmbient[] = {1,1,1,1};
     glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpecular);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmbient);
     glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
     glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, lightDirection);
     glLighti(GL_LIGHT0, GL_SPOT_CUTOFF, 90);
@@ -231,18 +249,21 @@ void XRayGLWidget::initializeGL()
 
 void XRayGLWidget::paintGL()
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     glLoadIdentity();
     //Add the light
     glLoadIdentity();
     //Set some material parameters (for the meshes, not for the light emitter
-    glMaterialf(GL_FRONT_AND_BACK,GL_SHININESS , 100);
+    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS , 0);
+    glMaterialf(GL_FRONT_AND_BACK, GL_SPECULAR, 0);
+    glMaterialf(GL_FRONT_AND_BACK, GL_DIFFUSE, 0);
     //Apply the transformation parameters
     glScalef(scale, scale, scale);
     glTranslatef(xMov, yMov, zMov);
     glRotated(xRot, 1.0, 0.0, 0.0);
     glRotated(yRot, 0.0, 1.0, 0.0);
     glRotated(zRot, 0.0, 0.0, 1.0);
+
 
 
     /*glPushMatrix();
@@ -257,26 +278,35 @@ void XRayGLWidget::paintGL()
 
     //Draw a layer
     GLuint texture[2];
-    texture[0] = bindTexture(QPixmap(QString("test.gif")), GL_TEXTURE_2D);
+    texture[0] = bindTexture(QPixmap(QString("test.png")), GL_TEXTURE_2D);
+    texture[1] = bindTexture(QPixmap(QString("cb.tga")), GL_TEXTURE_2D);
 
-    //glBindTexture(GL_TEXTURE_2D, texture[0]);
+
     glColor3f(1,1,1);
-    glBegin(GL_QUADS);
-             glTexCoord2f(0,0); glVertex3f(-15,-10,-15); //lo
-             glTexCoord2f(0,1); glVertex3f(-15,-10,15); //lu
-             glTexCoord2f(1,1); glVertex3f(15,-10,15);  //ru
-             glTexCoord2f(1,0); glVertex3f(15,-10,-15);   //ro
-    glEnd();
+    glBindTexture(GL_TEXTURE_2D, texture[0]);
+    /*glBegin(GL_QUADS);
+             glTexCoord2f(0,0); glVertex3f(-15,-15,-10); //lo
+             glTexCoord2f(0,1); glVertex3f(-15,15,-10); //lu
+             glTexCoord2f(1,1); glVertex3f(15,15,-10);  //ru
+             glTexCoord2f(1,0); glVertex3f(15,-15,-10);   //ro
+    glEnd();*/
 
-    texture[1] = bindTexture(QPixmap(QString("cb.gif")), GL_TEXTURE_2D);
-    //glBindTexture(GL_TEXTURE_2D, texture[1]);
-    glBegin(GL_QUADS);
-             glTexCoord2f(0,0); glVertex3f(-1,1,0); //lo
-             glTexCoord2f(0,1); glVertex3f(-1,-1,0); //lu
-             glTexCoord2f(1,1); glVertex3f(1,-1,0);  //ru
-             glTexCoord2f(1,0); glVertex3f(1,1,0);   //ro
-    glEnd();
 
+    for(int i = 0; i < 25; i += 5)
+    {
+        glMatrixMode(GL_TEXTURE);
+            glLoadIdentity();
+            glTranslatef(0.5, 0.5, 0);
+            glRotatef((360/5)*(i/5),0,0,1);
+            glTranslatef(-0.5, -0.5, 0);
+        glMatrixMode(GL_MODELVIEW);
+        glBegin(GL_QUADS);
+                 glTexCoord2f(0,0); glVertex3f(-15,-15,-i*2); //lo
+                 glTexCoord2f(0,1); glVertex3f(-15,15,-i*2); //lu
+                 glTexCoord2f(1,1); glVertex3f(15,15,-i*2);  //ru
+                 glTexCoord2f(1,0); glVertex3f(15,-15,-i*2);   //ro
+        glEnd();
+    }
 
 
     //Draw the cubes
@@ -323,3 +353,4 @@ QSize XRayGLWidget::sizeHint() const
 {
     return QSize(400, 400);
 }
+
