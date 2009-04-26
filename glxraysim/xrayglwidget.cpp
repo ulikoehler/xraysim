@@ -28,8 +28,8 @@ XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
 
     scale = 1;
 
-    TransformationMode = MODE_ROTATE;
-    SimulationMode = SIM_MODE_TEXTURE_BLEND;
+    transformationMode = MODE_ROTATE;
+    simulationMode = SIM_MODE_TEXTURE_BLEND;
 }
 
 XRayGLWidget::~XRayGLWidget()
@@ -252,7 +252,7 @@ void XRayGLWidget::initializeGL()
     glEndList();
 }
 
-void XRayGLWidget::textureBlendingXRay()
+void XRayGLWidget::renderTextureBlending()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     glLoadIdentity();

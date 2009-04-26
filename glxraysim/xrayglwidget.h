@@ -67,7 +67,7 @@ private:
     QPoint lastPos;
 
     //Private functions
-    void textureBlendXRay();
+    void renderTextureBlending();
 
     /**
      * OpenGL variables

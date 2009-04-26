@@ -13,8 +13,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsGroupBox->setLayout(hbox);
     //Set the default mode
     glWidget->setTransformationMode(MODE_ROTATE);
-
-   //connect(ui->scaleDial,
 }
 
 MainWindow::~MainWindow()
