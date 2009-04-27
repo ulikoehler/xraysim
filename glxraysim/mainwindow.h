@@ -4,6 +4,7 @@
 #include <QtGui/QMainWindow>
 #include <QtGui/QFileDialog>
 #include "xrayglwidget.h"
+#include "gldialog.h"
 
 namespace Ui
 {
@@ -18,10 +19,6 @@ public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-private:
-    Ui::MainWindowClass *ui;
-    XRayGLWidget *glWidget;
-
 private slots:
     void on_imageDistanceComboBox_valueChanged(double );
     void on_selectInputFilesButton_clicked();
@@ -33,6 +30,9 @@ private slots:
     void on_resetViewButton_clicked();
 
 private:
+    Ui::MainWindowClass *ui;
+    gldialog *glDialog;
+    XRayGLWidget *glWidget;
     QFileDialog *inputFileDialog;
 };
 

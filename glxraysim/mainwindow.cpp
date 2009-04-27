@@ -3,7 +3,7 @@
 
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindowClass)
+    : QMainWindow(parent), ui(new Ui::MainWindowClass), glDialog(new gldialog)
 {
     ui->setupUi(this);
     //Initialize the member dialogs
@@ -15,9 +15,10 @@ MainWindow::MainWindow(QWidget *parent)
      */
     glWidget = new XRayGLWidget(ui->graphicsGroupBox);
     glWidget->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-    QHBoxLayout *hbox = new QHBoxLayout();
-    hbox->addWidget(glWidget, 0);
-    ui->graphicsGroupBox->setLayout(hbox);
+    //glDialog->//addWidget(glWidget,0);
+    //glDialog
+    glDialog->layout()->addWidget(glWidget);
+    glDialog->show();
     //Set the default mode
     glWidget->setTransformationMode(MODE_ROTATE);
 }

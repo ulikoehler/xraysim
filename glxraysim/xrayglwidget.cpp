@@ -290,11 +290,11 @@ void XRayGLWidget::renderTextureBlending()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     //Apply the transformation parameters
-    glScalef(scale, scale, scale);
-    glTranslatef(xMov, yMov, zMov);
     glRotated(xRot, 1.0, 0.0, 0.0);
     glRotated(yRot, 0.0, 1.0, 0.0);
     glRotated(zRot, 0.0, 0.0, 1.0);
+    glTranslatef(xMov, yMov, zMov);
+    glScalef(scale, scale, scale);
 
     //Set the color
     glColor3f(1,1,1);
@@ -305,17 +305,13 @@ void XRayGLWidget::renderTextureBlending()
      */
     if(textureChanged)
     {
-        if(textures != 0)
+        //We don't need the old textures any more so delete it
+        for(int i = 0; i < texturesLength; i++)
         {
-            //We don't need the old textures any more so delete it
-            for(int i = 0; i < texturesLength; i++)
-            {
-                cout << "tex " << textures[i] << endl;
-                deleteTexture(textures[i]);
-            }
-            //Delete the old textures array
-            delete textures;
+            deleteTexture(textures[i]);
         }
+        //Delete the old textures array
+        delete textures;
         //Initialize a new texture array;
         textures = new GLuint[inputFileList.size()];
         texturesLength = inputFileList.size();

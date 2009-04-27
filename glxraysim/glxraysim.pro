@@ -6,7 +6,10 @@ TARGET = glxraysim
 TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
-    xrayglwidget.cpp
+    xrayglwidget.cpp \
+    gldialog.cpp
 HEADERS += mainwindow.h \
-    xrayglwidget.h
-FORMS += mainwindow.ui
+    xrayglwidget.h \
+    gldialog.h
+FORMS += mainwindow.ui \
+    gldialog.ui
