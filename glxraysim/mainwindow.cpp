@@ -69,3 +69,9 @@ void MainWindow::on_selectInputFilesButton_clicked()
     inputFileDialog->exec();
     glWidget->setInputFileList(inputFileDialog->selectedFiles());
 }
+
+void MainWindow::on_imageDistanceComboBox_valueChanged(double value)
+{
+    glWidget->setImageDistance(value);
+    glWidget->updateGL();
+}

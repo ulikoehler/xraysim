@@ -23,6 +23,7 @@ private:
     XRayGLWidget *glWidget;
 
 private slots:
+    void on_imageDistanceComboBox_valueChanged(double );
     void on_selectInputFilesButton_clicked();
     void on_textureBlendModeRadioButton_toggled(bool checked);
     void on_pixelCubesModeRadioButton_toggled(bool checked);

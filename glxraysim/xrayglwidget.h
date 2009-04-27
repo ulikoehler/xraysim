@@ -38,6 +38,8 @@ class XRayGLWidget : public QGLWidget
 
      void setInputFileList(QStringList newList);
 
+     void setImageDistance(float distance);
+
  public slots:
      void setXRotation(int angle);
      void setYRotation(int angle);
@@ -65,20 +67,27 @@ private:
     float xRot, yRot, zRot;
     float xMov, yMov, zMov;
     float scale; //Changed by the slider
-    double baseScale; //Changed by a spin box, multiplied with scale
+    float imageDistance; //z distance from one image to another
     QPoint lastPos;
+
+    bool textureChanged; //True if the textures are to be updated; the have to be updated at the first call
 
     //Input properties
     QStringList inputFileList;
 
     //Private functions
     void renderTextureBlending();
+    void renderPixelCubes();
 
     /**
      * OpenGL variables
      */
     //Display list IDs
     GLuint drawCubeListID;
+    GLuint drawTexturedPlaneListID;
+
+    GLuint *textures; //Array holding the texture IDs
+    int texturesLength; //Length of textures array
 };
 
 #endif // XRAYGLWIDGET_H

@@ -18,6 +18,7 @@ using namespace std::tr1;
 
 XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
 {
+    //Initialize member variables
     xRot = 0;
     yRot = 0;
     zRot = 0;
@@ -30,13 +31,15 @@ XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
 
     transformationMode = MODE_ROTATE;
     simulationMode = SIM_MODE_TEXTURE_BLEND;
+
+    textureChanged = true;
 }
 
 XRayGLWidget::~XRayGLWidget()
 {
     makeCurrent();
     //Delete the display lists
-    glDeleteLists(drawCubeListID, 1);
+    glDeleteLists(drawCubeListID, 2); //Alaos covers the textured plane drawing list
 }
 
 void XRayGLWidget::resetView()
@@ -106,10 +109,14 @@ void XRayGLWidget::setScale(int scalePercent)
     updateGL();
 }
 
-
 void XRayGLWidget::setInputFileList(QStringList newList)
 {
     inputFileList = newList;
+}
+
+void XRayGLWidget::setImageDistance(float distance)
+{
+    imageDistance = distance;
 }
 
 ////////////////////
@@ -215,12 +222,12 @@ void XRayGLWidget::initializeGL()
     glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, lightDirection);
     glLighti(GL_LIGHT0, GL_SPOT_CUTOFF, 90);
 
-
     /**
      * Initialize the display lists
      */
     //Initialize the cube generation list
-    drawCubeListID = glGenLists(1);
+    //(We initialize 2 here because the plain drawing list is the next)
+    drawCubeListID = glGenLists(2);
 
     glNewList(drawCubeListID, GL_COMPILE);
         glBegin(GL_TRIANGLE_STRIP);
@@ -241,7 +248,7 @@ void XRayGLWidget::initializeGL()
         glEnd();
 
         glBegin(GL_TRIANGLE_STRIP);
-        //Draw the top
+            //Top
             glVertex3s(0,1,1);
             glVertex3s(0,1,0);
             glVertex3s(1,1,1);
@@ -249,18 +256,30 @@ void XRayGLWidget::initializeGL()
         glEnd();
 
         glBegin(GL_TRIANGLE_STRIP);
-            //Draw the bottom
+            //Bottom
             glVertex3s(0,0,0);
             glVertex3s(0,0,1);
             glVertex3s(1,0,0);
             glVertex3s(1,0,1);
         glEnd();
     glEndList();
+
+    //Initialize the textured plane drawing list
+    drawTexturedPlaneListID = drawCubeListID + 1;
+
+    glNewList(drawTexturedPlaneListID, GL_COMPILE);
+        glBegin(GL_QUADS);
+                 glTexCoord2f(0,0); glVertex3f(-15,-15,0); //lo
+                 glTexCoord2f(0,1); glVertex3f(-15,15,0); //lu
+                 glTexCoord2f(1,1); glVertex3f(15,15,0);  //ru
+                 glTexCoord2f(1,0); glVertex3f(15,-15,0); //ro
+        glEnd();
+    glEndList();
 }
 
 void XRayGLWidget::renderTextureBlending()
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     //Apply the transformation parameters
     glScalef(scale, scale, scale);
@@ -269,33 +288,62 @@ void XRayGLWidget::renderTextureBlending()
     glRotated(yRot, 0.0, 1.0, 0.0);
     glRotated(zRot, 0.0, 0.0, 1.0);
 
-    //Draw a layer
-    GLuint texture;
-    texture = bindTexture(QPixmap(QString("test.png")), GL_TEXTURE_2D);
-
+    //Set the color
     glColor3f(1,1,1);
-    glBindTexture(GL_TEXTURE_2D, texture);
 
-    for(int i = 0; i < 25; i += 5)
-    {
-        glMatrixMode(GL_TEXTURE);
-            glLoadIdentity();
-            glTranslatef(0.5, 0.5, 0);
-            glRotatef((360/5)*(i/5),0,0,1);
-            glTranslatef(-0.5, -0.5, 0);
-        glMatrixMode(GL_MODELVIEW);
-        glBegin(GL_QUADS);
-                 glTexCoord2f(0,0); glVertex3f(-15,-15,-i*2); //lo
-                 glTexCoord2f(0,1); glVertex3f(-15,15,-i*2); //lu
-                 glTexCoord2f(1,1); glVertex3f(15,15,-i*2);  //ru
-                 glTexCoord2f(1,0); glVertex3f(15,-15,-i*2); //ro
-        glEnd();
+    /**
+     * If the texture file names have changed, update the textures
+     * This is an extra loop to avoid time-consuming branching inside the GL-drawing loop
+     */
+    if(textureChanged)
+    {    
+        //We don't need the old textures any more so delete it
+        for(int i = 0; i < texturesLength; i++)
+        {
+            deleteTexture(textures[i]);
+        }
+        //Delete the old textures array
+        delete textures;
+        //Initialize a new texture array;
+        textures = new GLuint[inputFileList.size()];
+        texturesLength = inputFileList.size();
+
+        for(int i = 0; i < inputFileList.size(); i++)
+        {
+            textures[i] = bindTexture(QPixmap(inputFileList[i]), GL_TEXTURE_2D);
+        }
+        //The texture doesn't have to be changed next time
+        textureChanged = false;
     }
+
+    for(int i = 0; i < texturesLength; i++)
+    {
+        glBindTexture(GL_TEXTURE_2D, textures[i]);
+        glCallList(drawTexturedPlaneListID);
+        //Move along the z axis to draw the next textured plane later on
+        glTranslatef(0,0,-imageDistance);
+    }
+}
+
+void XRayGLWidget::renderPixelCubes()
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();
+    //Apply the transformation parameters
+    glScalef(scale, scale, scale);
+    glTranslatef(xMov, yMov, zMov);
+    glRotated(xRot, 1.0, 0.0, 0.0);
+    glRotated(yRot, 0.0, 1.0, 0.0);
+    glRotated(zRot, 0.0, 0.0, 1.0);
+
+
+    //TODO implement; hint: Use QImage(QPixmap(...));
 }
 
 void XRayGLWidget::paintGL()
 {
-
+    if(simulationMode == SIM_MODE_TEXTURE_BLEND) {renderTextureBlending();}
+    else {renderPixelCubes();}
 }
 
 void XRayGLWidget::resizeGL(int width, int height)
@@ -305,10 +353,8 @@ void XRayGLWidget::resizeGL(int width, int height)
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    //glTranslatef(0,0,5);
     gluPerspective(90, height/width, 0, 1000.0);
     glMatrixMode(GL_MODELVIEW);
-
 }
 
 QSize XRayGLWidget::minimumSizeHint() const
