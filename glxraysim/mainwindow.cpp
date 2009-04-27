@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     /**
      * Initialize the GL widget
      */
-    glWidget = new XRayGLWidget(ui->graphicsGroupBox);
+    glWidget = new XRayGLWidget(glDialog);
     glWidget->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     //glDialog->//addWidget(glWidget,0);
     //glDialog
