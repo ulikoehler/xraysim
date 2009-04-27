@@ -4,6 +4,15 @@
 a.out
 xraysim-test
 doc
+*.ps
+*.pdf
+*.png
+*.aux
+*.log
+*.out
+*.toc
+*.tga
+ui_*.h
 build
 dist
 .dep.inc
