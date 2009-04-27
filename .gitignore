@@ -13,6 +13,11 @@ doc
 *.toc
 *.tga
 ui_*.h
+moc_*.cpp
+*.pro.user
+qtc-gdbmacros
+release
+debug
 build
 dist
 .dep.inc
