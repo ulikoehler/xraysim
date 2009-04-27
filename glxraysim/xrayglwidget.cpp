@@ -4,6 +4,10 @@
 
 #include <tr1/random>
 
+#include <iostream>
+
+using namespace std;
+
 //Global variables
 const GLfloat null4f[] = {0,0,0,0};
 
@@ -33,6 +37,9 @@ XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
     simulationMode = SIM_MODE_TEXTURE_BLEND;
 
     textureChanged = true;
+
+    texturesLength = 0;
+    textures = 0;
 }
 
 XRayGLWidget::~XRayGLWidget()
@@ -297,14 +304,18 @@ void XRayGLWidget::renderTextureBlending()
      * This is an extra loop to avoid time-consuming branching inside the GL-drawing loop
      */
     if(textureChanged)
-    {    
-        //We don't need the old textures any more so delete it
-        for(int i = 0; i < texturesLength; i++)
+    {
+        if(textures != 0)
         {
-            deleteTexture(textures[i]);
+            //We don't need the old textures any more so delete it
+            for(int i = 0; i < texturesLength; i++)
+            {
+                cout << "tex " << textures[i] << endl;
+                deleteTexture(textures[i]);
+            }
+            //Delete the old textures array
+            delete textures;
         }
-        //Delete the old textures array
-        delete textures;
         //Initialize a new texture array;
         textures = new GLuint[inputFileList.size()];
         texturesLength = inputFileList.size();
