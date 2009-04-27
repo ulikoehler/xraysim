@@ -106,6 +106,12 @@ void XRayGLWidget::setScale(int scalePercent)
     updateGL();
 }
 
+
+void XRayGLWidget::setInputFileList(QStringList newList)
+{
+    inputFileList = newList;
+}
+
 ////////////////////
 //Mouse event code//
 ////////////////////

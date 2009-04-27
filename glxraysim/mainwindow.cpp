@@ -1,11 +1,18 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindowClass)
 {
     ui->setupUi(this);
-    //Create a new GL widget and put it into the graphics box
+    //Initialize the member dialogs
+    inputFileDialog = new QFileDialog(this, "Select input files");
+    inputFileDialog->setFileMode(QFileDialog::ExistingFiles); //Allow multiple file selection
+
+    /**
+     * Initialize the GL widget
+     */
     glWidget = new XRayGLWidget(ui->graphicsGroupBox);
     glWidget->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     QHBoxLayout *hbox = new QHBoxLayout();
@@ -49,10 +56,16 @@ void MainWindow::on_scaleSlider_valueChanged(int value)
 
 void MainWindow::on_pixelCubesModeRadioButton_toggled(bool checked)
 {
-    glWidget->setSimulationMode(SIM_MODE_PIXEL_CUBES);
+    if(checked) {glWidget->setSimulationMode(SIM_MODE_PIXEL_CUBES);}
 }
 
 void MainWindow::on_textureBlendModeRadioButton_toggled(bool checked)
 {
-    glWidget->setSimulationMode(SIM_MODE_TEXTURE_BLEND);
+    if(checked) {glWidget->setSimulationMode(SIM_MODE_TEXTURE_BLEND);}
+}
+
+void MainWindow::on_selectInputFilesButton_clicked()
+{
+    inputFileDialog->exec();
+    glWidget->setInputFileList(inputFileDialog->selectedFiles());
 }

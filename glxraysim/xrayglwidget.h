@@ -36,6 +36,8 @@ class XRayGLWidget : public QGLWidget
 
      void setScale(int scalePercent);
 
+     void setInputFileList(QStringList newList);
+
  public slots:
      void setXRotation(int angle);
      void setYRotation(int angle);
@@ -65,6 +67,9 @@ private:
     float scale; //Changed by the slider
     double baseScale; //Changed by a spin box, multiplied with scale
     QPoint lastPos;
+
+    //Input properties
+    QStringList inputFileList;
 
     //Private functions
     void renderTextureBlending();

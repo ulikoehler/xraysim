@@ -183,6 +183,19 @@
      </layout>
     </widget>
    </widget>
+   <widget class="QPushButton" name="selectInputFilesButton">
+    <property name="geometry">
+     <rect>
+      <x>550</x>
+      <y>250</y>
+      <width>151</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Select input files</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
