@@ -112,6 +112,7 @@ void XRayGLWidget::setScale(int scalePercent)
 void XRayGLWidget::setInputFileList(QStringList newList)
 {
     inputFileList = newList;
+    textureChanged = true;
 }
 
 void XRayGLWidget::setImageDistance(float distance)
@@ -269,10 +270,10 @@ void XRayGLWidget::initializeGL()
 
     glNewList(drawTexturedPlaneListID, GL_COMPILE);
         glBegin(GL_QUADS);
-                 glTexCoord2f(0,0); glVertex3f(-15,-15,0); //lo
-                 glTexCoord2f(0,1); glVertex3f(-15,15,0); //lu
-                 glTexCoord2f(1,1); glVertex3f(15,15,0);  //ru
-                 glTexCoord2f(1,0); glVertex3f(15,-15,0); //ro
+                 glTexCoord2f(0,0); glVertex3f(-1,-1,0); //lo
+                 glTexCoord2f(0,1); glVertex3f(-1,1,0); //lu
+                 glTexCoord2f(1,1); glVertex3f(1,1,0);  //ru
+                 glTexCoord2f(1,0); glVertex3f(1,-1,0); //ro
         glEnd();
     glEndList();
 }
