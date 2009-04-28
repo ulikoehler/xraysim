@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>178</width>
-    <height>332</height>
+    <height>388</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -201,6 +201,38 @@
     </property>
     <property name="value">
      <double>1.000000000000000</double>
+    </property>
+   </widget>
+   <widget class="QLabel" name="baseScaleLabel">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>330</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Base scale:</string>
+    </property>
+   </widget>
+   <widget class="QSpinBox" name="baseScaleSpinner">
+    <property name="geometry">
+     <rect>
+      <x>89</x>
+      <y>330</y>
+      <width>71</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="prefix">
+     <string>1/</string>
+    </property>
+    <property name="maximum">
+     <number>10000</number>
+    </property>
+    <property name="value">
+     <number>100</number>
     </property>
    </widget>
   </widget>

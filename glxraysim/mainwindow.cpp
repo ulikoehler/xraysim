@@ -76,3 +76,8 @@ void MainWindow::on_imageDistanceComboBox_valueChanged(double value)
     glWidget->setImageDistance(value);
     glWidget->updateGL();
 }
+
+void MainWindow::on_baseScaleSpinner_valueChanged(int value)
+{
+    glWidget->setBaseScale(1.0/value);
+}

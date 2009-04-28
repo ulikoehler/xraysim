@@ -35,6 +35,7 @@ class XRayGLWidget : public QGLWidget
      void setSimulationMode(SimulationMode mode);
 
      void setScale(int scalePercent);
+     void setBaseScale(float baseScale);
 
      void setInputFileList(QStringList newList);
 
@@ -67,6 +68,7 @@ private:
     float xRot, yRot, zRot;
     float xMov, yMov, zMov;
     float scale; //Changed by the slider
+    float baseScale; //Changed by the spinner
     float imageDistance; //z distance from one image to another
     QPoint lastPos;
 

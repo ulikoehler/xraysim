@@ -2,11 +2,14 @@
 #include <QtOpenGL>
 #include <cstdlib>
 
+#include <iostream>
+using namespace std;
+
 //Global variables
 const GLfloat null4f[] = {0,0,0,0};
 
 //Macros
-#define drawCube(color) glColor4f(color, 0, 0, color);glCallList(drawCubeListID)
+#define drawCube(color) glColor4f(1, 1, 1, color);glCallList(drawCubeListID)
 #define drawCubeRaw() glCallList(drawCubeListID);
 
 #include "xrayglwidget.h"
@@ -131,6 +134,12 @@ void XRayGLWidget::setScale(int scalePercent)
 {
     this->scale = scalePercent / 100.0;
     updateGL();
+}
+
+
+void XRayGLWidget::setBaseScale(float baseScale)
+{
+    this->baseScale = baseScale;
 }
 
 void XRayGLWidget::setInputFileList(QStringList newList)
@@ -313,7 +322,6 @@ void XRayGLWidget::renderTextureBlending()
     glRotated(zRot, 0.0, 0.0, 1.0);
     glTranslatef(xMov, yMov, zMov);
     glScalef(scale, scale, scale);
-
     //Set the color
     glColor3f(1,1,1);
 
@@ -361,6 +369,7 @@ void XRayGLWidget::renderPixelCubes()
     glLoadIdentity();
     //Apply the transformation parameters
     glScalef(scale, scale, scale);
+    glScalef(baseScale, baseScale, baseScale);
     glTranslatef(xMov, yMov, zMov);
     glRotated(xRot, 1.0, 0.0, 0.0);
     glRotated(yRot, 0.0, 1.0, 0.0);
@@ -402,8 +411,7 @@ void XRayGLWidget::renderPixelCubes()
             glPushMatrix();
             for(int x = 0; x < image->width(); x++)
             {
-                //drawCube(qGray(image->pixel(x,y)) / 255.0);
-                drawCube(1);
+                drawCube(qGray(image->pixel(x,y)) / 255.0);
                 glTranslatef(1,0,0);
             }
             glPopMatrix();
