@@ -437,7 +437,7 @@ void XRayGLWidget::renderPixelCubes()
 void XRayGLWidget::paintGL()
 {
     if(simulationMode == SIM_MODE_TEXTURE_BLEND) {renderTextureBlending();}
-    else //if (simulationMode == SIM_MODE_PIXEL_CUBES)
+    else if (simulationMode == SIM_MODE_PIXEL_CUBES)
     {renderPixelCubes();}
 }
 
