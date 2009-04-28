@@ -3,6 +3,8 @@
 
 #include <QtGui/QMainWindow>
 #include <QtGui/QFileDialog>
+#include <QtGui/QMessageBox>
+#include <QtGui/QCloseEvent>
 #include "xrayglwidget.h"
 #include "gldialog.h"
 
@@ -18,6 +20,9 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+protected:
+     void closeEvent(QCloseEvent* event);
 
 private slots:
     void on_pixelCubeScaleSpinner_valueChanged(int );

@@ -9,7 +9,7 @@ using namespace std;
 const GLfloat null4f[] = {0,0,0,0};
 
 //Macros
-#define drawCube(color) glColor4f(1, 1, 1, color);glCallList(drawCubeListID)
+#define drawCube(color) glColor4f(1, 1, 1, 1-color);glCallList(drawCubeListID)
 #define drawCubeRaw() glCallList(drawCubeListID);
 
 #include "xrayglwidget.h"
@@ -176,21 +176,21 @@ void XRayGLWidget::mouseMoveEvent(QMouseEvent *event)
     {
         if (event->buttons() & Qt::LeftButton)
         {
-            setXRotation(xRot + 8 * dy);
-            setYRotation(yRot + 8 * dx);
+            setXRotation(xRot + 4 * dy);
+            setYRotation(yRot + 4 * dx);
         }
         else if (event->buttons() & Qt::RightButton)
         {
-            setXRotation(xRot + 8 * dy);
-            setZRotation(zRot + 8 * dx);
+            setXRotation(xRot + 4 * dy);
+            setZRotation(zRot + 4 * dx);
         }
     }
     else if(transformationMode == MODE_TRANSLATE)
     {
         if (event->buttons() & Qt::LeftButton)
         {
-            xMov += 0.01/pixelCubeScale * dx;//(0.1/scale) * dx;
-            yMov -= 0.01/pixelCubeScale * dy;//(0.1/scale) * dy;
+            xMov += 0.01/pixelCubeScale * dx;
+            yMov -= 0.01/pixelCubeScale * dy;
         }
         else if (event->buttons() & Qt::RightButton)
         {
@@ -200,6 +200,7 @@ void XRayGLWidget::mouseMoveEvent(QMouseEvent *event)
     }
     lastPos = event->pos();
 }
+
 /////////////////
 //Painting code//
 /////////////////

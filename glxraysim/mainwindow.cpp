@@ -28,6 +28,18 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::closeEvent(QCloseEvent* event)
+{
+    int ret = QMessageBox::question(this, tr("Quit GLXRaySim?"),
+                                   tr("Do you really want to quit GLXRaySim?"),
+                                   QMessageBox::Yes | QMessageBox::No);
+    if(ret == QMessageBox::Yes)
+    {
+        QApplication::quit();
+    }
+    else {event->ignore();}
+}
+
 void MainWindow::on_resetViewButton_clicked()
 {
     glWidget->resetView();

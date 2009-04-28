@@ -25,9 +25,14 @@ void gldialog::changeEvent(QEvent *e)
     }
 }
 
-void gldialog::on_gldialog_finished(int result)
+void gldialog::closeEvent(QCloseEvent* event)
 {
-    QApplication::closeAllWindows();
-    QApplication::exit();
-    QApplication::quit();
+    int ret = QMessageBox::question(this, tr("Quit GLXRaySim?"),
+                                   tr("Do you really want to quit GLXRaySim?"),
+                                   QMessageBox::No | QMessageBox::Yes);
+    if(ret == QMessageBox::Yes)
+    {
+        QApplication::quit();
+    }
+    else {event->ignore();}
 }

@@ -2,8 +2,11 @@
 #define GLDIALOG_H
 
 #include <QtGui/QDialog>
+#include <QtGui/QMessageBox>
+#include <QtGui/QCloseEvent>
 
-namespace Ui {
+namespace Ui
+{
     class gldialog;
 }
 
@@ -15,13 +18,11 @@ public:
     virtual ~gldialog();
 
 protected:
-    virtual void changeEvent(QEvent *e);
+    void changeEvent(QEvent *e);
+    void closeEvent(QCloseEvent* event);
 
 private:
     Ui::gldialog *m_ui;
-
-private slots:
-    void on_gldialog_finished(int result);
 };
 
 #endif // GLDIALOG_H
