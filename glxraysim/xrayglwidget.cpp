@@ -26,6 +26,7 @@ XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
     zMov = 0;
 
     scale = 1;
+    pixelCubeScale = 1.0/500;
 
     transformationMode = MODE_ROTATE;
     simulationMode = SIM_MODE_TEXTURE_BLEND;
@@ -84,6 +85,9 @@ void XRayGLWidget::setTransformationMode(TransformationMode mode)
 void XRayGLWidget::setSimulationMode(SimulationMode mode)
 {
     this->simulationMode = mode;
+    //Enforce texture reload
+    textureChanged = true;
+    //Update the graphics
     updateGL();
 }
 
@@ -235,8 +239,8 @@ void XRayGLWidget::initializeGL()
     //Set ambient light to null (because the light source already emits ambient light)
 
     //const GLfloat global_ambient[] = { 0.5f, 0.5f, 0.5f, 1.0f };
-    //const GLfloat global_ambient[] = {0,0,0,0};
-    const GLfloat global_ambient[] = {1,1,1,1};
+    const GLfloat global_ambient[] = {0,0,0,0};
+    //const GLfloat global_ambient[] = {1,1,1,1};
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient);
 
 
@@ -317,11 +321,11 @@ void XRayGLWidget::renderTextureBlending()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     //Apply the transformation parameters
+    glScalef(scale, scale, scale);
+    glTranslatef(xMov, yMov, zMov);
     glRotated(xRot, 1.0, 0.0, 0.0);
     glRotated(yRot, 0.0, 1.0, 0.0);
     glRotated(zRot, 0.0, 0.0, 1.0);
-    glTranslatef(xMov, yMov, zMov);
-    glScalef(scale, scale, scale);
     //Set the color
     glColor3f(1,1,1);
 
@@ -400,6 +404,8 @@ void XRayGLWidget::renderPixelCubes()
         textureChanged = false;
     }
 
+    glScalef(1,1,500);
+
     //Draw the cubes
     for(int i = 0; i < imageTexturesLength; i++)
     {
@@ -436,7 +442,7 @@ void XRayGLWidget::resizeGL(int width, int height)
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(90, height/width, 0, 1000.0);
+    gluPerspective(90, height/width, 0, 15000.0);
     glMatrixMode(GL_MODELVIEW);
 }
 
