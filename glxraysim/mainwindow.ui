@@ -203,24 +203,24 @@
      <double>1.000000000000000</double>
     </property>
    </widget>
-   <widget class="QLabel" name="baseScaleLabel">
+   <widget class="QLabel" name="pixelCubeScaleLabel">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>330</y>
-      <width>71</width>
-      <height>16</height>
+      <width>111</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string>Base scale:</string>
+     <string>Pixel cube scale:</string>
     </property>
    </widget>
-   <widget class="QSpinBox" name="baseScaleSpinner">
+   <widget class="QSpinBox" name="pixelCubeScaleSpinner">
     <property name="geometry">
      <rect>
-      <x>89</x>
-      <y>330</y>
+      <x>80</x>
+      <y>350</y>
       <width>71</width>
       <height>22</height>
      </rect>

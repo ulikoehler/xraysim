@@ -137,9 +137,9 @@ void XRayGLWidget::setScale(int scalePercent)
 }
 
 
-void XRayGLWidget::setBaseScale(float baseScale)
+void XRayGLWidget::setPixelCubeScale(float pixelCubeScale)
 {
-    this->baseScale = baseScale;
+    this->pixelCubeScale = pixelCubeScale;
 }
 
 void XRayGLWidget::setInputFileList(QStringList newList)
@@ -260,7 +260,7 @@ void XRayGLWidget::initializeGL()
      * Initialize the display lists
      */
     //Initialize the cube generation list
-    //(We initialize 2 here because the plain drawing list is the next)
+    //(We initialize 2 at a time because the plain drawing list is the next)
     drawCubeListID = glGenLists(2);
 
     glNewList(drawCubeListID, GL_COMPILE);
@@ -369,7 +369,7 @@ void XRayGLWidget::renderPixelCubes()
     glLoadIdentity();
     //Apply the transformation parameters
     glScalef(scale, scale, scale);
-    glScalef(baseScale, baseScale, baseScale);
+    glScalef(pixelCubeScale, pixelCubeScale, pixelCubeScale);
     glTranslatef(xMov, yMov, zMov);
     glRotated(xRot, 1.0, 0.0, 0.0);
     glRotated(yRot, 0.0, 1.0, 0.0);
