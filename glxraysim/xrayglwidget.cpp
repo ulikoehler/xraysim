@@ -12,7 +12,7 @@ using namespace std;
 const GLfloat null4f[] = {0,0,0,0};
 
 //Macros
-#define drawCube(color) glColor4f(color, 0, 0, color);glCallList(drawCubeListID);
+#define drawCube(color) glColor4f(color, 0, 0, color);glCallList(drawCubeListID)
 #define drawCubeRaw() glCallList(drawCubeListID);
 
 using namespace std;
@@ -40,6 +40,9 @@ XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
 
     texturesLength = 0;
     textures = 0;
+
+    imageTextures = 0;
+    imageTexturesLength = 0;
 }
 
 XRayGLWidget::~XRayGLWidget()
@@ -47,6 +50,27 @@ XRayGLWidget::~XRayGLWidget()
     makeCurrent();
     //Delete the display lists
     glDeleteLists(drawCubeListID, 2); //Alaos covers the textured plane drawing list
+
+    //Delete the textures saved in the VRAM
+    if(textures != 0)
+    {
+        for(int i = 0; i < texturesLength; i++)
+        {
+            deleteTexture(textures[i]);
+        }
+        //Delete the textures array
+        delete textures;
+    }
+    //Do the same with the QImage textures
+    if(imageTextures != 0)
+    {
+        for(int i = 0; i < imageTexturesLength; i++)
+        {
+            delete imageTextures[i];
+        }
+        //Delete the old textures array
+        delete imageTextures;
+    }
 }
 
 void XRayGLWidget::resetView()
@@ -285,6 +309,7 @@ void XRayGLWidget::initializeGL()
     glEndList();
 }
 
+
 void XRayGLWidget::renderTextureBlending()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -300,21 +325,25 @@ void XRayGLWidget::renderTextureBlending()
     glColor3f(1,1,1);
 
     /**
-     * If the texture file names have changed, update the textures
-     * This is an extra loop to avoid time-consuming branching inside the GL-drawing loop
-     */
+* If the texture file names have changed, update the textures
+* This is an extra loop to avoid time-consuming branching inside the GL-drawing loop
+*/
     if(textureChanged)
     {
-        //We don't need the old textures any more so delete it
-        for(int i = 0; i < texturesLength; i++)
+        if(textures != 0)
         {
-            deleteTexture(textures[i]);
+            //We don't need the old textures any more so delete it
+            for(int i = 0; i < texturesLength; i++)
+            {
+                deleteTexture(textures[i]);
+            }
+            //Delete the old textures array
+            delete textures;
+            //Initialize a new texture array;
+            texturesLength = inputFileList.size();
         }
-        //Delete the old textures array
-        delete textures;
-        //Initialize a new texture array;
+
         textures = new GLuint[inputFileList.size()];
-        texturesLength = inputFileList.size();
 
         for(int i = 0; i < inputFileList.size(); i++)
         {
@@ -346,12 +375,56 @@ void XRayGLWidget::renderPixelCubes()
 
 
     //TODO implement; hint: Use QImage(QPixmap(...));
+
+    if(textureChanged)
+    {
+        if(imageTextures != 0)
+        {
+            //We don't need the old textures any more so delete it
+            for(int i = 0; i < texturesLength; i++)
+            {
+                delete imageTextures[i];
+            }
+            //Delete the old textures array
+            delete imageTextures;
+            //Initialize a new texture array;
+            imageTexturesLength = inputFileList.size();
+        }
+
+        imageTextures = new QImage*[inputFileList.size()];
+
+        for(int i = 0; i < inputFileList.size(); i++)
+        {
+            imageTextures[i] = new QImage(inputFileList[i]);
+        }
+        //The texture doesn't have to be changed next time
+        textureChanged = false;
+    }
+
+    for(int i = 0; i < imageTexturesLength; i++)
+    {
+        QImage* image = imageTextures[i];
+        glPushMatrix();
+        //Draw the rows
+        for(int y = 0; y < image->height(); y++)
+        {
+            glPushMatrix();
+            for(int x = 0; x < image->width(); x++)
+            {
+                drawCube(qGray(image->pixel(x,y)) / 255.0);
+                glTranslatef(1,0,0);
+            }
+            glPopMatrix();
+        }
+        glPopMatrix();
+        glTranslatef(0,0,-imageDistance);
+    }
 }
 
 void XRayGLWidget::paintGL()
 {
     if(simulationMode == SIM_MODE_TEXTURE_BLEND) {renderTextureBlending();}
-    else {renderPixelCubes();}
+    else if (simulationMode == SIM_MODE_PIXEL_CUBES) {renderPixelCubes();}
 }
 
 void XRayGLWidget::resizeGL(int width, int height)

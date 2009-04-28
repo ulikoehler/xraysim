@@ -88,6 +88,9 @@ private:
 
     GLuint *textures; //Array holding the texture IDs
     int texturesLength; //Length of textures array
+
+    QImage **imageTextures; //Same as textures but used in pixel cube mode (QImage* is the type here -> dbl ptr)
+    int imageTexturesLength;
 };
 
 #endif // XRAYGLWIDGET_H
