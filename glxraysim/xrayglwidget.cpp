@@ -2,21 +2,12 @@
 #include <QtOpenGL>
 #include <cstdlib>
 
-#include <tr1/random>
-
-#include <iostream>
-
-using namespace std;
-
 //Global variables
 const GLfloat null4f[] = {0,0,0,0};
 
 //Macros
 #define drawCube(color) glColor4f(color, 0, 0, color);glCallList(drawCubeListID)
 #define drawCubeRaw() glCallList(drawCubeListID);
-
-using namespace std;
-using namespace std::tr1;
 
 #include "xrayglwidget.h"
 
@@ -84,11 +75,13 @@ void XRayGLWidget::resetView()
 void XRayGLWidget::setTransformationMode(TransformationMode mode)
 {
     this->transformationMode = mode;
+    updateGL();
 }
 
 void XRayGLWidget::setSimulationMode(SimulationMode mode)
 {
     this->simulationMode = mode;
+    updateGL();
 }
 
 /////////////////
@@ -373,9 +366,6 @@ void XRayGLWidget::renderPixelCubes()
     glRotated(yRot, 0.0, 1.0, 0.0);
     glRotated(zRot, 0.0, 0.0, 1.0);
 
-
-    //TODO implement; hint: Use QImage(QPixmap(...));
-
     if(textureChanged)
     {
         if(imageTextures != 0)
@@ -388,10 +378,10 @@ void XRayGLWidget::renderPixelCubes()
             //Delete the old textures array
             delete imageTextures;
             //Initialize a new texture array;
-            imageTexturesLength = inputFileList.size();
         }
 
         imageTextures = new QImage*[inputFileList.size()];
+        imageTexturesLength = inputFileList.size();
 
         for(int i = 0; i < inputFileList.size(); i++)
         {
@@ -401,6 +391,7 @@ void XRayGLWidget::renderPixelCubes()
         textureChanged = false;
     }
 
+    //Draw the cubes
     for(int i = 0; i < imageTexturesLength; i++)
     {
         QImage* image = imageTextures[i];
@@ -411,10 +402,12 @@ void XRayGLWidget::renderPixelCubes()
             glPushMatrix();
             for(int x = 0; x < image->width(); x++)
             {
-                drawCube(qGray(image->pixel(x,y)) / 255.0);
+                //drawCube(qGray(image->pixel(x,y)) / 255.0);
+                drawCube(1);
                 glTranslatef(1,0,0);
             }
             glPopMatrix();
+            glTranslatef(0,1,0);
         }
         glPopMatrix();
         glTranslatef(0,0,-imageDistance);
@@ -424,7 +417,8 @@ void XRayGLWidget::renderPixelCubes()
 void XRayGLWidget::paintGL()
 {
     if(simulationMode == SIM_MODE_TEXTURE_BLEND) {renderTextureBlending();}
-    else if (simulationMode == SIM_MODE_PIXEL_CUBES) {renderPixelCubes();}
+    else //if (simulationMode == SIM_MODE_PIXEL_CUBES)
+    {renderPixelCubes();}
 }
 
 void XRayGLWidget::resizeGL(int width, int height)

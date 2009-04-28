@@ -90,7 +90,7 @@ private:
     int texturesLength; //Length of textures array
 
     QImage **imageTextures; //Same as textures but used in pixel cube mode (QImage* is the type here -> dbl ptr)
-    int imageTexturesLength;
+    int imageTexturesLength; //Length of imageTextures
 };
 
 #endif // XRAYGLWIDGET_H
