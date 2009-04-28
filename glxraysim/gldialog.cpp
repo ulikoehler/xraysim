@@ -24,3 +24,10 @@ void gldialog::changeEvent(QEvent *e)
         break;
     }
 }
+
+void gldialog::on_gldialog_finished(int result)
+{
+    QApplication::closeAllWindows();
+    QApplication::exit();
+    QApplication::quit();
+}

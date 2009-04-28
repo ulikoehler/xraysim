@@ -57,12 +57,20 @@ void MainWindow::on_scaleSlider_valueChanged(int value)
 
 void MainWindow::on_pixelCubesModeRadioButton_toggled(bool checked)
 {
-    if(checked) {glWidget->setSimulationMode(SIM_MODE_PIXEL_CUBES);}
+    if(checked)
+    {
+        glWidget->setSimulationMode(SIM_MODE_PIXEL_CUBES); //Set the simulation mode
+        glWidget->setPixelCubeScale(1.0/(ui->pixelCubeScaleSpinner->value())); //Update the pixel cube scale
+    }
 }
 
 void MainWindow::on_textureBlendModeRadioButton_toggled(bool checked)
 {
-    if(checked) {glWidget->setSimulationMode(SIM_MODE_TEXTURE_BLEND);}
+    if(checked)
+    {
+        glWidget->setSimulationMode(SIM_MODE_TEXTURE_BLEND); //Set the simulation mode
+        glWidget->setPixelCubeScale(1); //The pixel cube scale is multiplied with other variables when transforming, so set it to 1
+    }
 }
 
 void MainWindow::on_selectInputFilesButton_clicked()

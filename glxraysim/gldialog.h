@@ -19,6 +19,9 @@ protected:
 
 private:
     Ui::gldialog *m_ui;
+
+private slots:
+    void on_gldialog_finished(int result);
 };
 
 #endif // GLDIALOG_H

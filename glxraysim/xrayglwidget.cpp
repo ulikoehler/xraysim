@@ -26,7 +26,7 @@ XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
     zMov = 0;
 
     scale = 1;
-    pixelCubeScale = 1.0/500;
+    pixelCubeScale = 1;
 
     transformationMode = MODE_ROTATE;
     simulationMode = SIM_MODE_TEXTURE_BLEND;
@@ -189,8 +189,8 @@ void XRayGLWidget::mouseMoveEvent(QMouseEvent *event)
     {
         if (event->buttons() & Qt::LeftButton)
         {
-            xMov += (0.01/scale) * dx;
-            yMov -= (0.01/scale) * dy;
+            xMov += 0.01/pixelCubeScale * dx;//(0.1/scale) * dx;
+            yMov -= 0.01/pixelCubeScale * dy;//(0.1/scale) * dy;
         }
         else if (event->buttons() & Qt::RightButton)
         {
