@@ -169,6 +169,8 @@ void XRayGLWidget::mousePressEvent(QMouseEvent *event)
 
 void XRayGLWidget::mouseMoveEvent(QMouseEvent *event)
 {
+    //Note: As the scaling matrix is applied BEFORE the rotation and translation,
+    //  we don't have to involve the scale factors in the calculation
     int dx = event->x() - lastPos.x();
     int dy = event->y() - lastPos.y();
     
@@ -181,8 +183,8 @@ void XRayGLWidget::mouseMoveEvent(QMouseEvent *event)
         }
         else if (event->buttons() & Qt::RightButton)
         {
-            setXRotation(xRot + 4 * dy);
-            setZRotation(zRot + 4 * dx);
+            setXRotation(xRot + 4 * dx);
+            setZRotation(zRot + 4 * dy);
         }
     }
     else if(transformationMode == MODE_TRANSLATE)
@@ -194,7 +196,7 @@ void XRayGLWidget::mouseMoveEvent(QMouseEvent *event)
         }
         else if (event->buttons() & Qt::RightButton)
         {
-            zMov -= (0.01/scale) * dy;
+            zMov -= (0.01/pixelCubeScale) * dy;
         }
         updateGL();
     }
