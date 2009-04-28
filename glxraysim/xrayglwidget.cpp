@@ -36,6 +36,8 @@ XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
     texturesLength = 0;
     textures = 0;
 
+    imageDistance = 1;
+
     imageTextures = 0;
     imageTexturesLength = 0;
 }
@@ -410,6 +412,7 @@ void XRayGLWidget::renderPixelCubes()
     glScalef(1,1,500);
 
     //Draw the cubes
+    cout << "len" << imageTexturesLength;
     for(int i = 0; i < imageTexturesLength; i++)
     {
         QImage* image = imageTextures[i];
