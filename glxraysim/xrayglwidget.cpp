@@ -9,7 +9,7 @@ using namespace std;
 const GLfloat null4f[] = {0,0,0,0};
 
 //Macros
-#define drawCube(color) glColor4f(1, 1, 1, 1-color);glCallList(drawCubeListID)
+#define drawCube(color) glColor4f(1, 1, 1, color);glCallList(drawCubeListID)
 #define drawCubeRaw() glCallList(drawCubeListID);
 
 #include "xrayglwidget.h"
@@ -445,7 +445,7 @@ void XRayGLWidget::resizeGL(int width, int height)
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(90, height/width, 0, 15000.0);
+    gluPerspective(120, height/width, 0, 15000.0);
     glMatrixMode(GL_MODELVIEW);
 }
 
