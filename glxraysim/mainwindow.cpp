@@ -88,7 +88,8 @@ void MainWindow::on_textureBlendModeRadioButton_toggled(bool checked)
 void MainWindow::on_selectInputFilesButton_clicked()
 {
     inputFileDialog->exec();
-    glWidget->setInputFileList(inputFileDialog->selectedFiles());
+    inputFileNameList = inputFileDialog->selectedFiles();
+    glWidget->setInputFileList(inputFileNameList);
 }
 
 void MainWindow::on_imageDistanceComboBox_valueChanged(double value)
@@ -100,4 +101,45 @@ void MainWindow::on_imageDistanceComboBox_valueChanged(double value)
 void MainWindow::on_pixelCubeScaleSpinner_valueChanged(int value)
 {
     glWidget->setPixelCubeScale(1.0/value);
+}
+
+void MainWindow::on_exitAction_triggered()
+{
+    QApplication::quit();
+}
+
+void MainWindow::on_simpleSumUpAction_triggered()
+{
+    //Declare an array of QImage pointers
+    QImage** images = new QImage*[inputFileNameList.size()];
+
+    int height = -1;
+    int width = -1;
+    for(int i = 0; i < inputFileNameList.length(); i++)
+    {
+        images[i] = new QImage(inputFileNameList[i]);
+        //Set the height and width if this is the first image
+        if(width == -1) {images[i]->width();}
+        if(height == -1) {images[i]->height();}
+
+        /**
+         * Check if the height and width of this image
+         * is equal to the first images
+         * (Overall effect: Check if all images have equal geometry)
+         */
+        if((images[i]->width() != width) || (images[i]->height() != height))
+        {
+            int ret = QMessageBox::critical(this, tr("Image size error"),
+                                   tr("The selected images don't have a common width and height!"));
+            return;
+        }
+
+    }
+
+    //Delete the images and the ptr array
+    for(int i = 0; i < inputFileNameList.length(); i++)
+    {
+        delete images[i];
+    }
+    delete images;
 }

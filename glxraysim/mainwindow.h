@@ -25,6 +25,8 @@ protected:
      void closeEvent(QCloseEvent* event);
 
 private slots:
+    void on_simpleSumUpAction_triggered();
+    void on_exitAction_triggered();
     void on_pixelCubeScaleSpinner_valueChanged(int );
     void on_imageDistanceComboBox_valueChanged(double );
     void on_selectInputFilesButton_clicked();
@@ -40,6 +42,7 @@ private:
     gldialog *glDialog;
     XRayGLWidget *glWidget;
     QFileDialog *inputFileDialog;
+    QStringList inputFileNameList;
 };
 
 #endif // MAINWINDOW_H
