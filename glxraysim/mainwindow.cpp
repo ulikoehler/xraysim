@@ -149,8 +149,6 @@ void MainWindow::on_simpleSumUpAction_triggered()
         matrix[i] = 0;
     }
 
-
-    cout << "read images";
     for(int i = 0; i < inputFileNameList.length(); i++)
     {
         for(int h = 0; h < height;h++)
@@ -168,7 +166,7 @@ void MainWindow::on_simpleSumUpAction_triggered()
     {
         if(matrix[i] > max)
         {
-            max = matrix[i]
+            max = matrix[i];
         }
     }
 

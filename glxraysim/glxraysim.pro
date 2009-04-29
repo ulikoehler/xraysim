@@ -7,9 +7,12 @@ TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
     xrayglwidget.cpp \
-    gldialog.cpp
+    gldialog.cpp \
+    graphicsdialog.cpp
 HEADERS += mainwindow.h \
     xrayglwidget.h \
-    gldialog.h
+    gldialog.h \
+    graphicsdialog.h
 FORMS += mainwindow.ui \
-    gldialog.ui
+    gldialog.ui \
+    graphicsdialog.ui
