@@ -2,7 +2,9 @@
 #include "ui_mainwindow.h"
 
 #include <cmath>
-
+#include <cstdio>
+#include <iostream>
+using namespace std;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindowClass), glDialog(new gldialog)
@@ -109,16 +111,17 @@ void MainWindow::on_exitAction_triggered()
 void MainWindow::on_simpleSumUpAction_triggered()
 {
     //Declare an array of QImage pointers
-    QImage** images = new QImage*[inputFileNameList.size()];
+    int inputLen = inputFileNameList.size();
+    QImage** images = new QImage*[inputLen];
 
     int height = -1; //-1 indicates that the first image has not been read yet
     int width = -1; //-1 indicates that the first image has not been read yet
-    for(int i = 0; i < inputFileNameList.length(); i++)
+    for(int i = 0; i < inputLen; i++)
     {
         images[i] = new QImage(inputFileNameList[i]);
         //Set the height and width if this is the first image
-        if(width == -1) {images[i]->width();}
-        if(height == -1) {images[i]->height();}
+        if(width == -1) {width = images[i]->width();}
+        if(height == -1) {height = images[i]->height();}
 
         /**
          * Check if the height and width of this image
@@ -127,56 +130,54 @@ void MainWindow::on_simpleSumUpAction_triggered()
          */
         if((images[i]->width() != width) || (images[i]->height() != height))
         {
-            //int ret = QMessageBox::critical(this, tr("Image size error"),
-            //                       tr("The selected images don't have a common width and height!"));
-            //return;
-            //TODO Uncomment if it works
+            QMessageBox::critical(this, tr("Image size error"),
+                                   tr("The selected images don't have a common width and height!"));
+            return;
         }
     }
+
+    //Arrays and pixel coordinates start from 0
+    width -= 1;
+    height -= 1;
 
     //Initialize an array to hold the sum values
     uint* matrix = new uint[width * height];
     //Set all values in the matrix to 0
-    for(int i = 0; i < width * height; i++)
+    for(int i = 0; i < (width * height); i++)
     {
         matrix[i] = 0;
     }
 
-    for(int i = 0; i < inputFileNameList.length(); i++)
+    for(int i = 0; i < inputLen; i++)
     {
         for(int h = 0; h < height;h++)
         {
             for(int w = 0; w < width; w++)
             {
                 //Add the pixel's gray value to the appropriate matrix value
-                matrix[h * width + w] += qGray(images[i]->pixel(width, height));
+                matrix[h * width + w] = matrix[h * width + w] + qAlpha(images[i]->pixel(w, h));
             }
         }
     }
-    //Find the maximum value in the matrix
-    uint max = 0;
-    for(int i = 0; i < width * height; i++)
-    {
-        if(matrix[i] > max)
-        {
-            max = matrix[i];
-        }
-    }
+    //for(int i = 0; i<(width*height);i++)
+    //{printf("%i ",matrix[i]);}
+
 
     //Set the pixels of the result images to the values (relative to the maximum)
-    QImage resultImage(width, height, QImage::Format_RGB32);
+    QImage resultImage(QImage(width, height, QImage::Format_ARGB32));
     for(int h = 0; h < height;h++)
         {
             for(int w = 0; w < width; w++)
             {
                 //TODO Check if ceil is appropriate here
-                register int val = ceil(matrix[h * width + w] / (float)max);
-                resultImage.setPixel(width, height, qRgb(val, val, val));
+                int val = matrix[h * width + w] / (float)inputLen;
+                cout << val << " ";
+                resultImage.setPixel(w, h, qRgba(val, val, val, 255-val));
             }
         }
 
     GraphicsDialog* graphicsDialog = new GraphicsDialog(this);
-    graphicsDialog->setImage(*(images[0]));
+    graphicsDialog->setImage(resultImage);
     graphicsDialog->show();
 
     //Delete the images and the ptr array

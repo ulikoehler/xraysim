@@ -10,6 +10,7 @@ GraphicsDialog::GraphicsDialog(QWidget *parent) :
 {
     m_ui->setupUi(this);
     m_ui->imageLabel->setBackgroundRole(QPalette::AlternateBase);
+    m_ui->imageLabel->update();
 }
 
 GraphicsDialog::~GraphicsDialog()

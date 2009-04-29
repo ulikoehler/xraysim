@@ -1,7 +1,8 @@
 #ifndef GRAPHICSDIALOG_H
 #define GRAPHICSDIALOG_H
 
-#include <QtGui/QDialog>
+#include <QDialog>
+#include <QSharedPointer>
 
 namespace Ui {
     class GraphicsDialog;
