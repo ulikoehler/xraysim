@@ -179,6 +179,10 @@ void MainWindow::on_simpleSumUpAction_triggered()
             }
         }
 
+    graphicsdialog* graphicsDialog = new graphicsdialog(this);
+    graphicsDialog->setImage(resultImage);
+    graphicsDialog->show();
+
     //Delete the images and the ptr array
     for(int i = 0; i < inputFileNameList.length(); i++)
     {
