@@ -13,9 +13,22 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="QGraphicsView" name="graphicsView"/>
+    <widget class="QLabel" name="imageLabel">
+     <property name="frameShape">
+      <enum>QFrame::Box</enum>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::PlainText</enum>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

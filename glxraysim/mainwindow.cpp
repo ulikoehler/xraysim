@@ -180,7 +180,7 @@ void MainWindow::on_simpleSumUpAction_triggered()
         }
 
     graphicsdialog* graphicsDialog = new graphicsdialog(this);
-    graphicsDialog->setImage(resultImage);
+    graphicsDialog->setImage(*(images[0]));
     graphicsDialog->show();
 
     //Delete the images and the ptr array

@@ -1,6 +1,9 @@
 #include "graphicsdialog.h"
 #include "ui_graphicsdialog.h"
 
+#include <iostream>
+using namespace std;
+
 graphicsdialog::graphicsdialog(QWidget *parent) :
     QDialog(parent),
     m_ui(new Ui::graphicsdialog)
@@ -15,8 +18,8 @@ graphicsdialog::~graphicsdialog()
 
  void graphicsdialog::setImage(QImage& image)
  {
-    m_ui->graphicsView->setBackgroundBrush(image);
-    m_ui->graphicsView->setCacheMode(QGraphicsView::CacheBackground);
+    m_ui->imageLabel->setPixmap(QPixmap::fromImage(image));
+    m_ui->imageLabel->update();
  }
 
 void graphicsdialog::changeEvent(QEvent *e)
