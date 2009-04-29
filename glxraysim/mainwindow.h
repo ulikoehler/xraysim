@@ -5,8 +5,10 @@
 #include <QtGui/QFileDialog>
 #include <QtGui/QMessageBox>
 #include <QtGui/QCloseEvent>
+#include <QSharedPointer>
 #include "xrayglwidget.h"
 #include "gldialog.h"
+#include "graphicsdialog.h"
 
 namespace Ui
 {

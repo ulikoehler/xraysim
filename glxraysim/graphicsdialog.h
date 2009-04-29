@@ -15,7 +15,7 @@ public:
     explicit graphicsdialog(QWidget *parent = 0);
     virtual ~graphicsdialog();
 
-    void setImage(QImage* image);
+    void setImage(QImage& image);
 
 protected:
     virtual void changeEvent(QEvent *e);

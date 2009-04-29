@@ -1,9 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <iostream>
-#include <tr1/memory>
-using namespace std::tr1;
+#include <cmath>
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindowClass), glDialog(new gldialog)
@@ -171,14 +170,14 @@ void MainWindow::on_simpleSumUpAction_triggered()
     }
 
     //Set the pixels of the result images to the values (relative to the maximum)
-    shared_ptr<QImage> resultImage(new QImage(width, height));
+    QImage resultImage(width, height, QImage::Format_RGB32);
     for(int h = 0; h < height;h++)
         {
             for(int w = 0; w < width; w++)
             {
                 //TODO Check if ceil is appropriate here
-                register int value = ceil(matrix[h * width + w] / (float)max);
-                resultImage->setPixel(width, height, qRgb(val, val, val));
+                register int val = ceil(matrix[h * width + w] / (float)max);
+                resultImage.setPixel(width, height, qRgb(val, val, val));
             }
         }
 

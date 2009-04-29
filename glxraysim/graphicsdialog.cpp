@@ -13,7 +13,7 @@ graphicsdialog::~graphicsdialog()
     delete m_ui;
 }
 
- void graphicsdialog::setImage(QImage* image)
+ void graphicsdialog::setImage(QImage& image)
  {
     m_ui->graphicsView->setBackgroundBrush(image);
     m_ui->graphicsView->setCacheMode(QGraphicsView::CacheBackground);
