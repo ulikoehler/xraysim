@@ -175,7 +175,7 @@ void MainWindow::on_simpleSumUpAction_triggered()
             }
         }
 
-    graphicsdialog* graphicsDialog = new graphicsdialog(this);
+    GraphicsDialog* graphicsDialog = new GraphicsDialog(this);
     graphicsDialog->setImage(*(images[0]));
     graphicsDialog->show();
 

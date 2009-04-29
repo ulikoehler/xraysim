@@ -4,25 +4,25 @@
 #include <iostream>
 using namespace std;
 
-graphicsdialog::graphicsdialog(QWidget *parent) :
+GraphicsDialog::GraphicsDialog(QWidget *parent) :
     QDialog(parent),
-    m_ui(new Ui::graphicsdialog)
+    m_ui(new Ui::GraphicsDialog)
 {
     m_ui->setupUi(this);
     m_ui->imageLabel->setBackgroundRole(QPalette::AlternateBase);
 }
 
-graphicsdialog::~graphicsdialog()
+GraphicsDialog::~GraphicsDialog()
 {
     delete m_ui;
 }
 
- void graphicsdialog::setImage(QImage& image)
+ void GraphicsDialog::setImage(QImage& image)
  {
     m_ui->imageLabel->setPixmap(QPixmap::fromImage(image));
  }
 
-void graphicsdialog::changeEvent(QEvent *e)
+void GraphicsDialog::changeEvent(QEvent *e)
 {
     QDialog::changeEvent(e);
     switch (e->type()) {

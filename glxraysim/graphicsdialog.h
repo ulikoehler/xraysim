@@ -4,16 +4,16 @@
 #include <QtGui/QDialog>
 
 namespace Ui {
-    class graphicsdialog;
+    class GraphicsDialog;
 }
 
-class graphicsdialog : public QDialog {
+class GraphicsDialog : public QDialog {
     Q_OBJECT
-    Q_DISABLE_COPY(graphicsdialog)
+    Q_DISABLE_COPY(GraphicsDialog)
 
 public:
-    explicit graphicsdialog(QWidget *parent = 0);
-    virtual ~graphicsdialog();
+    explicit GraphicsDialog(QWidget *parent = 0);
+    virtual ~GraphicsDialog();
 
     void setImage(QImage& image);
 
@@ -21,7 +21,7 @@ protected:
     virtual void changeEvent(QEvent *e);
 
 private:
-    Ui::graphicsdialog *m_ui;
+    Ui::GraphicsDialog *m_ui;
 };
 
 #endif // GRAPHICSDIALOG_H
