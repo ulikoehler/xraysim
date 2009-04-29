@@ -138,8 +138,6 @@ void MainWindow::on_simpleSumUpAction_triggered()
         }
     }
 
-    width = 10;
-    height = 10;
     //Initialize an array to hold the sum values
     uint* matrix = new uint[width * height];
     //Set all values in the matrix to 0

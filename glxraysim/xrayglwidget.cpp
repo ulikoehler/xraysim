@@ -2,9 +2,6 @@
 #include <QtOpenGL>
 #include <cstdlib>
 
-#include <iostream>
-using namespace std;
-
 //Global variables
 const GLfloat null4f[] = {0,0,0,0};
 
@@ -409,10 +406,7 @@ void XRayGLWidget::renderPixelCubes()
         textureChanged = false;
     }
 
-    glScalef(1,1,500);
-
     //Draw the cubes
-    cout << "len" << imageTexturesLength;
     for(int i = 0; i < imageTexturesLength; i++)
     {
         QImage* image = imageTextures[i];
@@ -420,6 +414,8 @@ void XRayGLWidget::renderPixelCubes()
         //Draw the rows
         for(int y = 0; y < image->height(); y++)
         {
+            //Extend the cubes to have a depth of imageDistance
+            glScalef(1,1,imageDistance);
             glPushMatrix();
             for(int x = 0; x < image->width(); x++)
             {
