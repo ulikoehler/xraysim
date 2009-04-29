@@ -17,12 +17,8 @@ MainWindow::MainWindow(QWidget *parent)
      */
     glWidget = new XRayGLWidget(glDialog);
     glWidget->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-    //glDialog->//addWidget(glWidget,0);
-    //glDialog
-    glDialog->layout()->addWidget(glWidget);
+    glDialog->setGLWidget(glWidget);
     glDialog->show();
-    //Set the default mode
-    glWidget->setTransformationMode(MODE_ROTATE);
 }
 
 MainWindow::~MainWindow()

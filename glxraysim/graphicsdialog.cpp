@@ -9,6 +9,7 @@ graphicsdialog::graphicsdialog(QWidget *parent) :
     m_ui(new Ui::graphicsdialog)
 {
     m_ui->setupUi(this);
+    m_ui->imageLabel->setBackgroundRole(QPalette::AlternateBase);
 }
 
 graphicsdialog::~graphicsdialog()
@@ -19,7 +20,6 @@ graphicsdialog::~graphicsdialog()
  void graphicsdialog::setImage(QImage& image)
  {
     m_ui->imageLabel->setPixmap(QPixmap::fromImage(image));
-    m_ui->imageLabel->update();
  }
 
 void graphicsdialog::changeEvent(QEvent *e)

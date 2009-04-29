@@ -1,10 +1,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QtGui/QMainWindow>
-#include <QtGui/QFileDialog>
-#include <QtGui/QMessageBox>
-#include <QtGui/QCloseEvent>
+#include <QMainWindow>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QCloseEvent>
 #include <QSharedPointer>
 #include "xrayglwidget.h"
 #include "gldialog.h"
