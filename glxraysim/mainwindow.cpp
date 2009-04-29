@@ -1,6 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <iostream>
+#include <tr1/memory>
+using namespace std::tr1;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindowClass), glDialog(new gldialog)
@@ -113,8 +116,8 @@ void MainWindow::on_simpleSumUpAction_triggered()
     //Declare an array of QImage pointers
     QImage** images = new QImage*[inputFileNameList.size()];
 
-    int height = -1;
-    int width = -1;
+    int height = -1; //-1 indicates that the first image has not been read yet
+    int width = -1; //-1 indicates that the first image has not been read yet
     for(int i = 0; i < inputFileNameList.length(); i++)
     {
         images[i] = new QImage(inputFileNameList[i]);
@@ -129,12 +132,57 @@ void MainWindow::on_simpleSumUpAction_triggered()
          */
         if((images[i]->width() != width) || (images[i]->height() != height))
         {
-            int ret = QMessageBox::critical(this, tr("Image size error"),
-                                   tr("The selected images don't have a common width and height!"));
-            return;
+            //int ret = QMessageBox::critical(this, tr("Image size error"),
+            //                       tr("The selected images don't have a common width and height!"));
+            //return;
+            //TODO Uncomment if it works
         }
-
     }
+
+    width = 10;
+    height = 10;
+    //Initialize an array to hold the sum values
+    uint* matrix = new uint[width * height];
+    //Set all values in the matrix to 0
+    for(int i = 0; i < width * height; i++)
+    {
+        matrix[i] = 0;
+    }
+
+
+    cout << "read images";
+    for(int i = 0; i < inputFileNameList.length(); i++)
+    {
+        for(int h = 0; h < height;h++)
+        {
+            for(int w = 0; w < width; w++)
+            {
+                //Add the pixel's gray value to the appropriate matrix value
+                matrix[h * width + w] += qGray(images[i]->pixel(width, height));
+            }
+        }
+    }
+    //Find the maximum value in the matrix
+    uint max = 0;
+    for(int i = 0; i < width * height; i++)
+    {
+        if(matrix[i] > max)
+        {
+            max = matrix[i]
+        }
+    }
+
+    //Set the pixels of the result images to the values (relative to the maximum)
+    shared_ptr<QImage> resultImage(new QImage(width, height));
+    for(int h = 0; h < height;h++)
+        {
+            for(int w = 0; w < width; w++)
+            {
+                //TODO Check if ceil is appropriate here
+                register int value = ceil(matrix[h * width + w] / (float)max);
+                resultImage->setPixel(width, height, qRgb(val, val, val));
+            }
+        }
 
     //Delete the images and the ptr array
     for(int i = 0; i < inputFileNameList.length(); i++)
