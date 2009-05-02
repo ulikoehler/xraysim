@@ -213,17 +213,15 @@ void XRayGLWidget::initializeGL()
 
     //Enable the required featuresg
     glEnable(GL_DEPTH_TEST);
-    //glEnable(GL_CULL_FACE);
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     glEnable(GL_COLOR_MATERIAL);
     glEnable (GL_BLEND);
     glEnable(GL_TEXTURE_2D);
-    //glEnable(GL_TEXTURE_3D);
-    //glEnable(GL_ALPHA_TEST);
+    glEnable(GL_ALPHA_TEST);
     glShadeModel(GL_SMOOTH);
 
-    glAlphaFunc ( GL_GREATER, 0.5 ) ;
+    glAlphaFunc ( GL_GREATER, 0.0);
     //glAlphaFunc(GL_ALWAYS, 1);
     glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -255,7 +253,7 @@ void XRayGLWidget::initializeGL()
     const GLfloat lightSpecular[] = {0,0,0,0};
     const GLfloat lightPosition[] = { 0,0,-30,0};
     const GLfloat lightDirection[] = {0,0,1};
-    const GLfloat lightAmbient[] = {1,1,1,1};
+    const GLfloat lightAmbient[] = {1,1,1,0};
     glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpecular);
     glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmbient);
     glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);

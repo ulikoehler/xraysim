@@ -8,11 +8,14 @@ SOURCES += main.cpp \
     mainwindow.cpp \
     xrayglwidget.cpp \
     gldialog.cpp \
-    graphicsdialog.cpp
+    graphicsdialog.cpp \
+    configurelightdialog.cpp
 HEADERS += mainwindow.h \
     xrayglwidget.h \
     gldialog.h \
-    graphicsdialog.h
+    graphicsdialog.h \
+    configurelightdialog.h
 FORMS += mainwindow.ui \
     gldialog.ui \
-    graphicsdialog.ui
+    graphicsdialog.ui \
+    configurelightdialog.ui
