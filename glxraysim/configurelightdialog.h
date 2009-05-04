@@ -8,6 +8,14 @@
 
 #include <QtGui/QDialog>
 
+#include <tr1/array>
+using namespace std::tr1;
+
+typedef array<float, 3> vec3f;
+typedef array<double, 3> vec3d;
+typedef array<float, 4> vec4f;
+typedef array<double, 4> vec4d;
+
 namespace Ui {
     class ConfigureLightDialog;
 }
@@ -25,11 +33,13 @@ protected:
 private:
     Ui::ConfigureLightDialog *m_ui;
 
-public slots:
+signals:
+    void ambientIntensityChanged(vec4d values);
 
 
 private slots:
     void on_light1Cutoff180CheckBox_toggled(bool checked);
+    void ambientIntensityValuesChanged(double value);
 };
 
 #endif // CONFIGURELIGHTDIALOG_H

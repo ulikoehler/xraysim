@@ -38,3 +38,15 @@ void ConfigureLightDialog::on_light1Cutoff180CheckBox_toggled(bool checked)
     }
 
 }
+
+
+void ConfigureLightDialog::ambientIntensityValuesChanged(double value)
+{
+    vec4d newIntensity;
+    newIntensity[0] = m_ui->ambientRedSpinBox->value();
+    newIntensity[1] = m_ui->ambientGreenSpinBox->value();
+    newIntensity[2] = m_ui->ambientBlueSpinBox->value();
+    newIntensity[3] = m_ui->ambientAlphaSpinBox->value();
+
+    emit ambientIntensityChanged(newIntensity);
+}
