@@ -179,28 +179,28 @@
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QDoubleSpinBox" name="doubleSpinBox">
+       <widget class="QDoubleSpinBox" name="light1DiffuseRedSpinBox">
         <property name="decimals">
          <number>3</number>
         </property>
        </widget>
       </item>
       <item row="2" column="2">
-       <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+       <widget class="QDoubleSpinBox" name="light1DiffuseGreenSpinBox">
         <property name="decimals">
          <number>3</number>
         </property>
        </widget>
       </item>
       <item row="2" column="3">
-       <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
+       <widget class="QDoubleSpinBox" name="light1DiffuseBlueSpinBox">
         <property name="decimals">
          <number>3</number>
         </property>
        </widget>
       </item>
       <item row="3" column="0">
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="light1SpecularLabel">
         <property name="text">
          <string>Specular:</string>
         </property>
@@ -228,14 +228,14 @@
        </widget>
       </item>
       <item row="4" column="0">
-       <widget class="QLabel" name="label_2">
+       <widget class="QLabel" name="light1AttenuationLabel">
         <property name="text">
          <string>Attenuation:</string>
         </property>
        </widget>
       </item>
       <item row="1" column="4">
-       <widget class="QDoubleSpinBox" name="Light1AmbientAlphaSpinBox"/>
+       <widget class="QDoubleSpinBox" name="light1AmbientAlphaSpinBox"/>
       </item>
       <item row="2" column="4">
        <widget class="QDoubleSpinBox" name="light1DiffuseAlphaSpinBox"/>
@@ -268,7 +268,7 @@
        </widget>
       </item>
       <item row="5" column="0">
-       <widget class="QLabel" name="label_3">
+       <widget class="QLabel" name="light1DirectionLabel">
         <property name="text">
          <string>Direction:</string>
         </property>
@@ -289,14 +289,14 @@
        </widget>
       </item>
       <item row="6" column="0">
-       <widget class="QLabel" name="label_4">
+       <widget class="QLabel" name="light1CutoffLabel">
         <property name="text">
          <string>Cutoff:</string>
         </property>
        </widget>
       </item>
       <item row="7" column="0">
-       <widget class="QLabel" name="label_5">
+       <widget class="QLabel" name="light1ExponentLabel">
         <property name="text">
          <string>Exponent:</string>
         </property>
