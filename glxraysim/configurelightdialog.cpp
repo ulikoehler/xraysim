@@ -6,6 +6,11 @@ ConfigureLightDialog::ConfigureLightDialog(QWidget *parent) :
     m_ui(new Ui::ConfigureLightDialog)
 {
     m_ui->setupUi(this);
+    //Connect the signals
+    connect(m_ui->ambientRedSpinBox, SIGNAL(valueChanged(double)), this, SLOT(ambientIntensityValuesChanged(double)));
+    connect(m_ui->ambientGreenSpinBox, SIGNAL(valueChanged(double)), this, SLOT(ambientIntensityValuesChanged(double)));
+    connect(m_ui->ambientBlueSpinBox, SIGNAL(valueChanged(double)), this, SLOT(ambientIntensityValuesChanged(double)));
+    connect(m_ui->ambientAlphaSpinBox, SIGNAL(valueChanged(double)), this, SLOT(ambientIntensityValuesChanged(double)));
 }
 
 ConfigureLightDialog::~ConfigureLightDialog()
@@ -23,6 +28,8 @@ void ConfigureLightDialog::changeEvent(QEvent *e)
     default:
         break;
     }
+
+    thisRef = this;
 }
 
 void ConfigureLightDialog::on_light1Cutoff180CheckBox_toggled(bool checked)

@@ -2,6 +2,9 @@
  * OpenGL developer remark:
  * LIGHT_0 is referenced as light1 in this file
  * That way the user doesn't need to be familiar with the OpenGL syntax
+ *
+ * Slots are referred as ...ValueChanged(...); signals as ...Changed(...)
+ * Slot parameters are ignored usuallyd
  */
 #ifndef CONFIGURELIGHTDIALOG_H
 #define CONFIGURELIGHTDIALOG_H
@@ -26,6 +29,7 @@ class ConfigureLightDialog : public QDialog {
 public:
     explicit ConfigureLightDialog(QWidget *parent = 0);
     virtual ~ConfigureLightDialog();
+    ConfigureLightDialog* thisRef;
 
 protected:
     virtual void changeEvent(QEvent *e);
@@ -36,10 +40,10 @@ private:
 signals:
     void ambientIntensityChanged(vec4d values);
 
-
-private slots:
+public slots:
     void on_light1Cutoff180CheckBox_toggled(bool checked);
     void ambientIntensityValuesChanged(double value);
+
 };
 
 #endif // CONFIGURELIGHTDIALOG_H
