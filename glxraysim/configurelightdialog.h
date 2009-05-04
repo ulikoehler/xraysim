@@ -25,6 +25,7 @@ protected:
 private:
     Ui::ConfigureLightDialog *m_ui;
 
+public slots:
 
 
 private slots:

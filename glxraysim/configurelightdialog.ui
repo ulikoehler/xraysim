@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>443</width>
-    <height>300</height>
+    <width>444</width>
+    <height>338</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -207,21 +207,21 @@
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="QDoubleSpinBox" name="doubleSpinBox_4">
+       <widget class="QDoubleSpinBox" name="light1SpecularRedSpinBox">
         <property name="decimals">
          <number>3</number>
         </property>
        </widget>
       </item>
       <item row="3" column="2">
-       <widget class="QDoubleSpinBox" name="doubleSpinBox_5">
+       <widget class="QDoubleSpinBox" name="light1SpecularGreenSpinBox">
         <property name="decimals">
          <number>3</number>
         </property>
        </widget>
       </item>
       <item row="3" column="3">
-       <widget class="QDoubleSpinBox" name="doubleSpinBox_6">
+       <widget class="QDoubleSpinBox" name="light1SpecularBlueSpinBox">
         <property name="decimals">
          <number>3</number>
         </property>
@@ -235,25 +235,37 @@
        </widget>
       </item>
       <item row="1" column="4">
-       <widget class="QDoubleSpinBox" name="doubleSpinBox_7"/>
+       <widget class="QDoubleSpinBox" name="Light1AmbientAlphaSpinBox"/>
       </item>
       <item row="2" column="4">
-       <widget class="QDoubleSpinBox" name="doubleSpinBox_8"/>
+       <widget class="QDoubleSpinBox" name="light1DiffuseAlphaSpinBox"/>
       </item>
       <item row="3" column="4">
-       <widget class="QDoubleSpinBox" name="doubleSpinBox_9"/>
+       <widget class="QDoubleSpinBox" name="light1SpecularAlphaSpinBox"/>
       </item>
       <item row="4" column="1">
-       <widget class="QDoubleSpinBox" name="doubleSpinBox_10"/>
+       <widget class="QDoubleSpinBox" name="light1ConstantAttenuationSpinBox"/>
       </item>
       <item row="4" column="2">
-       <widget class="QDoubleSpinBox" name="doubleSpinBox_11"/>
+       <widget class="QDoubleSpinBox" name="light1LinearAttenuationSpinBox">
+        <property name="decimals">
+         <number>3</number>
+        </property>
+       </widget>
       </item>
       <item row="4" column="3">
-       <widget class="QDoubleSpinBox" name="doubleSpinBox_12"/>
+       <widget class="QDoubleSpinBox" name="light1QuadraticAttenuationSpinBox">
+        <property name="decimals">
+         <number>3</number>
+        </property>
+       </widget>
       </item>
       <item row="5" column="1">
-       <widget class="QDoubleSpinBox" name="doubleSpinBox_13"/>
+       <widget class="QDoubleSpinBox" name="light1XDirectionSpinBox">
+        <property name="decimals">
+         <number>3</number>
+        </property>
+       </widget>
       </item>
       <item row="5" column="0">
        <widget class="QLabel" name="label_3">
@@ -263,10 +275,18 @@
        </widget>
       </item>
       <item row="5" column="2">
-       <widget class="QDoubleSpinBox" name="doubleSpinBox_14"/>
+       <widget class="QDoubleSpinBox" name="light1YDirectionSpinBox">
+        <property name="decimals">
+         <number>3</number>
+        </property>
+       </widget>
       </item>
       <item row="5" column="3">
-       <widget class="QDoubleSpinBox" name="doubleSpinBox_15"/>
+       <widget class="QDoubleSpinBox" name="light1ZDirectionSpinBox">
+        <property name="decimals">
+         <number>3</number>
+        </property>
+       </widget>
       </item>
       <item row="6" column="0">
        <widget class="QLabel" name="label_4">
