@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>444</width>
+    <width>457</width>
     <height>338</height>
    </rect>
   </property>
@@ -235,10 +235,18 @@
        </widget>
       </item>
       <item row="1" column="4">
-       <widget class="QDoubleSpinBox" name="light1AmbientAlphaSpinBox"/>
+       <widget class="QDoubleSpinBox" name="light1AmbientAlphaSpinBox">
+        <property name="decimals">
+         <number>3</number>
+        </property>
+       </widget>
       </item>
       <item row="2" column="4">
-       <widget class="QDoubleSpinBox" name="light1DiffuseAlphaSpinBox"/>
+       <widget class="QDoubleSpinBox" name="light1DiffuseAlphaSpinBox">
+        <property name="decimals">
+         <number>3</number>
+        </property>
+       </widget>
       </item>
       <item row="3" column="4">
        <widget class="QDoubleSpinBox" name="light1SpecularAlphaSpinBox"/>
@@ -265,6 +273,12 @@
         <property name="decimals">
          <number>3</number>
         </property>
+        <property name="minimum">
+         <double>-1000.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>1000.000000000000000</double>
+        </property>
        </widget>
       </item>
       <item row="5" column="0">
@@ -279,12 +293,27 @@
         <property name="decimals">
          <number>3</number>
         </property>
+        <property name="minimum">
+         <double>-1000.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>1000.000000000000000</double>
+        </property>
        </widget>
       </item>
       <item row="5" column="3">
        <widget class="QDoubleSpinBox" name="light1ZDirectionSpinBox">
         <property name="decimals">
          <number>3</number>
+        </property>
+        <property name="minimum">
+         <double>-1000.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>1000.000000000000000</double>
+        </property>
+        <property name="value">
+         <double>-1.000000000000000</double>
         </property>
        </widget>
       </item>
