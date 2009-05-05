@@ -19,7 +19,20 @@ ConfigureLightDialog::ConfigureLightDialog(QWidget *parent) :
     //
     connect(m_ui->light1GroupBox, SIGNAL(toggled(bool)), this, SLOT(light1ToggledChanged(bool)));
     //Ambient
-    connect(m_ui->light1GroupBox, SIGNAL(toggled(bool)), this, SLOT(light1ToggledChanged(bool)));
+    connect(m_ui->light1AmbientRedSpinBox, SIGNAL(valueChanged(double)), this, SLOT(light1AmbientValuesChanged(double)));
+    connect(m_ui->light1AmbientGreenSpinBox, SIGNAL(valueChanged(double)), this, SLOT(light1AmbientValuesChanged(double)));
+    connect(m_ui->light1AmbientBlueSpinBox, SIGNAL(valueChanged(double)), this, SLOT(light1AmbientValuesChanged(double)));
+    connect(m_ui->light1AmbientAlphaSpinBox, SIGNAL(valueChanged(double)), this, SLOT(light1AmbientValuesChanged(double)));
+    //Diffuse
+    connect(m_ui->light1DiffuseRedSpinBox, SIGNAL(valueChanged(double)), this, SLOT(light1DiffuseValuesChanged(double)));
+    connect(m_ui->light1DiffuseGreenSpinBox, SIGNAL(valueChanged(double)), this, SLOT(light1DiffuseValuesChanged(double)));
+    connect(m_ui->light1DiffuseBlueSpinBox, SIGNAL(valueChanged(double)), this, SLOT(light1DiffuseValuesChanged(double)));
+    connect(m_ui->light1DiffuseAlphaSpinBox, SIGNAL(valueChanged(double)), this, SLOT(light1DiffuseValuesChanged(double)));
+    //Specular
+    connect(m_ui->light1SpecularRedSpinBox, SIGNAL(valueChanged(double)), this, SLOT(light1SpecularValuesChanged(double)));
+    connect(m_ui->light1SpecularGreenSpinBox, SIGNAL(valueChanged(double)), this, SLOT(light1SpecularValuesChanged(double)));
+    connect(m_ui->light1SpecularBlueSpinBox, SIGNAL(valueChanged(double)), this, SLOT(light1SpecularValuesChanged(double)));
+    connect(m_ui->light1SpecularAlphaSpinBox, SIGNAL(valueChanged(double)), this, SLOT(light1SpecularValuesChanged(double)));
     //Exponent
     connect(m_ui->light1ExponentSpinBox, SIGNAL(valueChanged(double)), this, SLOT(light1ExponentValueChanged(double)));
 }
@@ -104,7 +117,7 @@ void ConfigureLightDialog::light1SpecularValuesChanged(double)
     newSpecular[2] = m_ui->light1SpecularBlueSpinBox->value();
     newSpecular[3] = m_ui->light1SpecularAlphaSpinBox->value();
 
-    emit light1SpecularChanged(newSpecular);
+    emit light1SpecularChanged(newSpeculard);
 }
 
 void ConfigureLightDialog::light1ExponentValueChanged(double value)
