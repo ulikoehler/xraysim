@@ -27,7 +27,6 @@ XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
 
     transformationMode = MODE_ROTATE;
     simulationMode = SIM_MODE_TEXTURE_BLEND;
-    pixelValueMode = PIXEL_VALUE_ALPHA;
 
     textureChanged = true;
 
@@ -88,12 +87,6 @@ void XRayGLWidget::setSimulationMode(SimulationMode mode)
     //Enforce texture reload
     textureChanged = true;
     //Update the graphics
-    updateGL();
-}
-
-void XRayGLWidget::setPixelValueMode(PixelValueMode mode)
-{
-    this->pixelValueMode = mode;
     updateGL();
 }
 
@@ -405,7 +398,7 @@ void XRayGLWidget::renderPixelCubes()
 
         for(int i = 0; i < inputFileList.size(); i++)
         {
-            imageTextures[i] = new QImage(inputFileList[i]);
+            imageTextures[i] = new QImage(QImage(inputFileList[i]).alphaChannel());
         }
         //The texture doesn't have to be changed next time
         textureChanged = false;
@@ -424,14 +417,8 @@ void XRayGLWidget::renderPixelCubes()
             glScalef(1,1,imageDistance);
             for(int x = 0; x < image->width(); x++)
             {
-                if(pixelValueMode == PIXEL_VALUE_ALPHA)
-                {
-                    drawCube(qAlpha(image->pixel(x,y)) / 255.0);
-                }
-                else
-                {
-                    drawCube(qGray(image->pixel(x,y)) / 255.0);
-                }
+                drawCube(qAlpha(image->pixel(x,y)) / 255.0);
+                drawCube(qGray(image->pixel(x,y)) / 255.0);
                 glTranslatef(1,0,0);
             }
             glPopMatrix();

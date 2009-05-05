@@ -27,8 +27,6 @@ protected:
      void closeEvent(QCloseEvent* event);
 
 private slots:
-    void on_pixelValueModeGrayRadioButton_toggled(bool checked);
-    void on_pixelValueModeAlphaRadioButton_toggled(bool checked);
     void on_simpleSumUpAction_triggered();
     void on_exitAction_triggered();
     void on_pixelCubeScaleSpinner_valueChanged(int );

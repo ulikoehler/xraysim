@@ -188,18 +188,3 @@ void MainWindow::on_simpleSumUpAction_triggered()
     delete images;
 }
 
-void MainWindow::on_pixelValueModeAlphaRadioButton_toggled(bool checked)
-{
-    if(checked)
-    {
-        glWidget->setPixelValueMode(PIXEL_VALUE_ALPHA);
-    }
-}
-
-void MainWindow::on_pixelValueModeGrayRadioButton_toggled(bool checked)
-{
-    if(checked)
-    {
-        glWidget->setPixelValueMode(PIXEL_VALUE_GRAY);
-    }
-}
