@@ -70,7 +70,6 @@ void ConfigureLightDialog::on_light1Cutoff180CheckBox_toggled(bool checked)
 
 }
 
-
 void ConfigureLightDialog::ambientIntensityValuesChanged(double)
 {
     vec4d newIntensity;
@@ -82,10 +81,37 @@ void ConfigureLightDialog::ambientIntensityValuesChanged(double)
     emit ambientIntensityChanged(newIntensity);
 }
 
+void ConfigureLightDialog::light1ToggledChanged(bool enabled)
+{
+    emit light1Toggled(enabled);
+}
+
+
+void ConfigureLightDialog::light1PositionValuesChanged(double)
+{
+    vec3f newPosition;
+
+    newPosition[0] = m_ui->light1PositionXSpinBox->value();
+    newPosition[1] = m_ui->light1PositionYSpinBox->value();
+    newPosition[2] = m_ui->light1PositionZSpinBox->value();
+
+    emit light1AmbientChanged(newPosition);
+}
+
+void ConfigureLightDialog::light1DirectionValuesChanged(double)
+{
+    vec3f newDirection;
+
+    newDirection[0] = m_ui->light1DirectionXSpinBox->value();
+    newDirection[1] = m_ui->light1DirectionYSpinBox->value();
+    newDirection[2] = m_ui->light1DirectionZSpinBox->value();
+
+    emit light1AmbientChanged(newDirection);
+}
 
 void ConfigureLightDialog::light1AmbientValuesChanged(double)
 {
-    vec4d newAmbient;
+    vec4f newAmbient;
 
     newAmbient[0] = m_ui->light1AmbientRedSpinBox->value();
     newAmbient[1] = m_ui->light1AmbientGreenSpinBox->value();
@@ -98,7 +124,7 @@ void ConfigureLightDialog::light1AmbientValuesChanged(double)
 
 void ConfigureLightDialog::light1DiffuseValuesChanged(double)
 {
-    vec4d newDiffuse;
+    vec4f newDiffuse;
 
     newDiffuse[0] = m_ui->light1DiffuseRedSpinBox->value();
     newDiffuse[1] = m_ui->light1DiffuseGreenSpinBox->value();
@@ -110,14 +136,14 @@ void ConfigureLightDialog::light1DiffuseValuesChanged(double)
 
 void ConfigureLightDialog::light1SpecularValuesChanged(double)
 {
-    vec4d newSpecular;
+    vec4f newSpecular;
 
     newSpecular[0] = m_ui->light1SpecularRedSpinBox->value();
     newSpecular[1] = m_ui->light1SpecularGreenSpinBox->value();
     newSpecular[2] = m_ui->light1SpecularBlueSpinBox->value();
     newSpecular[3] = m_ui->light1SpecularAlphaSpinBox->value();
 
-    emit light1SpecularChanged(newSpeculard);
+    emit light1SpecularChanged(newSpecular);
 }
 
 void ConfigureLightDialog::light1ExponentValueChanged(double value)

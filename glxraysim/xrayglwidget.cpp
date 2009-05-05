@@ -413,8 +413,8 @@ void XRayGLWidget::renderPixelCubes()
         for(int y = 0; y < image->height(); y++)
         {
             //Extend the cubes to have a depth of imageDistance
-            glScalef(1,1,imageDistance);
             glPushMatrix();
+            glScalef(1,1,imageDistance);
             for(int x = 0; x < image->width(); x++)
             {
                 drawCube(qGray(image->pixel(x,y)) / 255.0);
