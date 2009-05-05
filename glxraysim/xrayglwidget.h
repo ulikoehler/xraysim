@@ -15,6 +15,12 @@ enum TransformationMode
     MODE_ROTATE
 };
 
+enum PixelValueMode
+{
+    PIXEL_VALUE_GRAY,
+    PIXEL_VALUE_ALPHA
+};
+
 class XRayGLWidget : public QGLWidget
 {
     Q_OBJECT
@@ -33,6 +39,7 @@ class XRayGLWidget : public QGLWidget
 
      void setTransformationMode(TransformationMode mode);
      void setSimulationMode(SimulationMode mode);
+     void setPixelValueMode(PixelValueMode mode);
 
      void setScale(int scalePercent);
      void setPixelCubeScale(float pixelCubeScale);
@@ -65,6 +72,7 @@ private:
     //Transformation variables
     TransformationMode transformationMode;
     SimulationMode simulationMode;
+    PixelValueMode pixelValueMode;
     float xRot, yRot, zRot;
     float xMov, yMov, zMov;
     float scale; //Changed by the slider

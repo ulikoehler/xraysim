@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>178</width>
-    <height>408</height>
+    <height>499</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -234,6 +234,38 @@
     <property name="value">
      <number>500</number>
     </property>
+   </widget>
+   <widget class="QGroupBox" name="pixelValueModeGroupBox">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>380</y>
+      <width>161</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Pixel value mode</string>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="QRadioButton" name="pixelValueModeGrayRadioButton">
+       <property name="text">
+        <string>Gray</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="pixelValueModeAlphaRadioButton">
+       <property name="text">
+        <string>Alpha</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
