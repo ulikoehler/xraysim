@@ -42,6 +42,8 @@ signals:
     //Light 1
     void light1Toggled(bool enabled);
     void light1AmbientChanged(vec4d values);
+    void light1DiffuseChanged(vec4d values);
+    void light1SpecularChanged(vec4d values);
     void light1ExponentChanged(double value);
 
 public slots:
@@ -49,6 +51,8 @@ public slots:
     //Light 1
     void light1ToggledChanged(bool enabled);
     void light1AmbientValuesChanged(double);
+    void light1DiffuseValuesChanged(double);
+    void light1SpecularValuesChanged(double);
     void light1ExponentValueChanged(double value);
 
 

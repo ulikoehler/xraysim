@@ -82,6 +82,31 @@ void ConfigureLightDialog::light1AmbientValuesChanged(double)
     emit light1AmbientChanged(newAmbient);
 }
 
+
+void ConfigureLightDialog::light1DiffuseValuesChanged(double)
+{
+    vec4d newDiffuse;
+
+    newDiffuse[0] = m_ui->light1DiffuseRedSpinBox->value();
+    newDiffuse[1] = m_ui->light1DiffuseGreenSpinBox->value();
+    newDiffuse[2] = m_ui->light1DiffuseBlueSpinBox->value();
+    newDiffuse[3] = m_ui->light1DiffuseAlphaSpinBox->value();
+
+    emit light1DiffuseChanged(newDiffuse);
+}
+
+void ConfigureLightDialog::light1SpecularValuesChanged(double)
+{
+    vec4d newSpecular;
+
+    newSpecular[0] = m_ui->light1SpecularRedSpinBox->value();
+    newSpecular[1] = m_ui->light1SpecularGreenSpinBox->value();
+    newSpecular[2] = m_ui->light1SpecularBlueSpinBox->value();
+    newSpecular[3] = m_ui->light1SpecularAlphaSpinBox->value();
+
+    emit light1SpecularChanged(newSpecular);
+}
+
 void ConfigureLightDialog::light1ExponentValueChanged(double value)
 {
     emit light1ExponentValueChanged(value);
