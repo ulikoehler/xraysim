@@ -18,6 +18,14 @@ ConfigureLightDialog::ConfigureLightDialog(QWidget *parent) :
     //Light 1
     //
     connect(m_ui->light1GroupBox, SIGNAL(toggled(bool)), this, SLOT(light1ToggledChanged(bool)));
+    //Position
+    connect(m_ui->light1PositionXSpinBox, SIGNAL(valueChanged(double)), this, SLOT(light1PositionValuesChanged(double)));
+    connect(m_ui->light1PositionYSpinBox, SIGNAL(valueChanged(double)), this, SLOT(light1PositionValuesChanged(double)));
+    connect(m_ui->light1PositionZSpinBox, SIGNAL(valueChanged(double)), this, SLOT(light1PositionValuesChanged(double)));
+    //Direction
+    connect(m_ui->light1DirectionXSpinBox, SIGNAL(valueChanged(double)), this, SLOT(light1DirectionValuesChanged(double)));
+    connect(m_ui->light1DirectionYSpinBox, SIGNAL(valueChanged(double)), this, SLOT(light1DirectionValuesChanged(double)));
+    connect(m_ui->light1DirectionZSpinBox, SIGNAL(valueChanged(double)), this, SLOT(light1DirectionValuesChanged(double)));
     //Ambient
     connect(m_ui->light1AmbientRedSpinBox, SIGNAL(valueChanged(double)), this, SLOT(light1AmbientValuesChanged(double)));
     connect(m_ui->light1AmbientGreenSpinBox, SIGNAL(valueChanged(double)), this, SLOT(light1AmbientValuesChanged(double)));
@@ -95,7 +103,7 @@ void ConfigureLightDialog::light1PositionValuesChanged(double)
     newPosition[1] = m_ui->light1PositionYSpinBox->value();
     newPosition[2] = m_ui->light1PositionZSpinBox->value();
 
-    emit light1AmbientChanged(newPosition);
+    emit light1PositionChanged(newPosition);
 }
 
 void ConfigureLightDialog::light1DirectionValuesChanged(double)
@@ -106,7 +114,7 @@ void ConfigureLightDialog::light1DirectionValuesChanged(double)
     newDirection[1] = m_ui->light1DirectionYSpinBox->value();
     newDirection[2] = m_ui->light1DirectionZSpinBox->value();
 
-    emit light1AmbientChanged(newDirection);
+    emit light1DirectionChanged(newDirection);
 }
 
 void ConfigureLightDialog::light1AmbientValuesChanged(double)

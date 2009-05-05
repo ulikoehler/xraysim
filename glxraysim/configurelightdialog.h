@@ -53,8 +53,8 @@ public slots:
     void ambientIntensityValuesChanged(double value);
     //Light 1
     void light1ToggledChanged(bool enabled);
-    void light1PositionValuesChanged(vec3f values);
-    void light1DirectionValuesChanged(vec3f values);
+    void light1PositionValuesChanged(double);
+    void light1DirectionValuesChanged(double);
     void light1AmbientValuesChanged(double);
     void light1DiffuseValuesChanged(double);
     void light1SpecularValuesChanged(double);
