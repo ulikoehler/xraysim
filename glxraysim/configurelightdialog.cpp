@@ -158,8 +158,3 @@ void ConfigureLightDialog::light1ExponentValueChanged(double value)
 {
     emit light1ExponentValueChanged(value);
 }
-
-void ConfigureLightDialog::light1ToggledChanged(bool enabled)
-{
-    emit light1Toggled(enabled);
-}
