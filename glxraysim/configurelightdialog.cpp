@@ -6,11 +6,22 @@ ConfigureLightDialog::ConfigureLightDialog(QWidget *parent) :
     m_ui(new Ui::ConfigureLightDialog)
 {
     m_ui->setupUi(this);
-    //Connect the signals
+    /**
+     * Connect the signals
+     */
+    //Ambient intensity
     connect(m_ui->ambientRedSpinBox, SIGNAL(valueChanged(double)), this, SLOT(ambientIntensityValuesChanged(double)));
     connect(m_ui->ambientGreenSpinBox, SIGNAL(valueChanged(double)), this, SLOT(ambientIntensityValuesChanged(double)));
     connect(m_ui->ambientBlueSpinBox, SIGNAL(valueChanged(double)), this, SLOT(ambientIntensityValuesChanged(double)));
     connect(m_ui->ambientAlphaSpinBox, SIGNAL(valueChanged(double)), this, SLOT(ambientIntensityValuesChanged(double)));
+    //
+    //Light 1
+    //
+    connect(m_ui->light1GroupBox, SIGNAL(toggled(bool)), this, SLOT(light1ToggledChanged(bool)));
+    //Ambient
+    connect(m_ui->light1GroupBox, SIGNAL(toggled(bool)), this, SLOT(light1ToggledChanged(bool)));
+    //Exponent
+    connect(m_ui->light1ExponentSpinBox, SIGNAL(valueChanged(double)), this, SLOT(light1ExponentValueChanged(double)));
 }
 
 ConfigureLightDialog::~ConfigureLightDialog()
@@ -47,7 +58,7 @@ void ConfigureLightDialog::on_light1Cutoff180CheckBox_toggled(bool checked)
 }
 
 
-void ConfigureLightDialog::ambientIntensityValuesChanged(double value)
+void ConfigureLightDialog::ambientIntensityValuesChanged(double)
 {
     vec4d newIntensity;
     newIntensity[0] = m_ui->ambientRedSpinBox->value();
@@ -56,4 +67,27 @@ void ConfigureLightDialog::ambientIntensityValuesChanged(double value)
     newIntensity[3] = m_ui->ambientAlphaSpinBox->value();
 
     emit ambientIntensityChanged(newIntensity);
+}
+
+
+void ConfigureLightDialog::light1AmbientValuesChanged(double)
+{
+    vec4d newAmbient;
+
+    newAmbient[0] = m_ui->light1AmbientRedSpinBox->value();
+    newAmbient[1] = m_ui->light1AmbientGreenSpinBox->value();
+    newAmbient[2] = m_ui->light1AmbientBlueSpinBox->value();
+    newAmbient[3] = m_ui->light1AmbientAlphaSpinBox->value();
+
+    emit light1AmbientChanged(newAmbient);
+}
+
+void ConfigureLightDialog::light1ExponentValueChanged(double value)
+{
+    emit light1ExponentValueChanged(value);
+}
+
+void ConfigureLightDialog::light1ToggledChanged(bool enabled)
+{
+    emit light1Toggled(enabled);
 }

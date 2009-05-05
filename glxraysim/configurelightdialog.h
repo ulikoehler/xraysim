@@ -39,11 +39,21 @@ private:
 
 signals:
     void ambientIntensityChanged(vec4d values);
+    //Light 1
+    void light1Toggled(bool enabled);
+    void light1AmbientChanged(vec4d values);
+    void light1ExponentChanged(double value);
 
 public slots:
-    void on_light1Cutoff180CheckBox_toggled(bool checked);
     void ambientIntensityValuesChanged(double value);
+    //Light 1
+    void light1ToggledChanged(bool enabled);
+    void light1AmbientValuesChanged(double);
+    void light1ExponentValueChanged(double value);
 
+
+private slots:
+    void on_light1Cutoff180CheckBox_toggled(bool checked);
 };
 
 #endif // CONFIGURELIGHTDIALOG_H

@@ -93,7 +93,7 @@
      <property name="checkable">
       <bool>true</bool>
      </property>
-     <layout class="QGridLayout" name="gridLayout">
+     <layout class="QGridLayout" name="light1GridLayout">
       <item row="0" column="0">
        <widget class="QLabel" name="light1PositionLabel">
         <property name="text">
@@ -256,7 +256,11 @@
        </widget>
       </item>
       <item row="4" column="1">
-       <widget class="QDoubleSpinBox" name="light1ConstantAttenuationSpinBox"/>
+       <widget class="QDoubleSpinBox" name="light1ConstantAttenuationSpinBox">
+        <property name="decimals">
+         <number>3</number>
+        </property>
+       </widget>
       </item>
       <item row="4" column="2">
        <widget class="QDoubleSpinBox" name="light1LinearAttenuationSpinBox">
