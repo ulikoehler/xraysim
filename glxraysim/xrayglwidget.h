@@ -46,6 +46,20 @@ class XRayGLWidget : public QGLWidget
      void setYRotation(int angle);
      void setZRotation(int angle);
 
+    /**
+     * Light configuration slots
+     */
+    void ambientIntensityChanged(vec4d values);
+    //Light 1
+    void light1Toggled(bool enabled);
+    void light1PositionChanged(vec3f values);
+    void light1DirectionChanged(vec3f values);
+    void light1AmbientChanged(vec4f values);
+    void light1DiffuseChanged(vec4f values);
+    void light1SpecularChanged(vec4f values);
+    void light1AttenuationChanged(vec4f values);
+    void light1ExponentChanged(float value);
+
 
 
  signals:

@@ -22,6 +22,22 @@ MainWindow::MainWindow(QWidget *parent)
     glWidget->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     glDialog->setGLWidget(glWidget);
     glDialog->show();
+
+    /**
+     * Connect signals
+     */
+    //Light config dialog -> GL widget
+    connect(lightDialog, SIGNAL( ambientIntensityChanged(vec4d)), glWidget, SLOT(ambientIntensityChanged(vec4d)));
+    //Light 1
+    connect(lightDialog, SIGNAL(light1Toggled(bool)), glWidget, SLOT(light1Toggled(bool)));
+    connect(lightDialog, SIGNAL( light1PositionChanged(vec3f)), glWidget, SLOT(light1PositionChanged(vec3f)));
+    connect(lightDialog, SIGNAL( light1DirectionChanged(vec3f)), glWidget, SLOT(light1DirectionChanged(vec3f)));
+    connect(lightDialog, SIGNAL( light1AmbientChanged(vec4f)), glWidget, SLOT(light1AmbientChanged(vec4f)));
+    connect(lightDialog, SIGNAL( light1DiffuseChanged(vec4f)), glWidget, SLOT(light1DiffuseChanged(vec4f)));
+    connect(lightDialog, SIGNAL( light1SpecularChanged(vec4f)), glWidget, SLOT(light1SpecularChanged(vec4f)));
+    connect(lightDialog, SIGNAL( light1AttenuationChanged(vec4f)), glWidget, SLOT(light1AttenuationChanged(vec4f)));
+    connect(lightDialog, SIGNAL( light1ExponentChanged(float)), glWidget, SLOT(light1ExponentChanged(float)));
+
 }
 
 MainWindow::~MainWindow()
@@ -32,7 +48,7 @@ MainWindow::~MainWindow()
 void MainWindow::closeEvent(QCloseEvent* event)
 {
     int ret = QMessageBox::question(this, tr("Quit GLXRaySim?"),
-                                   tr("Do you really want to quit GLXRaySim?"),
+                                    tr("Do you really want to quit GLXRaySim?"),
                                    QMessageBox::Yes | QMessageBox::No);
     if(ret == QMessageBox::Yes)
     {
