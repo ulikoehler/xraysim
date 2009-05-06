@@ -259,6 +259,7 @@
      <string>Extras</string>
     </property>
     <addaction name="simpleSumUpAction"/>
+    <addaction name="lightPropertiesAction"/>
    </widget>
    <addaction name="fileMenu"/>
    <addaction name="extrasMenu"/>
@@ -274,6 +275,11 @@
   <action name="simpleSumUpAction">
    <property name="text">
     <string>Simple Sum-up</string>
+   </property>
+  </action>
+  <action name="lightPropertiesAction">
+   <property name="text">
+    <string>Light properties</string>
    </property>
   </action>
  </widget>

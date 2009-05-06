@@ -8,6 +8,7 @@
 #include <QSharedPointer>
 #include "xrayglwidget.h"
 #include "gldialog.h"
+#include "configurelightdialog.h"
 #include "graphicsdialog.h"
 
 namespace Ui
@@ -27,6 +28,7 @@ protected:
      void closeEvent(QCloseEvent* event);
 
 private slots:
+    void on_lightPropertiesAction_triggered();
     void on_simpleSumUpAction_triggered();
     void on_exitAction_triggered();
     void on_pixelCubeScaleSpinner_valueChanged(int );
@@ -43,6 +45,7 @@ private:
     Ui::MainWindowClass *ui;
     gldialog *glDialog;
     XRayGLWidget *glWidget;
+    ConfigureLightDialog *lightDialog;
     QFileDialog *inputFileDialog;
     QStringList inputFileNameList;
 };

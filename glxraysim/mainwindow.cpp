@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     //Initialize the member dialogs
+    lightDialog = new ConfigureLightDialog(this);
     inputFileDialog = new QFileDialog(this, "Select input files");
     inputFileDialog->setFileMode(QFileDialog::ExistingFiles); //Allow multiple file selection
 
@@ -188,3 +189,8 @@ void MainWindow::on_simpleSumUpAction_triggered()
     delete images;
 }
 
+
+void MainWindow::on_lightPropertiesAction_triggered()
+{
+    lightDialog->show();
+}
