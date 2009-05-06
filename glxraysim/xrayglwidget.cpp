@@ -405,6 +405,7 @@ void XRayGLWidget::renderPixelCubes()
     }
 
     //Draw the cubes
+    glScalef(1,1,imageDistance);
     for(int i = 0; i < imageTexturesLength; i++)
     {
         QImage* image = imageTextures[i];
@@ -414,18 +415,16 @@ void XRayGLWidget::renderPixelCubes()
         {
             //Extend the cubes to have a depth of imageDistance
             glPushMatrix();
-            glScalef(1,1,imageDistance);
             for(int x = 0; x < image->width(); x++)
             {
-                drawCube(qAlpha(image->pixel(x,y)) / 255.0);
-                drawCube(qGray(image->pixel(x,y)) / 255.0);
+                drawCube(qRed(image->pixel(x,y)) / 255.0); //Here: qRed == qGreen == qBlue
                 glTranslatef(1,0,0);
             }
             glPopMatrix();
             glTranslatef(0,1,0);
         }
         glPopMatrix();
-        glTranslatef(0,0,-imageDistance);
+        glTranslatef(0,0,-1);
     }
 }
 
