@@ -97,22 +97,24 @@ void ConfigureLightDialog::light1ToggledChanged(bool enabled)
 
 void ConfigureLightDialog::light1PositionValuesChanged(double)
 {
-    vec3f newPosition;
+    vec4f newPosition;
 
     newPosition[0] = m_ui->light1PositionXSpinBox->value();
     newPosition[1] = m_ui->light1PositionYSpinBox->value();
     newPosition[2] = m_ui->light1PositionZSpinBox->value();
+    newPosition[3] = m_ui->light1PositionWSpinBox->value();
 
     emit light1PositionChanged(newPosition);
 }
 
 void ConfigureLightDialog::light1DirectionValuesChanged(double)
 {
-    vec3f newDirection;
+    vec4f newDirection;
 
     newDirection[0] = m_ui->light1DirectionXSpinBox->value();
     newDirection[1] = m_ui->light1DirectionYSpinBox->value();
     newDirection[2] = m_ui->light1DirectionZSpinBox->value();
+    newDirection[3] = m_ui->light1DirectionZSpinBox->value();
 
     emit light1DirectionChanged(newDirection);
 }

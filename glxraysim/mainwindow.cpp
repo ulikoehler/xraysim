@@ -30,8 +30,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(lightDialog, SIGNAL( ambientIntensityChanged(vec4d)), glWidget, SLOT(ambientIntensityChanged(vec4d)));
     //Light 1
     connect(lightDialog, SIGNAL(light1Toggled(bool)), glWidget, SLOT(light1Toggled(bool)));
-    connect(lightDialog, SIGNAL( light1PositionChanged(vec3f)), glWidget, SLOT(light1PositionChanged(vec3f)));
-    connect(lightDialog, SIGNAL( light1DirectionChanged(vec3f)), glWidget, SLOT(light1DirectionChanged(vec3f)));
+    connect(lightDialog, SIGNAL( light1PositionChanged(vec4f)), glWidget, SLOT(light1PositionChanged(vec4f)));
+    connect(lightDialog, SIGNAL( light1DirectionChanged(vec4f)), glWidget, SLOT(light1DirectionChanged(vec4f)));
     connect(lightDialog, SIGNAL( light1AmbientChanged(vec4f)), glWidget, SLOT(light1AmbientChanged(vec4f)));
     connect(lightDialog, SIGNAL( light1DiffuseChanged(vec4f)), glWidget, SLOT(light1DiffuseChanged(vec4f)));
     connect(lightDialog, SIGNAL( light1SpecularChanged(vec4f)), glWidget, SLOT(light1SpecularChanged(vec4f)));

@@ -156,6 +156,54 @@ void XRayGLWidget::setImageDistance(float distance)
     imageDistance = distance;
 }
 
+///////////
+//Signals//
+///////////
+
+void XRayGLWidget::ambientIntensityChanged(vec4d values)
+{
+
+}
+
+void XRayGLWidget::light1Toggled(bool enabled)
+{
+    if(enabled)
+    {
+        glEnable(GL_LIGHT0);
+    }
+    else
+    {
+       glDisable(GL_LIGHT0);
+    }
+}
+void XRayGLWidget::light1PositionChanged(vec4f values)
+{
+    //glLightfv(GL_LIGHT0, GL_POSITION
+}
+void XRayGLWidget::light1DirectionChanged(vec4f values)
+{
+
+}
+void XRayGLWidget::light1AmbientChanged(vec4f values)
+{
+
+}
+void XRayGLWidget::light1DiffuseChanged(vec4f values)
+{
+
+}
+void XRayGLWidget::light1SpecularChanged(vec4f values)
+{
+
+}
+void XRayGLWidget::light1AttenuationChanged(vec4f values)
+{
+
+}
+void XRayGLWidget::light1ExponentChanged(float value)
+{
+
+}
 ////////////////////
 //Mouse event code//
 ////////////////////
@@ -236,7 +284,7 @@ void XRayGLWidget::initializeGL()
 
     //Set material
 
-    //Set ambient light to null (because the light source already emits ambient light)
+    //Set ambient  to null (because the light source already emits ambient light)
 
     //const GLfloat global_ambient[] = { 0.5f, 0.5f, 0.5f, 1.0f };
     const GLfloat global_ambient[] = {0,0,0,0};

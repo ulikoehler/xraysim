@@ -2,6 +2,9 @@
 #define XRAYGLWIDGET_H
 
 #include <QGLWidget>
+#include "configurelightdialog.h"
+
+using namespace std;
 
 enum SimulationMode
 {
@@ -52,8 +55,8 @@ class XRayGLWidget : public QGLWidget
     void ambientIntensityChanged(vec4d values);
     //Light 1
     void light1Toggled(bool enabled);
-    void light1PositionChanged(vec3f values);
-    void light1DirectionChanged(vec3f values);
+    void light1PositionChanged(vec4f values);
+    void light1DirectionChanged(vec4f values);
     void light1AmbientChanged(vec4f values);
     void light1DiffuseChanged(vec4f values);
     void light1SpecularChanged(vec4f values);
