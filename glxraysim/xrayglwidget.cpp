@@ -178,23 +178,24 @@ void XRayGLWidget::light1Toggled(bool enabled)
 }
 void XRayGLWidget::light1PositionChanged(vec4f values)
 {
-    //glLightfv(GL_LIGHT0, GL_POSITION
+    glLightfv(GL_LIGHT0, GL_POSITION, values.data());
 }
 void XRayGLWidget::light1DirectionChanged(vec4f values)
 {
-
+    glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, values.data());
 }
 void XRayGLWidget::light1AmbientChanged(vec4f values)
 {
-
+    glLightfv(GL_LIGHT0, GL_AMBIENT, values.data());
 }
 void XRayGLWidget::light1DiffuseChanged(vec4f values)
 {
-
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, values.data());
 }
 void XRayGLWidget::light1SpecularChanged(vec4f values)
 {
 
+    glLightfv(GL_LIGHT0, GL_SPECULAR, values.data());
 }
 void XRayGLWidget::light1AttenuationChanged(vec4f values)
 {
@@ -202,7 +203,7 @@ void XRayGLWidget::light1AttenuationChanged(vec4f values)
 }
 void XRayGLWidget::light1ExponentChanged(float value)
 {
-
+    glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, value);
 }
 ////////////////////
 //Mouse event code//

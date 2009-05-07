@@ -188,7 +188,6 @@ void MainWindow::on_simpleSumUpAction_triggered()
             {
                 //TODO Check if ceil is appropriate here
                 int val = matrix[h * width + w] / (float)inputLen;
-                cout << val << " ";
                 resultImage.setPixel(w, h, qRgba(val, val, val, 255-val));
             }
         }
