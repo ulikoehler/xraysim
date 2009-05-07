@@ -179,7 +179,7 @@
      <rect>
       <x>10</x>
       <y>280</y>
-      <width>91</width>
+      <width>92</width>
       <height>16</height>
      </rect>
     </property>
@@ -197,13 +197,13 @@
      </rect>
     </property>
     <property name="decimals">
-     <number>5</number>
+     <number>2</number>
     </property>
     <property name="maximum">
      <double>1000000.000000000000000</double>
     </property>
     <property name="value">
-     <double>1.000000000000000</double>
+     <double>150.000000000000000</double>
     </property>
    </widget>
    <widget class="QLabel" name="pixelCubeScaleLabel">
