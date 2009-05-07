@@ -6,7 +6,7 @@
 const GLfloat null4f[] = {0,0,0,0};
 
 //Macros
-#define drawCube(color) glColor4f(1, 1, 1, color);glCallList(drawCubeListID)
+#define drawCube(color) glColor4f(color, color, color, color);glCallList(drawCubeListID)
 #define drawCubeRaw() glCallList(drawCubeListID);
 
 #include "xrayglwidget.h"
@@ -306,8 +306,8 @@ void XRayGLWidget::initializeGL()
     glMaterialf(GL_FRONT_AND_BACK, GL_AMBIENT, 1);
 
     const GLfloat lightSpecular[] = {0,0,0,0};
-    const GLfloat lightPosition[] = { 0,0,-30,0};
-    const GLfloat lightDirection[] = {0,0,1};
+    const GLfloat lightPosition[] = { 0,-30,0,0};
+    const GLfloat lightDirection[] = {0,1,0};
     const GLfloat lightAmbient[] = {1,1,1,0};
     glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpecular);
     glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmbient);
@@ -378,9 +378,9 @@ void XRayGLWidget::renderTextureBlending()
     //Apply the transformation parameters
     glScalef(scale, scale, scale);
     glTranslatef(xMov, yMov, zMov);
-    glRotated(xRot, 1.0, 0.0, 0.0);
-    glRotated(yRot, 0.0, 1.0, 0.0);
-    glRotated(zRot, 0.0, 0.0, 1.0);
+    glRotatef(xRot, 1.0, 0.0, 0.0);
+    glRotatef(yRot, 0.0, 1.0, 0.0);
+    glRotatef(zRot, 0.0, 0.0, 1.0);
     //Set the color
     glColor3f(1,1,1);
 
@@ -434,8 +434,6 @@ void XRayGLWidget::renderPixelCubes()
     glRotated(yRot, 0.0, 1.0, 0.0);
     glRotated(zRot, 0.0, 0.0, 1.0);
 
-    glRotatef(90, 0, 1, 0);
-
     if(textureChanged)
     {
         if(imageTextures != 0)
@@ -474,7 +472,7 @@ void XRayGLWidget::renderPixelCubes()
             glPushMatrix();
             for(int x = 0; x < image->width(); x++)
             {
-                drawCube(qRed(image->pixel(x,y)) / 255.0); //Here: qRed == qGreen == qBlue
+                drawCube(qGray(image->pixel(x,y)) / 255.0); //Here: qRed == qGreen == qBlue
                 glTranslatef(1,0,0);
             }
             glPopMatrix();
@@ -499,7 +497,6 @@ void XRayGLWidget::resizeGL(int width, int height)
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glRotatef(90, 0, 1, 0);
     gluPerspective(120, height/width, 0, 15000.0);
     glMatrixMode(GL_MODELVIEW);
 }
