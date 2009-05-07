@@ -434,6 +434,8 @@ void XRayGLWidget::renderPixelCubes()
     glRotated(yRot, 0.0, 1.0, 0.0);
     glRotated(zRot, 0.0, 0.0, 1.0);
 
+    glRotatef(90, 0, 1, 0);
+
     if(textureChanged)
     {
         if(imageTextures != 0)
@@ -497,6 +499,7 @@ void XRayGLWidget::resizeGL(int width, int height)
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
+    glRotatef(90, 0, 1, 0);
     gluPerspective(120, height/width, 0, 15000.0);
     glMatrixMode(GL_MODELVIEW);
 }
