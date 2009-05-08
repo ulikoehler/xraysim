@@ -209,3 +209,8 @@ void MainWindow::on_lightPropertiesAction_triggered()
 {
     lightDialog->show();
 }
+
+void MainWindow::on_alphaTestAction_triggered()
+{
+
+}

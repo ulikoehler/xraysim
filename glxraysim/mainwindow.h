@@ -28,6 +28,7 @@ protected:
      void closeEvent(QCloseEvent* event);
 
 private slots:
+    void on_alphaTestAction_triggered();
     void on_lightPropertiesAction_triggered();
     void on_simpleSumUpAction_triggered();
     void on_exitAction_triggered();

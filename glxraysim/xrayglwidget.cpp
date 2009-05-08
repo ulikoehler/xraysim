@@ -33,7 +33,7 @@ XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
     texturesLength = 0;
     textures = 0;
 
-    imageDistance = 1;
+    imageDistance = 150;
 
     imageTextures = 0;
     imageTexturesLength = 0;

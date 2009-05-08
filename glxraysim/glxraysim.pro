@@ -9,13 +9,16 @@ SOURCES += main.cpp \
     xrayglwidget.cpp \
     gldialog.cpp \
     graphicsdialog.cpp \
-    configurelightdialog.cpp
+    configurelightdialog.cpp \
+    alphatestdialog.cpp
 HEADERS += mainwindow.h \
     xrayglwidget.h \
     gldialog.h \
     graphicsdialog.h \
-    configurelightdialog.h
+    configurelightdialog.h \
+    alphatestdialog.h
 FORMS += mainwindow.ui \
     gldialog.ui \
     graphicsdialog.ui \
-    configurelightdialog.ui
+    configurelightdialog.ui \
+    alphatestdialog.ui
