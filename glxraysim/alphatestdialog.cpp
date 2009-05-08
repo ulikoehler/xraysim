@@ -7,14 +7,14 @@ AlphaTestDialog::AlphaTestDialog(QWidget *parent) :
 {
     m_ui->setupUi(this);
     //Connect the signals
-    connect(m_ui->greaterRadioButton, SIGNAL(toggled(bool)), this, SLOT(guiStateChanged(bool)));
-    connect(m_ui->lessRadioButton, SIGNAL(toggled(bool)), this, SLOT(guiStateChanged(bool)));
-    connect(m_ui->lessOrEqualRadioButton, SIGNAL(toggled(bool)), this, SLOT(guiStateChanged(bool)));
-    connect(m_ui->greaterOrEqualRadioButton, SIGNAL(toggled(bool)), this, SLOT(guiStateChanged(bool)));
-    connect(m_ui->notEqualRadioButton, SIGNAL(toggled(bool)), this, SLOT(guiStateChanged(bool)));
-    connect(m_ui->equalRadioButton, SIGNAL(toggled(bool)), this, SLOT(guiStateChanged(bool)));
-    connect(m_ui->alwaysRadioButton, SIGNAL(toggled(bool)), this, SLOT(guiStateChanged(bool)));
-    connect(m_ui->neverRadioButton, SIGNAL(toggled(bool)), this, SLOT(guiStateChanged(bool)));
+    connect(m_ui->greaterRadioButton, SIGNAL(toggled(bool)), this, SLOT(guiStateChanged()));
+    connect(m_ui->lessRadioButton, SIGNAL(toggled(bool)), this, SLOT(guiStateChanged()));
+    connect(m_ui->lessOrEqualRadioButton, SIGNAL(toggled(bool)), this, SLOT(guiStateChanged()));
+    connect(m_ui->greaterOrEqualRadioButton, SIGNAL(toggled(bool)), this, SLOT(guiStateChanged()));
+    connect(m_ui->notEqualRadioButton, SIGNAL(toggled(bool)), this, SLOT(guiStateChanged()));
+    connect(m_ui->equalRadioButton, SIGNAL(toggled(bool)), this, SLOT(guiStateChanged()));
+    connect(m_ui->alwaysRadioButton, SIGNAL(toggled(bool)), this, SLOT(guiStateChanged()));
+    connect(m_ui->neverRadioButton, SIGNAL(toggled(bool)), this, SLOT(guiStateChanged()));
 
     connect(m_ui->valueSpinBox, SIGNAL(valueChanged(double)), this, SLOT(guiStateChanged()));
 }
@@ -38,10 +38,6 @@ void AlphaTestDialog::guiStateChanged()
     else if(m_ui->alwaysRadioButton->isChecked()){mode = GL_ALWAYS;}
     else if(m_ui->neverRadioButton->isChecked()) {mode = GL_NEVER;}
 
-    if(mode == UINT_MAX)
-    {
-        return; //No mode could be selecteds
-    }
     //Get the value
     value = m_ui->valueSpinBox->value();
     //Emit the signal

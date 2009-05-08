@@ -52,7 +52,7 @@ class XRayGLWidget : public QGLWidget
     /**
      * Light configuration slots
      */
-    void ambientIntensityChanged(vec4d values);
+    void ambientIntensityChanged(vec4f values);
     //Light 1
     void light1Toggled(bool enabled);
     void light1PositionChanged(vec4f values);
@@ -62,6 +62,9 @@ class XRayGLWidget : public QGLWidget
     void light1SpecularChanged(vec4f values);
     void light1AttenuationChanged(vec4f values);
     void light1ExponentChanged(float value);
+
+    //Connected to the alpha test dialog
+    void alphaFuncChanged(uint mode, double value);
 
 
 

@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     //Initialize the member dialogs
     lightDialog = new ConfigureLightDialog(this);
+    alphaTestDialog = new AlphaTestDialog(this);
     inputFileDialog = new QFileDialog(this, "Select input files");
     inputFileDialog->setFileMode(QFileDialog::ExistingFiles); //Allow multiple file selection
 
@@ -26,23 +27,30 @@ MainWindow::MainWindow(QWidget *parent)
     /**
      * Connect signals
      */
-    //Light config dialog -> GL widget
-    connect(lightDialog, SIGNAL( ambientIntensityChanged(vec4d)), glWidget, SLOT(ambientIntensityChanged(vec4d)));
-    //Light 1
+    //Light config dialog
+    connect(lightDialog, SIGNAL(ambientIntensityChanged(vec4f)), glWidget, SLOT(ambientIntensityChanged(vec4f)));
+     //Light 1
     connect(lightDialog, SIGNAL(light1Toggled(bool)), glWidget, SLOT(light1Toggled(bool)));
-    connect(lightDialog, SIGNAL( light1PositionChanged(vec4f)), glWidget, SLOT(light1PositionChanged(vec4f)));
-    connect(lightDialog, SIGNAL( light1DirectionChanged(vec4f)), glWidget, SLOT(light1DirectionChanged(vec4f)));
-    connect(lightDialog, SIGNAL( light1AmbientChanged(vec4f)), glWidget, SLOT(light1AmbientChanged(vec4f)));
-    connect(lightDialog, SIGNAL( light1DiffuseChanged(vec4f)), glWidget, SLOT(light1DiffuseChanged(vec4f)));
-    connect(lightDialog, SIGNAL( light1SpecularChanged(vec4f)), glWidget, SLOT(light1SpecularChanged(vec4f)));
-    connect(lightDialog, SIGNAL( light1AttenuationChanged(vec4f)), glWidget, SLOT(light1AttenuationChanged(vec4f)));
-    connect(lightDialog, SIGNAL( light1ExponentChanged(float)), glWidget, SLOT(light1ExponentChanged(float)));
+    connect(lightDialog, SIGNAL(light1PositionChanged(vec4f)), glWidget, SLOT(light1PositionChanged(vec4f)));
+    connect(lightDialog, SIGNAL(light1DirectionChanged(vec4f)), glWidget, SLOT(light1DirectionChanged(vec4f)));
+    connect(lightDialog, SIGNAL(light1AmbientChanged(vec4f)), glWidget, SLOT(light1AmbientChanged(vec4f)));
+    connect(lightDialog, SIGNAL(light1DiffuseChanged(vec4f)), glWidget, SLOT(light1DiffuseChanged(vec4f)));
+    connect(lightDialog, SIGNAL(light1SpecularChanged(vec4f)), glWidget, SLOT(light1SpecularChanged(vec4f)));
+    connect(lightDialog, SIGNAL(light1AttenuationChanged(vec4f)), glWidget, SLOT(light1AttenuationChanged(vec4f)));
+    connect(lightDialog, SIGNAL(light1ExponentChanged(float)), glWidget, SLOT(light1ExponentChanged(float)));
+
+    //Alpha test dialog
+    connect(alphaTestDialog, SIGNAL(alphaTestChanged(uint,double)), glWidget, SLOT(alphaFuncChanged(uint,double)));
 
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete lightDialog;
+    delete alphaTestDialog;
+    delete inputFileDialog;
+    delete glWidget;
 }
 
 void MainWindow::closeEvent(QCloseEvent* event)
@@ -212,5 +220,5 @@ void MainWindow::on_lightPropertiesAction_triggered()
 
 void MainWindow::on_alphaTestAction_triggered()
 {
-
+    alphaTestDialog->show();
 }

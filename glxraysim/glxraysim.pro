@@ -22,3 +22,5 @@ FORMS += mainwindow.ui \
     graphicsdialog.ui \
     configurelightdialog.ui \
     alphatestdialog.ui
+QMAKE_CXXFLAGS -= -O2
+QMAKE_CXXFLAGS += -O3 -march=core2

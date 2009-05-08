@@ -38,7 +38,7 @@ private:
     Ui::ConfigureLightDialog *m_ui;
 
 signals:
-    void ambientIntensityChanged(vec4d values);
+    void ambientIntensityChanged(vec4f values);
     //Light 1
     void light1Toggled(bool enabled);
     void light1PositionChanged(vec4f values);

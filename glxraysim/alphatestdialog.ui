@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>285</width>
-    <height>180</height>
+    <width>208</width>
+    <height>203</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -53,7 +53,7 @@
      <item>
       <widget class="QRadioButton" name="notEqualRadioButton">
        <property name="text">
-        <string>RadioButton</string>
+        <string>Not equal</string>
        </property>
       </widget>
      </item>

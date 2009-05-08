@@ -10,6 +10,7 @@
 #include "gldialog.h"
 #include "configurelightdialog.h"
 #include "graphicsdialog.h"
+#include "alphatestdialog.h"
 
 namespace Ui
 {
@@ -47,6 +48,7 @@ private:
     gldialog *glDialog;
     XRayGLWidget *glWidget;
     ConfigureLightDialog *lightDialog;
+    AlphaTestDialog *alphaTestDialog;
     QFileDialog *inputFileDialog;
     QStringList inputFileNameList;
 };

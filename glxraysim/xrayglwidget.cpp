@@ -160,9 +160,9 @@ void XRayGLWidget::setImageDistance(float distance)
 //Signals//
 ///////////
 
-void XRayGLWidget::ambientIntensityChanged(vec4d values)
+void XRayGLWidget::ambientIntensityChanged(vec4f values)
 {
-
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, values.data());
 }
 
 void XRayGLWidget::light1Toggled(bool enabled)
@@ -209,6 +209,12 @@ void XRayGLWidget::light1AttenuationChanged(vec4f values)
 void XRayGLWidget::light1ExponentChanged(float value)
 {
     glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, value);
+    updateGL();
+}
+
+void XRayGLWidget::alphaFuncChanged(uint mode, double value)
+{
+    glAlphaFunc(mode, value);
     updateGL();
 }
 ////////////////////
