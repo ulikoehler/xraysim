@@ -65,8 +65,8 @@ class XRayGLWidget : public QGLWidget
 
     //Connected to the alpha test dialog
     void alphaFuncChanged(uint mode, double value);
-
-    void useAlphaChannelChanged(bool enabled);
+    
+    void useAlphaChannelChanged();
 
 
 
