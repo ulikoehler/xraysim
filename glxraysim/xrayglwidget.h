@@ -63,11 +63,21 @@ class XRayGLWidget : public QGLWidget
     void light1AttenuationChanged(vec4f values);
     void light1ExponentChanged(float value);
 
+    /**
+     * Material configuration slots
+     */
+    void materialAmbientChanged(vec4f values);
+    void materialDiffuseChanged(vec4f values);
+    void materialSpecularChanged(vec4f values);
+    void materialEmissionChanged(vec4f values);
+    void materialShininessChanged(int value);
+
+    /**
+     * Other slots
+     */
     //Connected to the alpha test dialog
     void alphaFuncChanged(uint mode, double value);
-    
     void useAlphaChannelChanged(bool enabled);
-
 
 
  signals:

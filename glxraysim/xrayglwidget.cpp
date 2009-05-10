@@ -204,7 +204,7 @@ void XRayGLWidget::light1SpecularChanged(vec4f values)
 }
 void XRayGLWidget::light1AttenuationChanged(vec4f values)
 {
-
+    //TODO implement here and in the light config dialog
     updateGL();
 }
 void XRayGLWidget::light1ExponentChanged(float value)
@@ -216,6 +216,33 @@ void XRayGLWidget::light1ExponentChanged(float value)
 void XRayGLWidget::alphaFuncChanged(uint mode, double value)
 {
     glAlphaFunc(mode, value);
+    updateGL();
+}
+
+//Material slots
+void materialAmbientChanged(vec4f values)
+{
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, values.data);
+    updateGL();
+}
+void materialDiffuseChanged(vec4f values)
+{
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, values.data);
+    updateGL();
+}
+void materialSpecularChanged(vec4f values)
+{
+        glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, values.data);
+    updateGL();
+}
+void materialEmissionChanged(vec4f values)
+{
+    glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, values.data);
+    updateGL();
+}
+void materialShininessChanged(int value)
+{
+    glMateriali(GL_FRONT_AND_BACK, GL_SHININESS, values.data);
     updateGL();
 }
 ////////////////////
