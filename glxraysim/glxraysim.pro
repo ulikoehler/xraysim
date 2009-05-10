@@ -18,7 +18,8 @@ HEADERS += mainwindow.h \
     graphicsdialog.h \
     configurelightdialog.h \
     alphatestdialog.h \
-    configurematerialdialog.h
+    configurematerialdialog.h \
+    globaldef.h
 FORMS += mainwindow.ui \
     gldialog.ui \
     graphicsdialog.ui \
