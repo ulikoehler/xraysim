@@ -260,6 +260,7 @@
     </property>
     <addaction name="simpleSumUpAction"/>
     <addaction name="lightPropertiesAction"/>
+    <addaction name="actionMaterial_properties"/>
     <addaction name="alphaTestAction"/>
     <addaction name="useAlphaChannelAction"/>
    </widget>
@@ -298,6 +299,11 @@
    </property>
    <property name="text">
     <string>Use alpha channel</string>
+   </property>
+  </action>
+  <action name="actionMaterial_properties">
+   <property name="text">
+    <string>Material properties</string>
    </property>
   </action>
  </widget>

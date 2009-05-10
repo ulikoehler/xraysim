@@ -11,6 +11,7 @@
 #include "configurelightdialog.h"
 #include "graphicsdialog.h"
 #include "alphatestdialog.h"
+#include "configurematerialdialog.h"
 
 namespace Ui
 {
@@ -29,6 +30,7 @@ protected:
      void closeEvent(QCloseEvent* event);
 
 private slots:
+    void on_actionMaterial_properties_triggered();
     void on_textureBlendModeRadioButton_toggled(bool checked);
     void on_pixelCubesModeRadioButton_toggled(bool checked);
     void on_rotateModeRadioButton_toggled(bool checked);
@@ -45,11 +47,14 @@ private slots:
 
 private:
     Ui::MainWindowClass *ui;
+    //Dialogs
     QPointer<gldialog> glDialog;
     QPointer<XRayGLWidget> glWidget;
     QPointer<ConfigureLightDialog> lightDialog;
+    QPointer<ConfigureMaterialDialog> materialDialog;
     QPointer<AlphaTestDialog> alphaTestDialog;
     QPointer<QFileDialog> inputFileDialog;
+
     QStringList inputFileNameList;
 };
 

@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     //Initialize the member dialogs
     lightDialog = new ConfigureLightDialog(this);
+    materialDialog = new ConfigureMaterialDialog(this);
     alphaTestDialog = new AlphaTestDialog(this);
     inputFileDialog = new QFileDialog(this, "Select input files");
     inputFileDialog->setFileMode(QFileDialog::ExistingFiles); //Allow multiple file selection
@@ -27,9 +28,11 @@ MainWindow::MainWindow(QWidget *parent)
     /**
      * Connect signals
      */
+    //
     //Light config dialog
+    //
     connect(lightDialog, SIGNAL(ambientIntensityChanged(vec4f)), glWidget, SLOT(ambientIntensityChanged(vec4f)));
-     //Light 1
+    //Light 1
     connect(lightDialog, SIGNAL(light1Toggled(bool)), glWidget, SLOT(light1Toggled(bool)));
     connect(lightDialog, SIGNAL(light1PositionChanged(vec4f)), glWidget, SLOT(light1PositionChanged(vec4f)));
     connect(lightDialog, SIGNAL(light1DirectionChanged(vec4f)), glWidget, SLOT(light1DirectionChanged(vec4f)));
@@ -38,8 +41,18 @@ MainWindow::MainWindow(QWidget *parent)
     connect(lightDialog, SIGNAL(light1SpecularChanged(vec4f)), glWidget, SLOT(light1SpecularChanged(vec4f)));
     connect(lightDialog, SIGNAL(light1AttenuationChanged(vec4f)), glWidget, SLOT(light1AttenuationChanged(vec4f)));
     connect(lightDialog, SIGNAL(light1ExponentChanged(float)), glWidget, SLOT(light1ExponentChanged(float)));
+    //
+    //Material config dialog
+    //
+    connect(materialDialog, SIGNAL(ambientChanged(vec4f)), glWidget, SLOT(materialAmbientChanged(vec4f)));
+    connect(materialDialog, SIGNAL(diffuseChanged(vec4f)), glWidget, SLOT(materialDiffuseChanged(vec4f)));
+    connect(materialDialog, SIGNAL(specularChanged(vec4f)), glWidget, SLOT(materialSpecularChanged(vec4f)));
+    connect(materialDialog, SIGNAL(emissionChanged(vec4f)), glWidget, SLOT(materialAmbientChanged(vec4f)));
+    connect(materialDialog, SIGNAL(shininessChanged(int)), glWidget, SLOT(materialShininessChanged(vec4f)));
 
+    //
     //Alpha test dialog
+    //
     connect(alphaTestDialog, SIGNAL(alphaTestChanged(uint,double)), glWidget, SLOT(alphaFuncChanged(uint,double)));
 
     //Actions
@@ -219,4 +232,9 @@ void MainWindow::on_lightPropertiesAction_triggered()
 void MainWindow::on_alphaTestAction_triggered()
 {
     alphaTestDialog->show();
+}
+
+void MainWindow::on_actionMaterial_properties_triggered()
+{
+
 }
