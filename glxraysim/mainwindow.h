@@ -29,6 +29,10 @@ protected:
      void closeEvent(QCloseEvent* event);
 
 private slots:
+    void on_textureBlendModeRadioButton_toggled(bool checked);
+    void on_pixelCubesModeRadioButton_toggled(bool checked);
+    void on_rotateModeRadioButton_toggled(bool checked);
+    void on_translateModeRadioButton_toggled(bool checked);
     void on_alphaTestAction_triggered();
     void on_lightPropertiesAction_triggered();
     void on_simpleSumUpAction_triggered();
@@ -41,11 +45,11 @@ private slots:
 
 private:
     Ui::MainWindowClass *ui;
-    gldialog *glDialog;
-    XRayGLWidget *glWidget;
-    ConfigureLightDialog *lightDialog;
-    AlphaTestDialog *alphaTestDialog;
-    QFileDialog *inputFileDialog;
+    QPointer<gldialog> glDialog;
+    QPointer<XRayGLWidget> glWidget;
+    QPointer<ConfigureLightDialog> lightDialog;
+    QPointer<AlphaTestDialog> alphaTestDialog;
+    QPointer<QFileDialog> inputFileDialog;
     QStringList inputFileNameList;
 };
 
