@@ -28,3 +28,4 @@ FORMS += mainwindow.ui \
 QMAKE_CXXFLAGS -= -O2
 QMAKE_CXXFLAGS += -O3 \
     -march=core2
+OTHER_FILES += TODO.txt
