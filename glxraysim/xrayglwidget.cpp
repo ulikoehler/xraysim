@@ -27,6 +27,7 @@ XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
 
     transformationMode = MODE_ROTATE;
     simulationMode = SIM_MODE_TEXTURE_BLEND;
+    useAlphaChannel = true;
 
     textureChanged = true;
 
@@ -263,6 +264,13 @@ void XRayGLWidget::mouseMoveEvent(QMouseEvent *event)
     lastPos = event->pos();
 }
 
+void XRayGLWidget::useAlphaChannelChanged(bool enabled)
+{
+    useAlphaChannel = enabled;
+    textureChanged = true;
+    updateGL();
+}
+
 /////////////////
 //Painting code//
 /////////////////
@@ -391,9 +399,9 @@ void XRayGLWidget::renderTextureBlending()
     glColor3f(1,1,1);
 
     /**
-* If the texture file names have changed, update the textures
-* This is an extra loop to avoid time-consuming branching inside the GL-drawing loop
-*/
+     * If the texture file names have changed, update the textures
+     * This is an extra loop to avoid time-consuming branching inside the GL-drawing loop
+     */
     if(textureChanged)
     {
         if(textures != 0)
@@ -459,7 +467,14 @@ void XRayGLWidget::renderPixelCubes()
 
         for(int i = 0; i < inputFileList.size(); i++)
         {
-            imageTextures[i] = new QImage(QImage(inputFileList[i]).alphaChannel());
+            if(useAlphaChannel)
+            {
+                imageTextures[i] = new QImage(QImage(inputFileList[i]).alphaChannel());
+            }
+            else
+            {
+                imageTextures[i] = new QImage(inputFileList[i]);
+            }
         }
         //The texture doesn't have to be changed next time
         textureChanged = false;

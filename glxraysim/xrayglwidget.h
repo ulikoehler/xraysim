@@ -66,6 +66,8 @@ class XRayGLWidget : public QGLWidget
     //Connected to the alpha test dialog
     void alphaFuncChanged(uint mode, double value);
 
+    void useAlphaChannelChanged(bool enabled);
+
 
 
  signals:
@@ -85,6 +87,7 @@ private:
     //Transformation variables
     TransformationMode transformationMode;
     SimulationMode simulationMode;
+    bool useAlphaChannel;
     float xRot, yRot, zRot;
     float xMov, yMov, zMov;
     float scale; //Changed by the slider

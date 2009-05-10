@@ -261,6 +261,7 @@
     <addaction name="simpleSumUpAction"/>
     <addaction name="lightPropertiesAction"/>
     <addaction name="alphaTestAction"/>
+    <addaction name="useAlphaChannelAction"/>
    </widget>
    <addaction name="fileMenu"/>
    <addaction name="extrasMenu"/>
@@ -286,6 +287,17 @@
   <action name="alphaTestAction">
    <property name="text">
     <string>Alpha test</string>
+   </property>
+  </action>
+  <action name="useAlphaChannelAction">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Use alpha channel</string>
    </property>
   </action>
  </widget>

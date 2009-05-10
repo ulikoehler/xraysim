@@ -42,6 +42,9 @@ MainWindow::MainWindow(QWidget *parent)
     //Alpha test dialog
     connect(alphaTestDialog, SIGNAL(alphaTestChanged(uint,double)), glWidget, SLOT(alphaFuncChanged(uint,double)));
 
+    //Actions
+    connect(ui->useAlphaChannelAction, SIGNAL(triggered(bool)), glWidget, SLOT(useAlphaChannelChanged(bool)));
+
 }
 
 MainWindow::~MainWindow()
@@ -184,8 +187,6 @@ void MainWindow::on_simpleSumUpAction_triggered()
             }
         }
     }
-    //for(int i = 0; i<(width*height);i++)
-    //{printf("%i ",matrix[i]);}
 
 
     //Set the pixels of the result images to the values (relative to the maximum)
