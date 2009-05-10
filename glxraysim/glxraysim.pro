@@ -10,17 +10,21 @@ SOURCES += main.cpp \
     gldialog.cpp \
     graphicsdialog.cpp \
     configurelightdialog.cpp \
-    alphatestdialog.cpp
+    alphatestdialog.cpp \
+    configurematerialdialog.cpp
 HEADERS += mainwindow.h \
     xrayglwidget.h \
     gldialog.h \
     graphicsdialog.h \
     configurelightdialog.h \
-    alphatestdialog.h
+    alphatestdialog.h \
+    configurematerialdialog.h
 FORMS += mainwindow.ui \
     gldialog.ui \
     graphicsdialog.ui \
     configurelightdialog.ui \
-    alphatestdialog.ui
+    alphatestdialog.ui \
+    configurematerialdialog.ui
 QMAKE_CXXFLAGS -= -O2
-QMAKE_CXXFLAGS += -O3 -march=core2
+QMAKE_CXXFLAGS += -O3 \
+    -march=core2
