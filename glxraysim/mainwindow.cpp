@@ -48,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(materialDialog, SIGNAL(diffuseChanged(vec4f)), glWidget, SLOT(materialDiffuseChanged(vec4f)));
     connect(materialDialog, SIGNAL(specularChanged(vec4f)), glWidget, SLOT(materialSpecularChanged(vec4f)));
     connect(materialDialog, SIGNAL(emissionChanged(vec4f)), glWidget, SLOT(materialAmbientChanged(vec4f)));
-    connect(materialDialog, SIGNAL(shininessChanged(int)), glWidget, SLOT(materialShininessChanged(vec4f)));
+    connect(materialDialog, SIGNAL(shininessChanged(int)), glWidget, SLOT(materialShininessChanged(int)));
 
     //
     //Alpha test dialog
@@ -226,15 +226,18 @@ void MainWindow::on_simpleSumUpAction_triggered()
 
 void MainWindow::on_lightPropertiesAction_triggered()
 {
+    lightDialog->setModal(false);
     lightDialog->show();
 }
 
 void MainWindow::on_alphaTestAction_triggered()
 {
+    alphaTestDialog->setModal(false);
     alphaTestDialog->show();
 }
 
 void MainWindow::on_actionMaterial_properties_triggered()
 {
-
+    materialDialog->setModal(false);
+    materialDialog->show();
 }

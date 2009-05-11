@@ -1,6 +1,8 @@
 #include <QtGui>
 #include <QtOpenGL>
 #include <cstdlib>
+#include <iostream>
+using namespace std;
 
 //Global variables
 const GLfloat null4f[] = {0,0,0,0};
@@ -223,6 +225,7 @@ void XRayGLWidget::alphaFuncChanged(uint mode, double value)
 void XRayGLWidget::materialAmbientChanged(vec4f values)
 {
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, values.data());
+    cout << "ma changed";
     updateGL();
 }
 void XRayGLWidget::materialDiffuseChanged(vec4f values)
@@ -520,7 +523,9 @@ void XRayGLWidget::renderPixelCubes()
             glPushMatrix();
             for(int x = 0; x < image->width(); x++)
             {
-                drawCube(qGray(image->pixel(x,y)) / 255.0); //Here: qRed == qGreen == qBlue
+                float color = qGray(image->pixel(x,y)) / 255.0; //This may also be the alpha value
+                glColor4f(color, color, color, color);
+                glCallList(drawCubeListID);
                 glTranslatef(1,0,0);
             }
             glPopMatrix();
