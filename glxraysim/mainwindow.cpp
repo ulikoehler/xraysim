@@ -57,7 +57,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //Actions
     connect(ui->useAlphaChannelAction, SIGNAL(triggered(bool)), glWidget, SLOT(useAlphaChannelChanged(bool)));
-
+    connect(ui->toggleAlphaAction, SIGNAL(triggered(bool)), glWidget, SLOT(toggleAlpha(bool)));
 }
 
 MainWindow::~MainWindow()

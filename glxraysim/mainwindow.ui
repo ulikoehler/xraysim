@@ -262,6 +262,7 @@
     <addaction name="lightPropertiesAction"/>
     <addaction name="actionMaterial_properties"/>
     <addaction name="alphaTestAction"/>
+    <addaction name="toggleAlphaAction"/>
     <addaction name="useAlphaChannelAction"/>
    </widget>
    <addaction name="fileMenu"/>
@@ -304,6 +305,17 @@
   <action name="actionMaterial_properties">
    <property name="text">
     <string>Material properties</string>
+   </property>
+  </action>
+  <action name="toggleAlphaAction">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Enable alpha</string>
    </property>
   </action>
  </widget>

@@ -30,6 +30,8 @@ XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
     transformationMode = MODE_ROTATE;
     simulationMode = SIM_MODE_TEXTURE_BLEND;
     useAlphaChannel = true;
+    alphaEnabled = true;
+    testRefVal = 0.0;
 
     textureChanged = true;
 
@@ -218,6 +220,7 @@ void XRayGLWidget::light1ExponentChanged(float value)
 void XRayGLWidget::alphaFuncChanged(uint mode, double value)
 {
     glAlphaFunc(mode, value);
+    testRefVal = value;
     updateGL();
 }
 
@@ -301,6 +304,12 @@ void XRayGLWidget::useAlphaChannelChanged(bool enabled)
     updateGL();
 }
 
+void XRayGLWidget::toggleAlpha(bool enable)
+{
+    alphaEnabled = enable;
+    updateGL();
+}
+
 /////////////////
 //Painting code//
 /////////////////
@@ -318,6 +327,8 @@ void XRayGLWidget::initializeGL()
     glEnable (GL_BLEND);
     glEnable(GL_TEXTURE_2D);
     glEnable(GL_ALPHA_TEST);
+    glEnable(GL_AUTO_NORMAL);
+    glEnable(GL_CULL_FACE);
     glShadeModel(GL_SMOOTH);
 
     glAlphaFunc ( GL_GREATER, 0.0);
@@ -404,7 +415,7 @@ void XRayGLWidget::initializeGL()
     //Initialize the textured plane drawing list
     drawTexturedPlaneListID = drawCubeListID + 1;
 
-    glNewList(drawTexturedPlaneListID, GL_COMPILE);
+    glNewList(drawTexturedPlaneListID,GL_COMPILE);
         glBegin(GL_TRIANGLE_STRIP);
                  glTexCoord2f(0,1); glVertex2f(-1,1); //lo
                  glTexCoord2f(0,0); glVertex2f(-1,-1); //lu
@@ -524,8 +535,19 @@ void XRayGLWidget::renderPixelCubes()
             for(int x = 0; x < image->width(); x++)
             {
                 float color = qGray(image->pixel(x,y)) / 255.0; //This may also be the alpha value
-                glColor4f(color, color, color, color);
-                glCallList(drawCubeListID);
+                if(alphaEnabled)
+                {
+                    glColor4f(color, color, color, color);
+                    glCallList(drawCubeListID);
+                }
+                else
+                {
+                    if(color > testRefVal)
+                    {
+                        glColor3f(color, color, color);
+                        glCallList(drawCubeListID);
+                    }
+                }
                 glTranslatef(1,0,0);
             }
             glPopMatrix();
@@ -550,7 +572,7 @@ void XRayGLWidget::resizeGL(int width, int height)
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(120, height/width, 0, 15000.0);
+    gluPerspective(90, height/width, 0, 1500.0);
     glMatrixMode(GL_MODELVIEW);
 }
 
