@@ -21,7 +21,8 @@ HEADERS += mainwindow.h \
     alphatestdialog.h \
     configurematerialdialog.h \
     globaldef.h \
-    togglefeaturesdialog.h
+    togglefeaturesdialog.h \
+    glextensions.h
 FORMS += mainwindow.ui \
     gldialog.ui \
     graphicsdialog.ui \

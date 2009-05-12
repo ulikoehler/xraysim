@@ -1,8 +1,4 @@
-#include <QtGui>
-#include <QtOpenGL>
-#include <cstdlib>
-#include <iostream>
-using namespace std;
+#include "xrayglwidget.h"
 
 //Global variables
 const GLfloat null4f[] = {0,0,0,0};
@@ -11,7 +7,6 @@ const GLfloat null4f[] = {0,0,0,0};
 #define drawCube(color) glColor4f(color, color, color, color);glCallList(drawCubeListID)
 #define drawCubeRaw() glCallList(drawCubeListID);
 
-#include "xrayglwidget.h"
 
 XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
 {
@@ -34,14 +29,20 @@ XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
     testRefVal = 0.0;
 
     textureChanged = true;
+    redrawPixelCubes = true;
 
     texturesLength = 0;
     textures = 0;
 
-    imageDistance = 150;
+    imageDistance = 10;
 
     imageTextures = 0;
     imageTexturesLength = 0;
+
+    drawCubeListID = 0;
+    drawTexturedPlaneListID = 0;
+    drawPixelCubesListID = 0;
+    pixelCubesVBOID = 0;
 }
 
 XRayGLWidget::~XRayGLWidget()
@@ -49,6 +50,12 @@ XRayGLWidget::~XRayGLWidget()
     makeCurrent();
     //Delete the display lists
     glDeleteLists(drawCubeListID, 2); //Alaos covers the textured plane drawing list
+
+    //Delete the old pixel cube drawing list wif there is one
+    if(drawPixelCubesListID > 0)
+    {
+        glDeleteLists(drawPixelCubesListID, 1);
+    }
 
     //Delete the textures saved in the VRAM
     if(textures != 0)
@@ -148,6 +155,7 @@ void XRayGLWidget::setScale(int scalePercent)
 void XRayGLWidget::setPixelCubeScale(float pixelCubeScale)
 {
     this->pixelCubeScale = pixelCubeScale;
+    redrawPixelCubes = true; //Force full redraw
 }
 
 void XRayGLWidget::setInputFileList(QStringList newList)
@@ -159,6 +167,7 @@ void XRayGLWidget::setInputFileList(QStringList newList)
 void XRayGLWidget::setImageDistance(float distance)
 {
     imageDistance = distance;
+    redrawPixelCubes = true; //Force full redraw
 }
 
 ///////////
@@ -228,27 +237,31 @@ void XRayGLWidget::alphaFuncChanged(uint mode, double value)
 void XRayGLWidget::materialAmbientChanged(vec4f values)
 {
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, values.data());
-    cout << "ma changed";
+    redrawPixelCubes = true; //Force full redraw
     updateGL();
 }
 void XRayGLWidget::materialDiffuseChanged(vec4f values)
 {
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, values.data());
+    redrawPixelCubes = true; //Force full redraw
     updateGL();
 }
 void XRayGLWidget::materialSpecularChanged(vec4f values)
 {
-        glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, values.data());
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, values.data());
+    redrawPixelCubes = true; //Force full redraw
     updateGL();
 }
 void XRayGLWidget::materialEmissionChanged(vec4f values)
 {
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, values.data());
+    redrawPixelCubes = true; //Force full redraw
     updateGL();
 }
 void XRayGLWidget::materialShininessChanged(int value)
 {
     glMateriali(GL_FRONT_AND_BACK, GL_SHININESS, value);
+    redrawPixelCubes = true; //Force full redraw
     updateGL();
 }
 ////////////////////
@@ -301,12 +314,14 @@ void XRayGLWidget::useAlphaChannelChanged(bool enabled)
 {
     useAlphaChannel = enabled;
     textureChanged = true;
+    redrawPixelCubes = true; //Force full redraw
     updateGL();
 }
 
 void XRayGLWidget::toggleAlpha(bool enable)
 {
     alphaEnabled = enable;
+    redrawPixelCubes = true; //Force full redraw
     updateGL();
 }
 
@@ -319,7 +334,8 @@ void XRayGLWidget::featureToggled(uint feature, bool enabled)
     else
     {
         glDisable(feature);
-    }
+    }    
+    redrawPixelCubes = true; //Force full redraw
     updateGL();
 }
 
@@ -504,9 +520,9 @@ void XRayGLWidget::renderPixelCubes()
 
     if(textureChanged)
     {
+        //Delete the old textures if there are some loaded
         if(imageTextures != 0)
         {
-            //We don't need the old textures any more so delete it
             for(int i = 0; i < texturesLength; i++)
             {
                 delete imageTextures[i];
@@ -532,43 +548,75 @@ void XRayGLWidget::renderPixelCubes()
         }
         //The texture doesn't have to be changed next time
         textureChanged = false;
+
+
     }
 
-    //Draw the cubes
-    glScalef(1,1,imageDistance);
-    for(int i = 0; i < imageTexturesLength; i++)
+    //If the texture or another property has changed, the if statement is true and the model is redrawn
+    if(textureChanged || redrawPixelCubes)
     {
-        QImage* image = imageTextures[i];
-        glPushMatrix();
-        //Draw the rows
-        for(int y = 0; y < image->height(); y++)
+
+        //Delete the old display list if there is one
+        if(drawPixelCubesListID > 0)
         {
-            //Extend the cubes to have a depth of imageDistance
-            glPushMatrix();
-            for(int x = 0; x < image->width(); x++)
-            {
-                float color = qGray(image->pixel(x,y)) / 255.0; //This may also be the alpha value
-                if(alphaEnabled)
-                {
-                    glColor4f(color, color, color, color);
-                    glCallList(drawCubeListID);
-                }
-                else
-                {
-                    if(color > testRefVal)
-                    {
-                        glColor3f(color, color, color);
-                        glCallList(drawCubeListID);
-                    }
-                }
-                glTranslatef(1,0,0);
-            }
-            glPopMatrix();
-            glTranslatef(0,1,0);
+            glDeleteLists(drawPixelCubesListID, 1);
         }
-        glPopMatrix();
-        glTranslatef(0,0,-1);
+
+        //Initialize the list
+        drawPixelCubesListID = glGenLists(1);
+        //Draw the cubes (to the list
+
+        uint bufferID;
+        glGenBuffers(1,&bufferID);
+
+        glNewList(drawPixelCubesListID, GL_COMPILE);
+        glScalef(10,10,10);
+        glCallList(drawCubeListID);
+        /*
+        ///////////////////////////////////////////
+
+                glScalef(1,1,imageDistance);
+                for(int i = 0; i < imageTexturesLength; i++)
+                {
+                    QImage* image = imageTextures[i];
+                    glPushMatrix();
+                    //Draw the rows
+                    for(int y = 0; y < image->height(); y++)
+                    {
+                        //Extend the cubes to have a depth of imageDistance
+                        glPushMatrix();
+                        for(int x = 0; x < image->width(); x++)
+                        {
+                            float color = qGray(image->pixel(x,y)) / 255.0; //This may also be the alpha value
+                            if(alphaEnabled)
+                            {
+                                glColor4f(color, color, color, color);
+                                glCallList(drawCubeListID);
+                            }
+                            else
+                            {
+                                if(color > testRefVal)
+                                {
+                                    glColor3f(color, color, color);
+                                    glCallList(drawCubeListID);
+                                }
+                            }
+                            glTranslatef(1,0,0);
+                        }
+                        glPopMatrix();
+                        glTranslatef(0,1,0);
+                    }
+                    glPopMatrix();
+                    glTranslatef(0,0,-1);
+                }*/
+        ///////////////////////////////////////////
+        glEndList();
     }
+
+    //Call the display list (renders the pixel cubes)
+    glCallList(drawPixelCubesListID);
+
+
 }
 
 void XRayGLWidget::paintGL()

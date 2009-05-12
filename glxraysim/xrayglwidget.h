@@ -2,7 +2,14 @@
 #define XRAYGLWIDGET_H
 
 #include <QGLWidget>
+#include <QtGui>
 #include "configurelightdialog.h"
+
+#include "glextensions.h"
+
+#include <cstdlib>
+#include <iostream>
+using namespace std;
 
 using namespace std;
 
@@ -112,6 +119,7 @@ private:
     QPoint lastPos;
 
     bool textureChanged; //True if the textures are to be updated; the have to be updated at the first call
+    bool redrawPixelCubes; //Makes the display list to be re-initialized
 
     //Input properties
     QStringList inputFileList;
@@ -126,6 +134,9 @@ private:
     //Display list IDs
     GLuint drawCubeListID;
     GLuint drawTexturedPlaneListID;
+
+    GLuint drawPixelCubesListID; //Changed dynamically
+    GLuint pixelCubesVBOID; //Vertex buffer object identifier for pixel cube mode
 
     GLuint *textures; //Array holding the texture IDs
     int texturesLength; //Length of textures array
