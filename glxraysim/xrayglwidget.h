@@ -80,6 +80,9 @@ class XRayGLWidget : public QGLWidget
     void useAlphaChannelChanged(bool enabled);
     void toggleAlpha(bool enable);
 
+    //Connected to the feature toggling dialog
+    void featureToggled(uint feature, bool enabled);
+
 
  signals:
      void xRotationChanged(int angle);

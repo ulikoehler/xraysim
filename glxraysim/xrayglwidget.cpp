@@ -310,6 +310,19 @@ void XRayGLWidget::toggleAlpha(bool enable)
     updateGL();
 }
 
+void XRayGLWidget::featureToggled(uint feature, bool enabled)
+{
+    if(enabled)
+    {
+        glEnable(feature);
+    }
+    else
+    {
+        glDisable(feature);
+    }
+    updateGL();
+}
+
 /////////////////
 //Painting code//
 /////////////////
@@ -324,7 +337,7 @@ void XRayGLWidget::initializeGL()
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     glEnable(GL_COLOR_MATERIAL);
-    glEnable (GL_BLEND);
+    glEnable(GL_BLEND);
     glEnable(GL_TEXTURE_2D);
     glEnable(GL_ALPHA_TEST);
     glEnable(GL_AUTO_NORMAL);
