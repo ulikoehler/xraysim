@@ -12,9 +12,13 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     //Initialize the member dialogs
     lightDialog = new ConfigureLightDialog(this);
+        lightDialog->setModal(false);
     materialDialog = new ConfigureMaterialDialog(this);
+        materialDialog->setModal(false);
     toggleFeaturesDialog = new ToggleFeaturesDialog(this);
+        toggleFeaturesDialog->setModal(false);
     alphaTestDialog = new AlphaTestDialog(this);
+        alphaTestDialog->setModal(false);
     inputFileDialog = new QFileDialog(this, "Select input files");
     inputFileDialog->setFileMode(QFileDialog::ExistingFiles); //Allow multiple file selection
 
@@ -232,19 +236,16 @@ void MainWindow::on_simpleSumUpAction_triggered()
 
 void MainWindow::on_lightPropertiesAction_triggered()
 {
-    lightDialog->setModal(false);
     lightDialog->show();
 }
 
 void MainWindow::on_alphaTestAction_triggered()
 {
-    alphaTestDialog->setModal(false);
     alphaTestDialog->show();
 }
 
 void MainWindow::on_actionMaterial_properties_triggered()
 {
-    materialDialog->setModal(false);
     materialDialog->show();
 }
 
