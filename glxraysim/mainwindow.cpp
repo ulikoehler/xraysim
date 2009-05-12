@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     //Initialize the member dialogs
     lightDialog = new ConfigureLightDialog(this);
     materialDialog = new ConfigureMaterialDialog(this);
+    toggleFeaturesDialog = new ToggleFeaturesDialog(this);
     alphaTestDialog = new AlphaTestDialog(this);
     inputFileDialog = new QFileDialog(this, "Select input files");
     inputFileDialog->setFileMode(QFileDialog::ExistingFiles); //Allow multiple file selection
@@ -49,6 +50,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(materialDialog, SIGNAL(specularChanged(vec4f)), glWidget, SLOT(materialSpecularChanged(vec4f)));
     connect(materialDialog, SIGNAL(emissionChanged(vec4f)), glWidget, SLOT(materialAmbientChanged(vec4f)));
     connect(materialDialog, SIGNAL(shininessChanged(int)), glWidget, SLOT(materialShininessChanged(int)));
+
+    //
+    //Toggle features dialog
+    //
+    connect(toggleFeaturesDialog, SIGNAL(featureToggled(uint, bool)), glWidget, SLOT(featureToggled(uint,bool)));
 
     //
     //Alpha test dialog
@@ -240,4 +246,9 @@ void MainWindow::on_actionMaterial_properties_triggered()
 {
     materialDialog->setModal(false);
     materialDialog->show();
+}
+
+void MainWindow::on_toggleFeaturesAction_triggered()
+{
+    toggleFeaturesDialog->show();
 }

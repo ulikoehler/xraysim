@@ -264,6 +264,7 @@
     <addaction name="alphaTestAction"/>
     <addaction name="toggleAlphaAction"/>
     <addaction name="useAlphaChannelAction"/>
+    <addaction name="toggleFeaturesAction"/>
    </widget>
    <addaction name="fileMenu"/>
    <addaction name="extrasMenu"/>
@@ -316,6 +317,11 @@
    </property>
    <property name="text">
     <string>Enable alpha</string>
+   </property>
+  </action>
+  <action name="toggleFeaturesAction">
+   <property name="text">
+    <string>Toggle features</string>
    </property>
   </action>
  </widget>

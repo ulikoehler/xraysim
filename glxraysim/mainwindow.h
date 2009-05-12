@@ -12,6 +12,7 @@
 #include "graphicsdialog.h"
 #include "alphatestdialog.h"
 #include "configurematerialdialog.h"
+#include "togglefeaturesdialog.h"
 
 namespace Ui
 {
@@ -30,6 +31,7 @@ protected:
      void closeEvent(QCloseEvent* event);
 
 private slots:
+    void on_toggleFeaturesAction_triggered();
     void on_actionMaterial_properties_triggered();
     void on_textureBlendModeRadioButton_toggled(bool checked);
     void on_pixelCubesModeRadioButton_toggled(bool checked);
@@ -52,6 +54,7 @@ private:
     QPointer<XRayGLWidget> glWidget;
     QPointer<ConfigureLightDialog> lightDialog;
     QPointer<ConfigureMaterialDialog> materialDialog;
+    QPointer<ToggleFeaturesDialog> toggleFeaturesDialog;
     QPointer<AlphaTestDialog> alphaTestDialog;
     QPointer<QFileDialog> inputFileDialog;
 

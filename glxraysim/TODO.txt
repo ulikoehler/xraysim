@@ -2,4 +2,6 @@ GLXRaySim TODO:
 -Material property dialog
 -Check for more things that can be encapsulated by a QPointer (auto-deletion to save memory)
 -Use VBO for cube drawing
--Develop an algorithm to draw the edges only (maybe outer edges only first);
+-Develop an algorithm to draw the edges only (maybe outer edges only at first);
+-Develop GLSL shaders
+-Make the simple sum-up result dependent on if alpha is enabled
