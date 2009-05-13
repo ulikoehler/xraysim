@@ -41,7 +41,7 @@ void Sobel::smoothImage()
             newImage->setPixel(x,y,val);
         }
     }
-    this->image = newImage;
+    //this->image = newImage;
 }
 
 int Sobel::calculateSobel(ushort x, ushort y)
@@ -61,6 +61,7 @@ int Sobel::calculateSobel(ushort x, ushort y)
     pixels[7] = qGray(image->pixel(x, y + 1));
     pixels[8] = qGray(image->pixel(x + 1, y + 1));
 
+    //TODO Check if optimization is needed
     int hsobel = pixels[0] + (pixels[3] * 2) + pixels[6]
             - pixels[2] - (pixels[5] * 2) - pixels[8];
     int vsobel = pixels[0] + (pixels[1] * 2) + pixels[3]
@@ -71,37 +72,35 @@ int Sobel::calculateSobel(ushort x, ushort y)
     return res;
 }
 
-std::list<Point> Sobel::startAtPoint(ushort startX, ushort startY, Direction d)
+std::list<QPoint> Sobel::startAtPoint(ushort startX, ushort startY, Direction d)
 {
-    std::list<Point> points;
+    std::list<QPoint> points;
 
-    ushort x = 0;
-    ushort y = 0;
+    ushort x = startX;
+    ushort y = startY;
 
     //Find the first pixel having a gradient
-    for(x = startX; x < width;x++)
+    for(; x < width - 1;x++)
     {
         int sob = calculateSobel(x, y);
         if (sob > 1000) {break;}
     }
 
-    Point beginPoint;
-    beginPoint.x = x;
-    beginPoint.y = y;
+    QPoint beginPoint(x,y);
 
-    std::list<Point> vertices;
+    std::list<QPoint> vertices;
+
 
     //As the scoped pixel mustn't be the maximum again, this has only 8 elements
     int sobels[8]; //Sobels of the pixels around the scoped pixel
-    while(true)
+    for(int im = 0; im < 100; im++)
     {
-        Point p;
-        p.x = x;
-        p.y = y;
+        QPoint p(x,y);
         vertices.push_back(p);
 
+        //printf("adgggggggggggggggggg\n");
         //If we reached the beginning
-        if(p.x == beginPoint.x && p.y == beginPoint.y)
+        if(p == beginPoint && vertices.size() > 1)
         {
             break;
         }
@@ -115,30 +114,40 @@ std::list<Point> Sobel::startAtPoint(ushort startX, ushort startY, Direction d)
         sobels[6] = calculateSobel(x, y + 1);
         sobels[7] = calculateSobel(x + 1, y + 1);
 
-        int max = -1;
-        int maxindex = -1;
+        int max = 0;
+        int maxindex = 3;
         for(int i = 0;i < 8; i++)
         {
-            if (sobels[i] > max) {max = sobels[i];maxindex = i;}
+            if (sobels[i] > max)
+            {
+                max = sobels[i];maxindex = i;
+                printf("smax mi %i\n", maxindex);
+            }
+            printf("x: %i y: %i i: %i s: %i\n",(int)x,(int)y,i, sobels[i]);
         }
 
+        printf("BMAX %i\n", maxindex);
         switch(maxindex)
         {
-            case 0: {x -= 1; y -= 1;break;}
-            case 1: {y -= 1;break;}
-            case 2: {x += 1; y -= 1;break;}
-            case 3: {x -= 1;break;}
+            case 0: {x -= 1; y -= 1;printf("CASE 0\n");break;}
+            case 1: {y -= 1;printf("CASE 1\n");break;}
+            case 2: {x += 1; y -= 1;printf("CASE 2\n");break;}
+            case 3: {x -= 1;printf("CASE 3\n");break;}
             //case 4: {} //Can't occur; nothing to change
-            case 4: {x += 1;break;}
-            case 5: {x -= 1; y += 1;break;}
-            case 6: {y += 1;break;}
-            case 7: {x += 1; y += 1;break;}
-            default: break;
+            case 4: {x += 1;printf("CASE 4\n");break;}
+            case 5: {x -= 1; y += 1;printf("CASE 5\n");break;}
+            case 6: {y += 1;printf("CASE 6\n");break;}
+            case 7: {x += 1; y += 1;printf("CASE 7\n");break;}
+            default: {break;printf("def!!");}
+        }
+        printf("EMAX\n");
+
+        if(x < 1 || x > width - 1 || y < 1 || y > height - 1)
+        {
+            printf("ext error!!");
         }
     }
+    return vertices;
 
-
-    //Calculate x sobel
-    //TODO Check if optimization is needed
     //image->setPixel(w, h, (uint) hsobel + vsobel);
 }

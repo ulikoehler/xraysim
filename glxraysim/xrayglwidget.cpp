@@ -528,12 +528,11 @@ void XRayGLWidget::render3dSurface()
     //Iterate the pixels at height startHeight
     //and calculate the sobel matrix for the surrounding values
 
-    QImage sobelImage(image->width(), image->height(), QImage::Format_RGB32);
+    shared_ptr<QImage> sobelImage(new QImage(image->width(), image->height(), QImage::Format_RGB32));
 
     //std::list<struct Point> vertices;
     Sobel sob(image);
     sob.startAtPoint(1,h,HORIZONTAL);
-
     //graphicsDialog->setImage(sobelImage);
     //graphicsDialog->show();
 }
@@ -655,9 +654,9 @@ void XRayGLWidget::paintGL()
 {
     switch(simulationMode)
     {
-        case SIM_MODE_TEXTURE_BLEND: renderTextureBlending();
-        case SIM_MODE_3D_SURFACE: render3dSurface();
-        case SIM_MODE_PIXEL_CUBES: renderPixelCubes();
+        case SIM_MODE_TEXTURE_BLEND: renderTextureBlending();break;
+        case SIM_MODE_3D_SURFACE: render3dSurface();break;
+        case SIM_MODE_PIXEL_CUBES: renderPixelCubes();break;
     }
 }
 

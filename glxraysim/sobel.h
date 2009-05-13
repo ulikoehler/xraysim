@@ -19,22 +19,13 @@ enum Direction
     VERTICAL
 };
 
-/**
- * Structs
- */
-struct Point
-{
-    ushort x;
-    ushort y;
-};
-
 class Sobel
 {
 public:
     Sobel(shared_ptr<QImage> image);
 
     void smoothImage();
-    std::list<Point> startAtPoint(ushort x, ushort y, Direction d);
+    std::list<QPoint> startAtPoint(ushort x, ushort y, Direction d);
 
 private:
     shared_ptr<QImage> image;
