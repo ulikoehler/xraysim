@@ -31,6 +31,7 @@ protected:
      void closeEvent(QCloseEvent* event);
 
 private slots:
+    void on_surfaceRadioButton_toggled(bool checked);
     void on_toggleFeaturesAction_triggered();
     void on_actionMaterial_properties_triggered();
     void on_textureBlendModeRadioButton_toggled(bool checked);

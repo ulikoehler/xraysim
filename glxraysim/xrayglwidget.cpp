@@ -215,7 +215,7 @@ void XRayGLWidget::light1SpecularChanged(vec4f values)
     glLightfv(GL_LIGHT0, GL_SPECULAR, values.data());
     updateGL();
 }
-void XRayGLWidget::light1AttenuationChanged(vec4f values)
+void XRayGLWidget::light1AttenuationChanged(vec4f )//values)
 {
     //TODO implement here and in the light config dialog
     updateGL();
@@ -506,6 +506,38 @@ void XRayGLWidget::renderTextureBlending()
     }
 }
 
+void XRayGLWidget::render3dSurface()
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();
+    //Apply the transformation parameters
+    glScalef(scale, scale, scale);
+    glTranslatef(xMov, yMov, zMov);
+    glRotatef(xRot, 1.0, 0.0, 0.0);
+    glRotatef(yRot, 0.0, 1.0, 0.0);
+    glRotatef(zRot, 0.0, 0.0, 1.0);
+    //Set the color
+    glColor3f(1,1,1);
+
+    if(inputFileList.length() == 0) {return;}
+
+    QPointer<GraphicsDialog> graphicsDialog = new GraphicsDialog(this);
+
+    shared_ptr<QImage> image(new QImage(inputFileList[0]));
+    int h = image->height() / 2; //Integer division
+    //Iterate the pixels at height startHeight
+    //and calculate the sobel matrix for the surrounding values
+
+    QImage sobelImage(image->width(), image->height(), QImage::Format_RGB32);
+
+    //std::list<struct Point> vertices;
+    Sobel sob(image);
+    sob.startAtPoint(1,h,HORIZONTAL);
+
+    //graphicsDialog->setImage(sobelImage);
+    //graphicsDialog->show();
+}
+
 void XRayGLWidget::renderPixelCubes()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -566,10 +598,10 @@ void XRayGLWidget::renderPixelCubes()
         drawPixelCubesListID = glGenLists(1);
         //Draw the cubes (to the list
 
-        uint bufferID;
-        glGenBuffers(1,&bufferID);
+        //uint bufferID;
 
         glNewList(drawPixelCubesListID, GL_COMPILE);
+        //Test cube
         glScalef(10,10,10);
         glCallList(drawCubeListID);
         /*
@@ -621,9 +653,12 @@ void XRayGLWidget::renderPixelCubes()
 
 void XRayGLWidget::paintGL()
 {
-    if(simulationMode == SIM_MODE_TEXTURE_BLEND) {renderTextureBlending();}
-    else if (simulationMode == SIM_MODE_PIXEL_CUBES)
-    {renderPixelCubes();}
+    switch(simulationMode)
+    {
+        case SIM_MODE_TEXTURE_BLEND: renderTextureBlending();
+        case SIM_MODE_3D_SURFACE: render3dSurface();
+        case SIM_MODE_PIXEL_CUBES: renderPixelCubes();
+    }
 }
 
 void XRayGLWidget::resizeGL(int width, int height)

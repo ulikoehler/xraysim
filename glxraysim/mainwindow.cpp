@@ -253,3 +253,8 @@ void MainWindow::on_toggleFeaturesAction_triggered()
 {
     toggleFeaturesDialog->show();
 }
+
+void MainWindow::on_surfaceRadioButton_toggled(bool checked)
+{
+    glWidget->setSimulationMode(SIM_MODE_3D_SURFACE);
+}

@@ -1,22 +1,29 @@
 #ifndef XRAYGLWIDGET_H
 #define XRAYGLWIDGET_H
 
+#include <tr1/memory>
 #include <QGLWidget>
 #include <QtGui>
 #include "configurelightdialog.h"
+#include "graphicsdialog.h"
+#include "sobel.h"
 
 #include "glextensions.h"
 
-#include <cstdlib>
-#include <iostream>
+//DEBUG
+#include <cstdio>
 using namespace std;
+using namespace std::tr1;
 
-using namespace std;
+/**
+ * Enums
+ */
 
 enum SimulationMode
 {
     SIM_MODE_TEXTURE_BLEND,
-    SIM_MODE_PIXEL_CUBES
+    SIM_MODE_PIXEL_CUBES,
+    SIM_MODE_3D_SURFACE
 };
 
 enum TransformationMode
@@ -126,6 +133,7 @@ private:
 
     //Private functions
     void renderTextureBlending();
+    void render3dSurface();
     void renderPixelCubes();
 
     /**

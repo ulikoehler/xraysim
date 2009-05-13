@@ -12,7 +12,8 @@ SOURCES += main.cpp \
     configurelightdialog.cpp \
     alphatestdialog.cpp \
     configurematerialdialog.cpp \
-    togglefeaturesdialog.cpp
+    togglefeaturesdialog.cpp \
+    sobel.cpp
 HEADERS += mainwindow.h \
     xrayglwidget.h \
     gldialog.h \
@@ -22,7 +23,8 @@ HEADERS += mainwindow.h \
     configurematerialdialog.h \
     globaldef.h \
     togglefeaturesdialog.h \
-    glextensions.h
+    glextensions.h \
+    sobel.h
 FORMS += mainwindow.ui \
     gldialog.ui \
     graphicsdialog.ui \
