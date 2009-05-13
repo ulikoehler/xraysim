@@ -2,7 +2,8 @@
 #define GRAPHICSDIALOG_H
 
 #include <QDialog>
-#include <QSharedPointer>
+#include <tr1/memory>
+using namespace std::tr1;
 
 namespace Ui {
     class GraphicsDialog;
@@ -16,13 +17,14 @@ public:
     explicit GraphicsDialog(QWidget *parent = 0);
     virtual ~GraphicsDialog();
 
-    void setImage(QImage& image);
+    void setImage(shared_ptr<QImage> image);
 
 protected:
     virtual void changeEvent(QEvent *e);
 
 private:
     Ui::GraphicsDialog *m_ui;
+    shared_ptr<QImage> image;
 };
 
 #endif // GRAPHICSDIALOG_H

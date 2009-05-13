@@ -76,8 +76,8 @@ std::list<QPoint> Sobel::startAtPoint(ushort startX, ushort startY, Direction d)
 {
     std::list<QPoint> points;
 
-    ushort x = startX;
-    ushort y = startY;
+    int x = startX;
+    int y = startY;
 
     //Find the first pixel having a gradient
     for(; x < width - 1;x++)
@@ -93,12 +93,15 @@ std::list<QPoint> Sobel::startAtPoint(ushort startX, ushort startY, Direction d)
 
     //As the scoped pixel mustn't be the maximum again, this has only 8 elements
     int sobels[8]; //Sobels of the pixels around the scoped pixel
-    for(int im = 0; im < 100; im++)
+
+    for(int im = 0; im < 1000; im++)
     {
-        QPoint p(x,y);
+        //printf("%i %i \n", x, y);
+        QPoint p;
+        p.setX(x);
+        p.setY(x);
         vertices.push_back(p);
 
-        //printf("adgggggggggggggggggg\n");
         //If we reached the beginning
         if(p == beginPoint && vertices.size() > 1)
         {
@@ -121,28 +124,24 @@ std::list<QPoint> Sobel::startAtPoint(ushort startX, ushort startY, Direction d)
             if (sobels[i] > max)
             {
                 max = sobels[i];maxindex = i;
-                printf("smax mi %i\n", maxindex);
             }
-            printf("x: %i y: %i i: %i s: %i\n",(int)x,(int)y,i, sobels[i]);
         }
 
-        printf("BMAX %i\n", maxindex);
         switch(maxindex)
         {
-            case 0: {x -= 1; y -= 1;printf("CASE 0\n");break;}
-            case 1: {y -= 1;printf("CASE 1\n");break;}
-            case 2: {x += 1; y -= 1;printf("CASE 2\n");break;}
-            case 3: {x -= 1;printf("CASE 3\n");break;}
+            case 0: {x -= 1; y -= 1;break;}
+            case 1: {y -= 1;break;}
+            case 2: {x += 1; y -= 1;break;}
+            case 3: {x -= 1;break;}
             //case 4: {} //Can't occur; nothing to change
-            case 4: {x += 1;printf("CASE 4\n");break;}
-            case 5: {x -= 1; y += 1;printf("CASE 5\n");break;}
-            case 6: {y += 1;printf("CASE 6\n");break;}
-            case 7: {x += 1; y += 1;printf("CASE 7\n");break;}
-            default: {break;printf("def!!");}
+            case 4: {x += 1;break;}
+            case 5: {x -= 1; y += 1;break;}
+            case 6: {y += 1;break;}
+            case 7: {x += 1; y += 1;break;}
+            default: {break;}
         }
-        printf("EMAX\n");
 
-        if(x < 1 || x > width - 1 || y < 1 || y > height - 1)
+        if(x < 1 || x > (width - 1) || y < 1 || y > (height - 1))
         {
             printf("ext error!!");
         }

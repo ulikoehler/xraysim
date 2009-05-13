@@ -210,18 +210,18 @@ void MainWindow::on_simpleSumUpAction_triggered()
 
 
     //Set the pixels of the result images to the values (relative to the maximum)
-    QImage resultImage(QImage(width, height, QImage::Format_ARGB32));
+    shared_ptr<QImage> resultImage(new QImage(width, height, QImage::Format_ARGB32));
     for(int h = 0; h < height;h++)
         {
             for(int w = 0; w < width; w++)
             {
                 //TODO Check if ceil is appropriate here
                 int val = matrix[h * width + w] / (float)inputLen;
-                resultImage.setPixel(w, h, qRgba(val, val, val, 255-val));
+                resultImage->setPixel(w, h, qRgba(val, val, val, 255-val));
             }
         }
 
-    GraphicsDialog* graphicsDialog = new GraphicsDialog(this);
+    shared_ptr<GraphicsDialog> graphicsDialog(new GraphicsDialog(this));
     graphicsDialog->setImage(resultImage);
     graphicsDialog->show();
 
@@ -256,5 +256,8 @@ void MainWindow::on_toggleFeaturesAction_triggered()
 
 void MainWindow::on_surfaceRadioButton_toggled(bool checked)
 {
-    glWidget->setSimulationMode(SIM_MODE_3D_SURFACE);
+    if(checked)
+    {
+        glWidget->setSimulationMode(SIM_MODE_3D_SURFACE);
+    }
 }

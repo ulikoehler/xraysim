@@ -18,8 +18,9 @@ GraphicsDialog::~GraphicsDialog()
     delete m_ui;
 }
 
- void GraphicsDialog::setImage(QImage& image)
+ void GraphicsDialog::setImage(shared_ptr<QImage> imageParam)
  {
+    this->image = imageParam;
     m_ui->imageLabel->setPixmap(QPixmap::fromImage(image));
  }
 

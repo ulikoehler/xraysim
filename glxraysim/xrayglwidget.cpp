@@ -511,7 +511,7 @@ void XRayGLWidget::render3dSurface()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     //Apply the transformation parameters
-    glScalef(scale, scale, scale);
+    //glScalef(scale, scale, scale);
     glTranslatef(xMov, yMov, zMov);
     glRotatef(xRot, 1.0, 0.0, 0.0);
     glRotatef(yRot, 0.0, 1.0, 0.0);
@@ -532,9 +532,22 @@ void XRayGLWidget::render3dSurface()
 
     //std::list<struct Point> vertices;
     Sobel sob(image);
-    sob.startAtPoint(1,h,HORIZONTAL);
-    //graphicsDialog->setImage(sobelImage);
-    //graphicsDialog->show();
+    std::list<QPoint> vertices = sob.startAtPoint(1,h,HORIZONTAL);
+
+    //Draw
+    //glBegin(GL_LINE_LOOP);
+    //glLineWidth(5);
+    list<QPoint>::iterator it;
+    for( it=vertices.begin() ; it != vertices.end(); it++ )
+    {
+        //printf("%i %i \n", it->x(), it->y());
+        sobelImage->setPixel(it->x(), it->y(), 0xffffff);
+        //glVertex3i(it->x(), it->y(), 0);
+    }
+    //glEnd();
+
+    graphicsDialog->setImage(sobelImage);
+    graphicsDialog->show();
 }
 
 void XRayGLWidget::renderPixelCubes()
@@ -601,9 +614,7 @@ void XRayGLWidget::renderPixelCubes()
 
         glNewList(drawPixelCubesListID, GL_COMPILE);
         //Test cube
-        glScalef(10,10,10);
         glCallList(drawCubeListID);
-        /*
         ///////////////////////////////////////////
 
                 glScalef(1,1,imageDistance);
@@ -621,8 +632,11 @@ void XRayGLWidget::renderPixelCubes()
                             float color = qGray(image->pixel(x,y)) / 255.0; //This may also be the alpha value
                             if(alphaEnabled)
                             {
-                                glColor4f(color, color, color, color);
-                                glCallList(drawCubeListID);
+                                if(color > testRefVal)
+                                {
+                                    glColor4f(color, color, color, color);
+                                    glCallList(drawCubeListID);
+                                }
                             }
                             else
                             {
@@ -639,7 +653,7 @@ void XRayGLWidget::renderPixelCubes()
                     }
                     glPopMatrix();
                     glTranslatef(0,0,-1);
-                }*/
+                }
         ///////////////////////////////////////////
         glEndList();
     }
