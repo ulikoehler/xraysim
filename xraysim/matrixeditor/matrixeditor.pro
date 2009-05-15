@@ -5,7 +5,8 @@ TARGET = matrixeditor
 TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
-    matrix.cpp
+    newmatrixdialog.cpp
 HEADERS += mainwindow.h \
-    matrix.h
-FORMS += mainwindow.ui
+    newmatrixdialog.h
+FORMS += mainwindow.ui \
+    newmatrixdialog.ui
