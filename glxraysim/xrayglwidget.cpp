@@ -660,21 +660,18 @@ void XRayGLWidget::renderPixelCubes()
         //uint bufferID;
 
         glNewList(drawPixelCubesListID, GL_COMPILE);
-        //Test cube
         ///////////////////////////////////////////
-
-                glPointSize(1.0);
+                glPointSize(5);
                 glScalef(1,1,imageDistance);
                 glBegin(GL_POINTS);
-                for(int i = 0; i < imageTexturesLength; i++)
+                for(uint i = 0; i < imageTexturesLength; i++)
                 {
                     QImage* image = imageTextures[i];
-                    glPushMatrix();
                     //Draw the rows
-                    for(int y = 0; y < image->height(); y++)
+                    for(uint y = 0; y < image->height(); y++)
                     {
                         //Extend the cubes to have a depth of imageDistance
-                        for(int x = 0; x < image->width(); x++)
+                        for(uint x = 0; x < image->width(); x++)
                         {
                             float color = qGray(image->pixel(x,y)) / 255.0; //This may also be the alpha value
                             if(alphaEnabled)
@@ -695,8 +692,6 @@ void XRayGLWidget::renderPixelCubes()
                             }
                         }
                     }
-                    glPopMatrix();
-                    glTranslatef(0,0,-1);
                 }
                 glEnd();
         ///////////////////////////////////////////
