@@ -144,7 +144,6 @@ private:
      * OpenGL variables
      */
     //Display list IDs
-    GLuint drawCubeListID;
     GLuint drawTexturedPlaneListID;
 
     GLuint drawPixelCubesListID; //Changed dynamically

@@ -3,11 +3,6 @@
 //Global variables
 const GLfloat null4f[] = {0,0,0,0};
 
-//Macros
-#define drawCube(color) glColor4f(color, color, color, color);glCallList(drawCubeListID)
-#define drawCubeRaw() glCallList(drawCubeListID);
-
-
 XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
 {
     //Initialize member variables
@@ -39,7 +34,6 @@ XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
     imageTextures = 0;
     imageTexturesLength = 0;
 
-    drawCubeListID = 0;
     drawTexturedPlaneListID = 0;
     drawPixelCubesListID = 0;
     pixelCubesVBOID = 0;
@@ -49,13 +43,7 @@ XRayGLWidget::~XRayGLWidget()
 {
     makeCurrent();
     //Delete the display lists
-    glDeleteLists(drawCubeListID, 2); //Alaos covers the textured plane drawing list
-
-    //Delete the old pixel cube drawing list wif there is one
-    if(drawPixelCubesListID > 0)
-    {
-        glDeleteLists(drawPixelCubesListID, 1);
-    }
+    glDeleteLists(drawTexturedPlaneListID, 1); //Alaos covers the textured plane drawing list
 
     //Delete the textures saved in the VRAM
     if(textures != 0)
@@ -402,48 +390,8 @@ void XRayGLWidget::initializeGL()
     /**
      * Initialize the display lists
      */
-    //Initialize the cube generation list
-    //(We initialize 2 at a time because the plain drawing list is the next)
-    drawCubeListID = glGenLists(2);
-    /*
-    glNewList(drawCubeListID, GL_COMPILE);
-        glBegin(GL_TRIANGLE_STRIP);
-            //Front side
-            glVertex3s(0,1,0);
-            glVertex3s(0,0,0);
-            glVertex3s(1,1,0);
-            glVertex3s(1,0,0);
-            //Right side
-            glVertex3s(1,1,1);
-            glVertex3s(1,0,1);
-            //Back side
-            glVertex3s(0,1,1);
-            glVertex3s(0,0,1);
-            //Left side
-            glVertex3s(0,1,0);
-            glVertex3s(0,0,0);
-        glEnd();
-
-        glBegin(GL_TRIANGLE_STRIP);
-            //Top
-            glVertex3s(0,1,1);
-            glVertex3s(0,1,0);
-            glVertex3s(1,1,1);
-            glVertex3s(1,1,0);
-        glEnd();
-
-        glBegin(GL_TRIANGLE_STRIP);
-            //Bottom
-            glVertex3s(0,0,0);
-            glVertex3s(0,0,1);
-            glVertex3s(1,0,0);
-            glVertex3s(1,0,1);
-        glEnd();
-    glEndList();*/
-
     //Initialize the textured plane drawing list
-    drawTexturedPlaneListID = drawCubeListID + 1;
-
+    drawTexturedPlaneListID = glGenLists(1);
     glNewList(drawTexturedPlaneListID,GL_COMPILE);
         glBegin(GL_TRIANGLE_STRIP);
                  glTexCoord2f(0,1); glVertex2f(-1,1); //lo
@@ -655,45 +603,45 @@ void XRayGLWidget::renderPixelCubes()
 
         //Initialize the list
         drawPixelCubesListID = glGenLists(1);
-        //Draw the cubes (to the list
-
-        //uint bufferID;
 
         glNewList(drawPixelCubesListID, GL_COMPILE);
         ///////////////////////////////////////////
-                glPointSize(5);
-                glScalef(1,1,imageDistance);
-                glBegin(GL_POINTS);
-                for(uint i = 0; i < imageTexturesLength; i++)
+            glPointSize(5);
+            glLineWidth(5);
+            glScalef(1,1,imageDistance);
+            glBegin(GL_LINES);
+            for(uint i = 0; i < imageTexturesLength; i++)
+            {
+                QImage* image = imageTextures[i];
+                //Draw the rows
+                for(uint y = 0; y < image->height(); y++)
                 {
-                    QImage* image = imageTextures[i];
-                    //Draw the rows
-                    for(uint y = 0; y < image->height(); y++)
+                    //Extend the cubes to have a depth of imageDistance
+                    for(uint x = 0; x < image->width(); x++)
                     {
-                        //Extend the cubes to have a depth of imageDistance
-                        for(uint x = 0; x < image->width(); x++)
+                        float color = qGray(image->pixel(x,y)) / 255.0; //This may also be the alpha value
+                        if(alphaEnabled)
                         {
-                            float color = qGray(image->pixel(x,y)) / 255.0; //This may also be the alpha value
-                            if(alphaEnabled)
+                            if(color > testRefVal)
                             {
-                                if(color > testRefVal)
-                                {
-                                    glColor4f(color, color, color, color);
-                                    glVertex3s(x,y,i);
-                                }
+                                glColor4f(color, color, color, color);
+                                glVertex3s(x,y,i);
+                                glVertex3s(x,y,i+1);
                             }
-                            else
+                        }
+                        else
+                        {
+                            if(color > testRefVal)
                             {
-                                if(color > testRefVal)
-                                {
-                                    glColor3f(color, color, color);
-                                    glVertex3s(x,y,i);
-                                }
+                                glColor3f(color, color, color);
+                                glVertex3s(x,y,i);
+                                glVertex3s(x,y,i+1);
                             }
                         }
                     }
                 }
-                glEnd();
+            }
+            glEnd();
         ///////////////////////////////////////////
         glEndList();
     }
