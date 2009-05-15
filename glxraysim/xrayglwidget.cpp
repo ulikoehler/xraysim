@@ -664,6 +664,7 @@ void XRayGLWidget::renderPixelCubes()
         glCallList(drawCubeListID);
         ///////////////////////////////////////////
 
+                glPointSize(1.0);
                 glScalef(1,1,imageDistance);
                 for(int i = 0; i < imageTexturesLength; i++)
                 {
@@ -679,11 +680,12 @@ void XRayGLWidget::renderPixelCubes()
                             float color = qGray(image->pixel(x,y)) / 255.0; //This may also be the alpha value
                             if(alphaEnabled)
                             {
-                                glDeleteShader(5);
                                 if(color > testRefVal)
                                 {
                                     glColor4f(color, color, color, color);
+                                    glBegin(GL_POINTS);
                                     glVertex3s(0,0,0);
+                                    glEnd();
                                 }
                             }
                             else

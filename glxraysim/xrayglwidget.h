@@ -5,6 +5,8 @@
 #define GL_GLEXT_PROTOTYPES
 
 #include <tr1/memory>
+#include <QtOpenGL>
+#include <GL/glext.h>
 #include <QGLWidget>
 #include <QtGui>
 #include "configurelightdialog.h"

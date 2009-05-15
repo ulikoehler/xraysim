@@ -18,6 +18,10 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+private slots:
+    void on_newVectorButton_clicked();
+    void on_newMatrixButton_clicked();
 };
 
 #endif // MAINWINDOW_H

@@ -11,3 +11,13 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::on_newMatrixButton_clicked()
+{
+
+}
+
+void MainWindow::on_newVectorButton_clicked()
+{
+
+}
