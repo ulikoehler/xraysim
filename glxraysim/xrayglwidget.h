@@ -62,6 +62,8 @@ class XRayGLWidget : public QGLWidget
 
      void setImageDistance(float distance);
 
+    void setAlphaExponent(float newAlphaExponent);
+
  public slots:
      void setXRotation(int angle);
      void setYRotation(int angle);
@@ -121,16 +123,17 @@ private:
     SimulationMode simulationMode;
     bool useAlphaChannel;
     bool alphaEnabled;
-    double testRefVal; //Reference value for alpha and emulated-alpha test
+    double testRefVal; //Reference value for alpha and the emulated alpha test
     float xRot, yRot, zRot;
     float xMov, yMov, zMov;
     float scale; //Changed by the slider
     float pixelCubeScale; //Changed by the spinner
     float imageDistance; //z distance from one image to another
+    float alphaExponent; //Defines a alpha mapping exponent
     QPoint lastPos;
 
     bool textureChanged; //True if the textures are to be updated; the have to be updated at the first call
-    bool redrawPixelCubes; //Makes the display list to be re-initialized
+    bool forceRedraw; //Makes the appropriate display list to be re-initialized
 
     //Input properties
     QStringList inputFileList;

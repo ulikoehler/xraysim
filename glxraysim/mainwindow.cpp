@@ -22,6 +22,11 @@ MainWindow::MainWindow(QWidget *parent)
     inputFileDialog = new QFileDialog(this, "Select input files");
     inputFileDialog->setFileMode(QFileDialog::ExistingFiles); //Allow multiple file selection
 
+    alphaExponentInputDialog = new QInputDialog(this);
+    alphaExponentInputDialog->setInputMode(QInputDialog::DoubleInput);
+    alphaExponentInputDialog->setDoubleValue(1.0);
+    alphaExponentInputDialog->setDoubleMinimum(0);
+
     /**
      * Initialize the GL widget
      */
@@ -260,4 +265,10 @@ void MainWindow::on_surfaceRadioButton_toggled(bool checked)
     {
         glWidget->setSimulationMode(SIM_MODE_3D_SURFACE);
     }
+}
+
+void MainWindow::on_setAlphaExponentAction_triggered()
+{
+    alphaExponentInputDialog->exec();
+    glWidget->setAlphaExponent(alphaExponentInputDialog->doubleValue());
 }

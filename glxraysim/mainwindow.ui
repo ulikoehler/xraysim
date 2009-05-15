@@ -272,6 +272,7 @@
     <addaction name="toggleAlphaAction"/>
     <addaction name="useAlphaChannelAction"/>
     <addaction name="toggleFeaturesAction"/>
+    <addaction name="setAlphaExponentAction"/>
    </widget>
    <addaction name="fileMenu"/>
    <addaction name="extrasMenu"/>
@@ -329,6 +330,11 @@
   <action name="toggleFeaturesAction">
    <property name="text">
     <string>Toggle features</string>
+   </property>
+  </action>
+  <action name="setAlphaExponentAction">
+   <property name="text">
+    <string>Set alpha exponent</string>
    </property>
   </action>
  </widget>

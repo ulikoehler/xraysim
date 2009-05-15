@@ -23,8 +23,10 @@ XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
     alphaEnabled = true;
     testRefVal = 0.0;
 
+    alphaExponent = 1.0;
+
     textureChanged = true;
-    redrawPixelCubes = true;
+    forceRedraw = true;
 
     texturesLength = 0;
     textures = 0;
@@ -143,7 +145,7 @@ void XRayGLWidget::setScale(int scalePercent)
 void XRayGLWidget::setPixelCubeScale(float pixelCubeScale)
 {
     this->pixelCubeScale = pixelCubeScale;
-    redrawPixelCubes = true; //Force full redraw
+    forceRedraw = true; //Force full redraw
 }
 
 void XRayGLWidget::setInputFileList(QStringList newList)
@@ -155,7 +157,14 @@ void XRayGLWidget::setInputFileList(QStringList newList)
 void XRayGLWidget::setImageDistance(float distance)
 {
     imageDistance = distance;
-    redrawPixelCubes = true; //Force full redraw
+    forceRedraw = true; //Force full redraw
+}
+
+void XRayGLWidget::setAlphaExponent(float newAlphaExponent)
+{
+    alphaExponent = newAlphaExponent;
+    forceRedraw = true;
+
 }
 
 ///////////
@@ -225,31 +234,31 @@ void XRayGLWidget::alphaFuncChanged(uint mode, double value)
 void XRayGLWidget::materialAmbientChanged(vec4f values)
 {
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, values.data());
-    redrawPixelCubes = true; //Force full redraw
+    forceRedraw = true; //Force full redraw
     updateGL();
 }
 void XRayGLWidget::materialDiffuseChanged(vec4f values)
 {
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, values.data());
-    redrawPixelCubes = true; //Force full redraw
+    forceRedraw = true; //Force full redraw
     updateGL();
 }
 void XRayGLWidget::materialSpecularChanged(vec4f values)
 {
     glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, values.data());
-    redrawPixelCubes = true; //Force full redraw
+    forceRedraw = true; //Force full redraw
     updateGL();
 }
 void XRayGLWidget::materialEmissionChanged(vec4f values)
 {
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, values.data());
-    redrawPixelCubes = true; //Force full redraw
+    forceRedraw = true; //Force full redraw
     updateGL();
 }
 void XRayGLWidget::materialShininessChanged(int value)
 {
     glMateriali(GL_FRONT_AND_BACK, GL_SHININESS, value);
-    redrawPixelCubes = true; //Force full redraw
+    forceRedraw = true; //Force full redraw
     updateGL();
 }
 ////////////////////
@@ -302,14 +311,14 @@ void XRayGLWidget::useAlphaChannelChanged(bool enabled)
 {
     useAlphaChannel = enabled;
     textureChanged = true;
-    redrawPixelCubes = true; //Force full redraw
+    forceRedraw = true; //Force full redraw
     updateGL();
 }
 
 void XRayGLWidget::toggleAlpha(bool enable)
 {
     alphaEnabled = enable;
-    redrawPixelCubes = true; //Force full redraw
+    forceRedraw = true; //Force full redraw
     updateGL();
 }
 
@@ -323,7 +332,7 @@ void XRayGLWidget::featureToggled(uint feature, bool enabled)
     {
         glDisable(feature);
     }    
-    redrawPixelCubes = true; //Force full redraw
+    forceRedraw = true; //Force full redraw
     updateGL();
 }
 
@@ -592,7 +601,7 @@ void XRayGLWidget::renderPixelCubes()
     }
 
     //If the texture or another property has changed, the if statement is true and the model is redrawn
-    if(textureChanged || redrawPixelCubes)
+    if(textureChanged || forceRedraw)
     {
 
         //Delete the old display list if there is one
@@ -624,7 +633,7 @@ void XRayGLWidget::renderPixelCubes()
                         {
                             if(color > testRefVal)
                             {
-                                glColor4f(color, color, color, color);
+                                glColor4f(color, color, color, pow(color, alphaExponent));
                                 glVertex3s(x,y,i);
                                 glVertex3s(x,y,i+1);
                             }
@@ -644,6 +653,7 @@ void XRayGLWidget::renderPixelCubes()
             glEnd();
         ///////////////////////////////////////////
         glEndList();
+        forceRedraw = false;
     }
 
     //Call the display list (renders the pixel cubes)

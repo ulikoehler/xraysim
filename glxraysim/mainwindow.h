@@ -31,6 +31,7 @@ protected:
      void closeEvent(QCloseEvent* event);
 
 private slots:
+    void on_setAlphaExponentAction_triggered();
     void on_surfaceRadioButton_toggled(bool checked);
     void on_toggleFeaturesAction_triggered();
     void on_actionMaterial_properties_triggered();
@@ -55,6 +56,7 @@ private:
     QPointer<XRayGLWidget> glWidget;
     QPointer<ConfigureLightDialog> lightDialog;
     QPointer<ConfigureMaterialDialog> materialDialog;
+    QPointer<QInputDialog> alphaExponentInputDialog;
     QPointer<ToggleFeaturesDialog> toggleFeaturesDialog;
     QPointer<AlphaTestDialog> alphaTestDialog;
     QPointer<QFileDialog> inputFileDialog;
