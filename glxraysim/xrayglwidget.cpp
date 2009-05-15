@@ -661,11 +661,11 @@ void XRayGLWidget::renderPixelCubes()
 
         glNewList(drawPixelCubesListID, GL_COMPILE);
         //Test cube
-        glCallList(drawCubeListID);
         ///////////////////////////////////////////
 
                 glPointSize(1.0);
                 glScalef(1,1,imageDistance);
+                glBegin(GL_POINTS);
                 for(int i = 0; i < imageTexturesLength; i++)
                 {
                     QImage* image = imageTextures[i];
@@ -674,7 +674,6 @@ void XRayGLWidget::renderPixelCubes()
                     for(int y = 0; y < image->height(); y++)
                     {
                         //Extend the cubes to have a depth of imageDistance
-                        glPushMatrix();
                         for(int x = 0; x < image->width(); x++)
                         {
                             float color = qGray(image->pixel(x,y)) / 255.0; //This may also be the alpha value
@@ -683,9 +682,7 @@ void XRayGLWidget::renderPixelCubes()
                                 if(color > testRefVal)
                                 {
                                     glColor4f(color, color, color, color);
-                                    glBegin(GL_POINTS);
-                                    glVertex3s(0,0,0);
-                                    glEnd();
+                                    glVertex3s(x,y,i);
                                 }
                             }
                             else
@@ -693,17 +690,15 @@ void XRayGLWidget::renderPixelCubes()
                                 if(color > testRefVal)
                                 {
                                     glColor3f(color, color, color);
-                                    glCallList(drawCubeListID);
+                                    glVertex3s(x,y,i);
                                 }
                             }
-                            glTranslatef(1,0,0);
                         }
-                        glPopMatrix();
-                        glTranslatef(0,1,0);
                     }
                     glPopMatrix();
                     glTranslatef(0,0,-1);
                 }
+                glEnd();
         ///////////////////////////////////////////
         glEndList();
     }
