@@ -72,81 +72,16 @@ int Sobel::calculateSobel(ushort x, ushort y)
     return res;
 }
 
-std::list<QPoint> Sobel::startAtPoint(ushort startX, ushort startY, Direction d)
+shared_ptr<QImage> Sobel::calculateSobelImage()
 {
-    std::list<QPoint> points;
 
-    int x = startX;
-    int y = startY;
-
-    //Find the first pixel having a gradient
-    for(; x < width - 1;x++)
+    shared_ptr<QImage> sobelImage(new QImage(width, height, QImage::Format_RGB32));
+    for (int w = 0; w < width;w++)
     {
-        int sob = calculateSobel(x, y);
-        if (sob > 1000) {break;}
-    }
-
-    QPoint beginPoint(x,y);
-
-    std::list<QPoint> vertices;
-
-
-    //As the scoped pixel mustn't be the maximum again, this has only 8 elements
-    int sobels[8]; //Sobels of the pixels around the scoped pixel
-
-    for(int im = 0; im < 1000; im++)
-    {
-        //printf("%i %i \n", x, y);
-        QPoint p;
-        p.setX(x);
-        p.setY(x);
-        vertices.push_back(p);
-
-        //If we reached the beginning
-        if(p == beginPoint && vertices.size() > 1)
+        for(int h = 0; h < height; h++)
         {
-            break;
-        }
 
-        sobels[0] = calculateSobel(x - 1, y - 1);
-        sobels[1] = calculateSobel(x, y - 1);
-        sobels[2] = calculateSobel(x + 1, y - 1);
-        sobels[3] = calculateSobel(x - 1, y);
-        sobels[4] = calculateSobel(x + 1, y);
-        sobels[5] = calculateSobel(x - 1, y + 1);
-        sobels[6] = calculateSobel(x, y + 1);
-        sobels[7] = calculateSobel(x + 1, y + 1);
-
-        int max = 0;
-        int maxindex = 3;
-        for(int i = 0;i < 8; i++)
-        {
-            if (sobels[i] > max)
-            {
-                max = sobels[i];maxindex = i;
-            }
-        }
-
-        switch(maxindex)
-        {
-            case 0: {x -= 1; y -= 1;break;}
-            case 1: {y -= 1;break;}
-            case 2: {x += 1; y -= 1;break;}
-            case 3: {x -= 1;break;}
-            //case 4: {} //Can't occur; nothing to change
-            case 4: {x += 1;break;}
-            case 5: {x -= 1; y += 1;break;}
-            case 6: {y += 1;break;}
-            case 7: {x += 1; y += 1;break;}
-            default: {break;}
-        }
-
-        if(x < 1 || x > (width - 1) || y < 1 || y > (height - 1))
-        {
-            printf("ext error!!");
         }
     }
-    return vertices;
-
     //image->setPixel(w, h, (uint) hsobel + vsobel);
 }

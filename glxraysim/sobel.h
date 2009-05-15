@@ -9,23 +9,13 @@
 using namespace std;
 using namespace std::tr1;
 
-/**
- * Enums
- */
-
-enum Direction
-{
-    HORIZONTAL,
-    VERTICAL
-};
-
 class Sobel
 {
 public:
     Sobel(shared_ptr<QImage> image);
 
     void smoothImage();
-    std::list<QPoint> startAtPoint(ushort x, ushort y, Direction d);
+    shared_ptr<QImage> calculateSobelImage();
 
 private:
     shared_ptr<QImage> image;

@@ -23,7 +23,6 @@ HEADERS += mainwindow.h \
     configurematerialdialog.h \
     globaldef.h \
     togglefeaturesdialog.h \
-    glextensions.h \
     sobel.h
 FORMS += mainwindow.ui \
     gldialog.ui \

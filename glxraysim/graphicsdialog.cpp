@@ -21,7 +21,7 @@ GraphicsDialog::~GraphicsDialog()
  void GraphicsDialog::setImage(shared_ptr<QImage> imageParam)
  {
     this->image = imageParam;
-    m_ui->imageLabel->setPixmap(QPixmap::fromImage(image));
+    m_ui->imageLabel->setPixmap(QPixmap::fromImage(*image));
  }
 
 void GraphicsDialog::changeEvent(QEvent *e)

@@ -405,7 +405,7 @@ void XRayGLWidget::initializeGL()
     //Initialize the cube generation list
     //(We initialize 2 at a time because the plain drawing list is the next)
     drawCubeListID = glGenLists(2);
-
+    /*
     glNewList(drawCubeListID, GL_COMPILE);
         glBegin(GL_TRIANGLE_STRIP);
             //Front side
@@ -439,7 +439,7 @@ void XRayGLWidget::initializeGL()
             glVertex3s(1,0,0);
             glVertex3s(1,0,1);
         glEnd();
-    glEndList();
+    glEndList();*/
 
     //Initialize the textured plane drawing list
     drawTexturedPlaneListID = drawCubeListID + 1;
@@ -511,7 +511,7 @@ void XRayGLWidget::render3dSurface()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     //Apply the transformation parameters
-    //glScalef(scale, scale, scale);
+    glScalef(scale, scale, scale);
     glTranslatef(xMov, yMov, zMov);
     glRotatef(xRot, 1.0, 0.0, 0.0);
     glRotatef(yRot, 0.0, 1.0, 0.0);
@@ -529,25 +529,72 @@ void XRayGLWidget::render3dSurface()
     //and calculate the sobel matrix for the surrounding values
 
     shared_ptr<QImage> sobelImage(new QImage(image->width(), image->height(), QImage::Format_RGB32));
-
     //std::list<struct Point> vertices;
-    Sobel sob(image);
-    std::list<QPoint> vertices = sob.startAtPoint(1,h,HORIZONTAL);
+    //Sobel sob(image);
+    std::list<QPoint> vertices;
+    const int rvalue = 10;
+
+    //Search for edges from the left
+    for(int y = 0; y < image->height(); y++)
+    {
+        for(int x = 1; x < image->width() - 1;x++)
+        {
+            if(qGray(image->pixel(x,y)) > rvalue)
+            {
+                vertices.push_back(QPoint(x,y));
+                break;
+            }
+        }
+    }
+    //Search for edges from the right
+    for(int y = image->height() - 1; y > 0; y--)
+    {
+        for(int x = image->width() - 1; x > 0;x--)
+        {
+            if(qGray(image->pixel(x,y)) > rvalue)
+            {
+                vertices.push_back(QPoint(x,y));
+
+                break;
+            }
+        }
+    }
+
+    //bool found
+    /*for(int x = image->width() - 1; x > 0;x--)
+    {
+        for(int y = image->height() - 1; y > 0; y--)
+        {
+            if(qGray(image->pixel(x,y)) > rvalue)
+            {
+                vertices.push_back(QPoint(x,y));
+                break;
+            }
+        }
+    }*/
 
     //Draw
-    //glBegin(GL_LINE_LOOP);
-    //glLineWidth(5);
+    //glBegin(GL_QUADS);
+    //glVertex2f(-0.5,0.5);
+    //glVertex2f(-0.5,-0.5);
+    //glVertex2f(0.5,0.5);
+    //glVertex2f(0.5,-0.5);
+    //glEnd();
+    glBegin(GL_LINE_LOOP);
+    glColor3f(1,1,1);
+    glLineWidth(5);
+    glTranslatef(0,0,-25);
     list<QPoint>::iterator it;
     for( it=vertices.begin() ; it != vertices.end(); it++ )
     {
         //printf("%i %i \n", it->x(), it->y());
-        sobelImage->setPixel(it->x(), it->y(), 0xffffff);
-        //glVertex3i(it->x(), it->y(), 0);
+        //sobelImage->setPixel(it->x(), it->y(), 0xffffff);
+        glVertex3f(it->x()/255, it->y()/255,0);
     }
-    //glEnd();
+    glEnd();
 
-    graphicsDialog->setImage(sobelImage);
-    graphicsDialog->show();
+    //graphicsDialog->setImage(sobelImage);
+    //graphicsDialog->show();
 }
 
 void XRayGLWidget::renderPixelCubes()
@@ -632,10 +679,11 @@ void XRayGLWidget::renderPixelCubes()
                             float color = qGray(image->pixel(x,y)) / 255.0; //This may also be the alpha value
                             if(alphaEnabled)
                             {
+                                glDeleteShader(5);
                                 if(color > testRefVal)
                                 {
                                     glColor4f(color, color, color, color);
-                                    glCallList(drawCubeListID);
+                                    glVertex3s(0,0,0);
                                 }
                             }
                             else

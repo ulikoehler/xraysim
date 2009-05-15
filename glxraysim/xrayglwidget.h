@@ -1,6 +1,9 @@
 #ifndef XRAYGLWIDGET_H
 #define XRAYGLWIDGET_H
 
+
+#define GL_GLEXT_PROTOTYPES
+
 #include <tr1/memory>
 #include <QGLWidget>
 #include <QtGui>
@@ -8,7 +11,6 @@
 #include "graphicsdialog.h"
 #include "sobel.h"
 
-#include "glextensions.h"
 
 //DEBUG
 #include <cstdio>
