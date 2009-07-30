@@ -31,6 +31,9 @@
         <platform>2</platform>
       </toolsSet>
       <compileType>
+        <cTool>
+          <commandLine>-std=c99</commandLine>
+        </cTool>
         <linkerTool>
           <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/isect</output>
           <linkerLibItems>

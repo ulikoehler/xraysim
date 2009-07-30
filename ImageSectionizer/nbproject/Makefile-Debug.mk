@@ -35,7 +35,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/main.o
 
 # C Compiler Flags
-CFLAGS=
+CFLAGS=-std=c99
 
 # CC Compiler Flags
 CCFLAGS=
