@@ -5,8 +5,9 @@
 #define GL_GLEXT_PROTOTYPES
 
 #include <tr1/memory>
-#include <QtOpenGL>
+#include <GL/gl.h>
 #include <GL/glext.h>
+#include <QtOpenGL>
 #include <QGLWidget>
 #include <QtGui>
 #include "configurelightdialog.h"
@@ -151,6 +152,8 @@ private:
 
     GLuint drawPixelCubesListID; //Changed dynamically
     GLuint pixelCubesVBOID; //Vertex buffer object identifier for pixel cube mode
+
+    GLuint vertexColorShaderID;
 
     GLuint *textures; //Array holding the texture IDs
     int texturesLength; //Length of textures array

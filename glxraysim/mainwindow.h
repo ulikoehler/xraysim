@@ -56,9 +56,11 @@ private:
     QPointer<XRayGLWidget> glWidget;
     QPointer<ConfigureLightDialog> lightDialog;
     QPointer<ConfigureMaterialDialog> materialDialog;
-    QPointer<QInputDialog> alphaExponentInputDialog;
     QPointer<ToggleFeaturesDialog> toggleFeaturesDialog;
     QPointer<AlphaTestDialog> alphaTestDialog;
+
+    QPointer<QInputDialog> alphaExponentInputDialog;
+    QPointer<QInputDialog> alphaFactorInputDialog;
     QPointer<QFileDialog> inputFileDialog;
 
     QStringList inputFileNameList;

@@ -1,7 +1,8 @@
 #include "xrayglwidget.h"
 
 //Global variables
-const GLfloat null4f[] = {0,0,0,0};
+const GLfloat zero4f[] = {0,0,0,0};
+const GLfloat one4f[] = {1,1,1,1};
 
 XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
 {
@@ -19,8 +20,8 @@ XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
 
     transformationMode = MODE_ROTATE;
     simulationMode = SIM_MODE_TEXTURE_BLEND;
-    useAlphaChannel = true;
     alphaEnabled = true;
+    useAlphaChannel = false;
     testRefVal = 0.0;
 
     alphaExponent = 1.0;
@@ -39,6 +40,9 @@ XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
     drawTexturedPlaneListID = 0;
     drawPixelCubesListID = 0;
     pixelCubesVBOID = 0;
+
+    //Initialize the shaders
+    //vertexColorShaderID =
 }
 
 XRayGLWidget::~XRayGLWidget()
@@ -302,8 +306,8 @@ void XRayGLWidget::mouseMoveEvent(QMouseEvent *event)
         {
             zMov -= (0.01/pixelCubeScale) * dy;
         }
-        updateGL();
     }
+    updateGL();
     lastPos = event->pos();
 }
 
@@ -348,13 +352,13 @@ void XRayGLWidget::initializeGL()
     //Enable the required featuresg
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
     glEnable(GL_COLOR_MATERIAL);
     glEnable(GL_BLEND);
     glEnable(GL_TEXTURE_2D);
     glEnable(GL_ALPHA_TEST);
     glEnable(GL_AUTO_NORMAL);
     glEnable(GL_CULL_FACE);
+    glEnable(GL_POINT_SMOOTH);
     glShadeModel(GL_SMOOTH);
 
     glAlphaFunc ( GL_GREATER, 0.0);
@@ -374,22 +378,25 @@ void XRayGLWidget::initializeGL()
 
     //Set ambient  to null (because the light source already emits ambient light)
 
+    /* Ambient lights to choose from */
     //const GLfloat global_ambient[] = { 0.5f, 0.5f, 0.5f, 1.0f };
-    const GLfloat global_ambient[] = {0,0,0,0};
-    //const GLfloat global_ambient[] = {1,1,1,1};
+    //const GLfloat global_ambient[] = {0,0,0,0};
+    const GLfloat global_ambient[] = {1,1,1,0};
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient);
 
 
     //Set some material parameters (for the meshes, not for the light emitter
-    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS , 0);
-    glMaterialf(GL_FRONT_AND_BACK, GL_SPECULAR, 0);
-    glMaterialf(GL_FRONT_AND_BACK, GL_DIFFUSE, 0);
-    glMaterialf(GL_FRONT_AND_BACK, GL_AMBIENT, 1);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS , one4f);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, zero4f);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, zero4f);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, one4f);
 
+    /* Settings for LIGHT0 */
     const GLfloat lightSpecular[] = {0,0,0,0};
     const GLfloat lightPosition[] = { 0,-30,0,0};
     const GLfloat lightDirection[] = {0,1,0};
     const GLfloat lightAmbient[] = {1,1,1,0};
+    //glEnable(GL_LIGHT0);
     glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpecular);
     glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmbient);
     glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
@@ -422,6 +429,7 @@ void XRayGLWidget::renderTextureBlending()
     glRotatef(xRot, 1.0, 0.0, 0.0);
     glRotatef(yRot, 0.0, 1.0, 0.0);
     glRotatef(zRot, 0.0, 0.0, 1.0);
+
     //Set the color
     glColor3f(1,1,1);
 
@@ -531,12 +539,6 @@ void XRayGLWidget::render3dSurface()
     }*/
 
     //Draw
-    //glBegin(GL_QUADS);
-    //glVertex2f(-0.5,0.5);
-    //glVertex2f(-0.5,-0.5);
-    //glVertex2f(0.5,0.5);
-    //glVertex2f(0.5,-0.5);
-    //glEnd();
     glBegin(GL_LINE_LOOP);
     glColor3f(1,1,1);
     glLineWidth(5);
@@ -556,6 +558,7 @@ void XRayGLWidget::render3dSurface()
 
 void XRayGLWidget::renderPixelCubes()
 {
+    //Note: The images are called textures herer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     //Apply the transformation parameters
@@ -566,6 +569,9 @@ void XRayGLWidget::renderPixelCubes()
     glRotated(yRot, 0.0, 1.0, 0.0);
     glRotated(zRot, 0.0, 0.0, 1.0);
 
+    glRotated(180.1,1,0,0);
+
+    //Update the textures
     if(textureChanged)
     {
         //Delete the old textures if there are some loaded
@@ -595,9 +601,6 @@ void XRayGLWidget::renderPixelCubes()
             }
         }
         //The texture doesn't have to be changed next time
-        textureChanged = false;
-
-
     }
 
     //If the texture or another property has changed, the if statement is true and the model is redrawn
@@ -615,10 +618,11 @@ void XRayGLWidget::renderPixelCubes()
 
         glNewList(drawPixelCubesListID, GL_COMPILE);
         ///////////////////////////////////////////
-            glPointSize(5);
-            glLineWidth(5);
+            glPointSize(1);
+            glLineWidth(1);
             glScalef(1,1,imageDistance);
-            glBegin(GL_LINES);
+            glBegin(GL_POINTS);
+            glPointSize(2);
             for(uint i = 0; i < imageTexturesLength; i++)
             {
                 QImage* image = imageTextures[i];
@@ -628,14 +632,13 @@ void XRayGLWidget::renderPixelCubes()
                     //Extend the cubes to have a depth of imageDistance
                     for(uint x = 0; x < image->width(); x++)
                     {
-                        float color = qGray(image->pixel(x,y)) / 255.0; //This may also be the alpha value
+                        float color = qGray(image->pixel(x,y)) / 255.0;
                         if(alphaEnabled)
                         {
                             if(color > testRefVal)
                             {
-                                glColor4f(color, color, color, pow(color, alphaExponent));
+                                glColor4f(color, color, color, pow(color, alphaExponent) / (float)imageTexturesLength);
                                 glVertex3s(x,y,i);
-                                glVertex3s(x,y,i+1);
                             }
                         }
                         else
@@ -653,6 +656,7 @@ void XRayGLWidget::renderPixelCubes()
             glEnd();
         ///////////////////////////////////////////
         glEndList();
+        textureChanged = false;
         forceRedraw = false;
     }
 

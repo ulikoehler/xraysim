@@ -273,6 +273,7 @@
     <addaction name="useAlphaChannelAction"/>
     <addaction name="toggleFeaturesAction"/>
     <addaction name="setAlphaExponentAction"/>
+    <addaction name="setAlphaFactorAction"/>
    </widget>
    <addaction name="fileMenu"/>
    <addaction name="extrasMenu"/>
@@ -305,7 +306,7 @@
     <bool>true</bool>
    </property>
    <property name="checked">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="text">
     <string>Use alpha channel</string>
@@ -335,6 +336,11 @@
   <action name="setAlphaExponentAction">
    <property name="text">
     <string>Set alpha exponent</string>
+   </property>
+  </action>
+  <action name="setAlphaFactorAction">
+   <property name="text">
+    <string>Set alpha factor</string>
    </property>
   </action>
  </widget>
