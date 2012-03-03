@@ -49,7 +49,7 @@ int main(int argc, char** argv)
     }
 
     int inputImageCount = argc - 2;
-    unsigned char** images = (unsigned char**) malloc(sizeof (unsigned char*) * inputImageCount * 4);
+    int** images = (int**) malloc(sizeof (int*) * inputImageCount);
     unsigned char* buffer;
     size_t imagesize, buffersize;
     int width, height;
@@ -58,7 +58,7 @@ int main(int argc, char** argv)
     LodePNG_Decoder_init(&decoder);
     for (int i = 0; i < inputImageCount; i++) {
         LodePNG_loadFile(&buffer, &buffersize, inputImageFilenames[i]);
-        LodePNG_decode(&decoder, &images[i], &imagesize, buffer, buffersize);
+        LodePNG_decode(&decoder, (unsigned char**)(&images[i]), &imagesize, buffer, buffersize);
         width = decoder.infoPng.width;
         height = decoder.infoPng.height;
         free(buffer);
@@ -85,9 +85,9 @@ int main(int argc, char** argv)
     }
 
     //Allocate the images array
-    unsigned char** saveImages = malloc(sizeof (unsigned char*) * saveImageCount);
+    int** saveImages = malloc(sizeof (int*) * saveImageCount);
     for (int i = 0; i < inputImageCount; i++) {
-        saveImages[i] = malloc(sizeof (unsigned char) * saveImageWidth * saveImageHeight);
+        saveImages[i] = malloc(sizeof (int) * saveImageWidth * saveImageHeight);
     }
 
     //Process the images
@@ -96,6 +96,12 @@ int main(int argc, char** argv)
         for (int i = 0; i < inputImageCount; i++) {
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
+                    printf("exe i=%i y=%i x=%i\n",i,y,x);
+                    fflush(stdout);
+                    int x = images[i][y * width + x];
+                    //int x = (int) images[i];
+                    printf("\n\n%i\n\n",x);
+                    fflush(stdout);
                     saveImages[y][x * inputImageCount + i] = images[i][y * width + x];
                 }
             }
@@ -120,7 +126,8 @@ int main(int argc, char** argv)
 
     //Write all images and free the memory
     for (unsigned i = 0; i < inputImageCount; i++) {
-        LodePNG_encode(&encoder, &buffer, &buffersize, saveImages[i], decoder.infoPng.width, decoder.infoPng.height);
+        LodePNG_encode(&encoder, &buffer, &buffersize, (unsigned char*)saveImages[i],
+                       decoder.infoPng.width, decoder.infoPng.height);
         //Construct the output filename string...
         char* filenameBuffer = (char*) malloc(sizeof (char) * strlen(inputImageFilenames[i]) + 256); //256 should be enough to hold the direction specifier number
         sprintf(filenameBuffer, "%s-%s-%i.png", inputImageFilenames[i], directionSpecifier, i);
@@ -135,7 +142,7 @@ int main(int argc, char** argv)
 
 
     LodePNG_Decoder_cleanup(&decoder);
-    LodePNG_Encoder_cleanup(&decoder);
+    LodePNG_Encoder_cleanup(&encoder);
     return (EXIT_SUCCESS);
 }
 

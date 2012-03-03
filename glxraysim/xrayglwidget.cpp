@@ -1,8 +1,28 @@
 #include "xrayglwidget.h"
 
+#include "shaders.h"
+
 //Global variables
 const GLfloat zero4f[] = {0,0,0,0};
 const GLfloat one4f[] = {1,1,1,1};
+
+void printShaderDebug(GLuint shaderId)
+{
+    int infologLength = 0;
+    //glGetShaderiv(shaderId,GL_INFO_LOG_LENGTH,&maxLength);
+    char infoLog[10000];
+    glGetShaderInfoLog(shaderId, 10000, &infologLength, infoLog);
+    printf("S: %s\n",infoLog);
+}
+
+void printProgramDebug(GLuint programId)
+{
+    int infologLength = 0;
+    //glGetProgramiv(programId,GL_INFO_LOG_LENGTH,&maxLength);
+    char infoLog[10000];
+    glGetProgramInfoLog(programId, 10000, &infologLength, infoLog);
+    printf("P: %s\n",infoLog);
+}
 
 XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
 {
@@ -42,8 +62,47 @@ XRayGLWidget::XRayGLWidget(QWidget *parent) : QGLWidget(parent)
     pixelCubesVBOID = 0;
 
     //Initialize the shaders
-    //vertexColorShaderID =
+    vertexColorShaderID = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vertexColorShaderID, 1, &vertexColorShaderSource, NULL);
+    glCompileShader(vertexColorShaderID);
+
+    if (glGetError() == GL_NO_ERROR)
+    {printf("noerror\n\n");}
+
+    printShaderDebug(vertexColorShaderID);
+
+
+    GLint res;
+    glGetShaderiv(vertexColorShaderID, GL_COMPILE_STATUS, &res);
+    if(res == GL_TRUE)
+    {
+        printf("Compiled\n");
+    }
+    else if (res == GL_FALSE)
+    {
+        printf("Not compiled\n");
+    }
+    else
+    {
+        printf("CS %i\n", res);
+    }
+
+    vertexColorShaderProgram = glCreateProgram();
+    glAttachShader(vertexColorShaderProgram, vertexColorShaderID);
+    if (glGetError() == GL_NO_ERROR)
+    {printf("noerror\n\n");}
+    glBindAttribLocation(vertexColorShaderProgram, 1, "density");
+    glLinkProgram(vertexColorShaderProgram);
+
+    printProgramDebug(vertexColorShaderProgram);
+
+    glUseProgram(vertexColorShaderProgram);
+
+    glValidateProgram(vertexColorShaderProgram);
+
 }
+
+
 
 XRayGLWidget::~XRayGLWidget()
 {
@@ -71,6 +130,17 @@ XRayGLWidget::~XRayGLWidget()
         //Delete the old textures array
         delete imageTextures;
     }
+
+
+    //Cleanup the shader
+    if(vertexColorShaderID != 0)
+    {
+        glDeleteShader(vertexColorShaderID);
+    }
+    if(vertexColorShaderProgram != 0)
+    {
+        glDeleteProgram(vertexColorShaderProgram);
+    }
 }
 
 void XRayGLWidget::resetView()
@@ -90,6 +160,15 @@ void XRayGLWidget::setTransformationMode(TransformationMode mode)
 void XRayGLWidget::setSimulationMode(SimulationMode mode)
 {
     this->simulationMode = mode;
+    //Configure the shaders
+    if(mode == SIM_MODE_PIXEL_CUBES)
+    {
+        //glUseProgram(vertexColorShaderProgram);
+    }
+    else
+    {
+        //glUseProgram(0);
+    }
     //Enforce texture reload
     textureChanged = true;
     //Update the graphics
@@ -274,7 +353,6 @@ void XRayGLWidget::mousePressEvent(QMouseEvent *event)
     lastPos = event->pos();
 }
 
-
 void XRayGLWidget::mouseMoveEvent(QMouseEvent *event)
 {
     //Note: As the scaling matrix is applied BEFORE the rotation and translation,
@@ -358,8 +436,6 @@ void XRayGLWidget::initializeGL()
     glEnable(GL_ALPHA_TEST);
     glEnable(GL_AUTO_NORMAL);
     glEnable(GL_CULL_FACE);
-    glEnable(GL_POINT_SMOOTH);
-    glShadeModel(GL_SMOOTH);
 
     glAlphaFunc ( GL_GREATER, 0.0);
     //glAlphaFunc(GL_ALWAYS, 1);
@@ -546,7 +622,7 @@ void XRayGLWidget::render3dSurface()
     list<QPoint>::iterator it;
     for( it=vertices.begin() ; it != vertices.end(); it++ )
     {
-        //printf("%i %i \n", it->x(), it->y());
+        //printf("%i %i \n",it->x(), it->y());
         //sobelImage->setPixel(it->x(), it->y(), 0xffffff);
         glVertex3f(it->x()/255, it->y()/255,0);
     }
@@ -562,16 +638,27 @@ void XRayGLWidget::renderPixelCubes()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     //Apply the transformation parameters
-    glScalef(scale, scale, scale);
-    glScalef(pixelCubeScale, pixelCubeScale, pixelCubeScale);
-    glTranslatef(xMov, yMov, zMov);
-    glRotated(xRot, 1.0, 0.0, 0.0);
+    //glScalef(scale, scale, scale);
+    //glScalef(pixelCubeScale, pixelCubeScale, pixelCubeScale);
+    //glTranslatef(xMov, yMov, zMov);
+    /*glRotated(xRot, 1.0, 0.0, 0.0);
     glRotated(yRot, 0.0, 1.0, 0.0);
     glRotated(zRot, 0.0, 0.0, 1.0);
+    glTranslated(0.0, 0.0, -10.0);
 
-    glRotated(180.1,1,0,0);
+    glRotated(180.1,1,0,0);*/
+glUseProgram(vertexColorShaderProgram);
+    //glColor3f(1.0,0.0,0.0);
+    glBegin(GL_QUADS);
+    //glVertexAttrib1f(densityAttrib, 0.2);
+    glVertex3f(-1,1,0);
+    glVertex3f(-1,-1,0);
+    glVertex3f(1,1,0);
+    glVertex3f(1,-1,0);
+    glEnd();
+    printf("q3t");
 
-    //Update the textures
+    /*//Update the textures
     if(textureChanged)
     {
         //Delete the old textures if there are some loaded
@@ -616,7 +703,9 @@ void XRayGLWidget::renderPixelCubes()
         //Initialize the list
         drawPixelCubesListID = glGenLists(1);
 
-        glNewList(drawPixelCubesListID, GL_COMPILE);
+        GLuint densityAttrib = 1;
+
+        glNewList(drawPixelCubesListID, GL_COMPILE_AND_EXECUTE);
         ///////////////////////////////////////////
             glPointSize(1);
             glLineWidth(1);
@@ -633,22 +722,10 @@ void XRayGLWidget::renderPixelCubes()
                     for(uint x = 0; x < image->width(); x++)
                     {
                         float color = qGray(image->pixel(x,y)) / 255.0;
-                        if(alphaEnabled)
+                        if(color > testRefVal)
                         {
-                            if(color > testRefVal)
-                            {
-                                glColor4f(color, color, color, pow(color, alphaExponent) / (float)imageTexturesLength);
-                                glVertex3s(x,y,i);
-                            }
-                        }
-                        else
-                        {
-                            if(color > testRefVal)
-                            {
-                                glColor3f(color, color, color);
-                                glVertex3s(x,y,i);
-                                glVertex3s(x,y,i+1);
-                            }
+                            glVertexAttrib1f(densityAttrib, color);
+                            glVertex3s(x,y,i);
                         }
                     }
                 }
@@ -661,7 +738,7 @@ void XRayGLWidget::renderPixelCubes()
     }
 
     //Call the display list (renders the pixel cubes)
-    glCallList(drawPixelCubesListID);
+    glCallList(drawPixelCubesListID);*/
 
 
 }

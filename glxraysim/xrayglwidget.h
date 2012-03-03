@@ -154,6 +154,8 @@ private:
     GLuint pixelCubesVBOID; //Vertex buffer object identifier for pixel cube mode
 
     GLuint vertexColorShaderID;
+    GLuint vertexColorShaderProgram;
+    GLuint densityAttrib;
 
     GLuint *textures; //Array holding the texture IDs
     int texturesLength; //Length of textures array
